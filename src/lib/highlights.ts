@@ -12,7 +12,7 @@ export const sendHighlight = async (content: string, context: string, author: st
       ['p', author],
       ['a', article],
       ['context', context],
-      ['alt', 'This highlight was made by https://primal.net web client'],
+      ['alt', 'This highlight was made by https://bzz.social web client'],
     ],
     created_at: Math.floor((new Date()).getTime() / 1_000),
   };
@@ -27,7 +27,7 @@ export const removeHighlight = async (id: string) => {
     kind: Kind.EventDeletion,
     tags: [
       ['e', id],
-      ['alt', 'This event was deleted through the https://primal.net web client'],
+      ['alt', 'This event was deleted through the https://bzz.social web client'],
     ],
     created_at: Math.floor((new Date()).getTime() / 1_000),
   };

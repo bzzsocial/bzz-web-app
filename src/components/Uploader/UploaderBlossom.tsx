@@ -101,7 +101,7 @@ const UploaderBlossom: Component<{
     const mirrors = accountStore.blossomServers.slice(1) || [];
     if (mirrors.length === 0) return;
 
-    let auth = await BlossomClient.createUploadAuth(signEvent, blob.sha256, { message: 'media upload mirroring'});
+    let auth = await BlossomClient.createUploadAuth(signEvent, blob.sha256, { message: 'media upload mirroring' });
     setUploadState('auth', () => ({ ...auth }));
 
     for (let server of mirrors) {
@@ -128,18 +128,7 @@ const UploaderBlossom: Component<{
   const calcUploadLimit = (membershipTier: string | undefined, size: number) => {
     let limit = uploadLimit.regular;
 
-    if (membershipTier === 'premium') {
-      limit = uploadLimit.premium;
-      // setUploadState('uploadLimit', () => uploadLimit.premium);
-      // return;
-    }
-    if (membershipTier === 'premium-legend') {
-      limit = uploadLimit.premiumLegend;
-      // setUploadState('uploadLimit', () => uploadLimit.premiumLegend);
-      // return;
-    }
-
-    setUploadState('uploadLimit',  () => limit);
+    setUploadState('uploadLimit', () => limit);
 
     return size <= MB * limit;
   };
@@ -158,7 +147,7 @@ const UploaderBlossom: Component<{
     let allow = true;
 
     if (url === primalBlossom) {
-      allow = calcUploadLimit(accountStore.membershipStatus.tier, file.size);
+      allow = calcUploadLimit(undefined, file.size);
     }
 
     if (!allow) {
@@ -268,7 +257,7 @@ const UploaderBlossom: Component<{
     <Show when={uploadState.id}>
       <Show
         when={!props.progressBar}
-        fallback={<>{props.progressBar!({...uploadState }, resetUpload)}</>}
+        fallback={<>{props.progressBar!({ ...uploadState }, resetUpload)}</>}
       >
         <Progress value={uploadState.progress} class={styles.uploadProgress}>
           <Show when={!props.hideLabel}>

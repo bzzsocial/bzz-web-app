@@ -3,7 +3,7 @@ import styles from './SaveFeedDialog.module.scss';
 import { TextField } from '@kobalte/core/text-field';
 import AdvancedSearchDialog from '../../components/AdvancedSearch/AdvancedSearchDialog';
 import ButtonSecondary from '../../components/Buttons/ButtonSecondary';
-import ButtonPremium from '../../components/Buttons/ButtonPremium';
+import ButtonPrimary from '../../components/Buttons/ButtonPrimary';
 import { useSettingsContext } from '../../contexts/SettingsContext';
 import { PrimalArticleFeed } from '../../types/primal';
 
@@ -22,9 +22,9 @@ const SaveFeedDialog: Component<{
   const generateFeedDefinition = () => {
 
     const spec = JSON.stringify({
-        id: 'advsearch',
-        query: props.query || '',
-      });
+      id: 'advsearch',
+      query: props.query || '',
+    });
 
     const feed: PrimalArticleFeed = {
       name: feedName(),
@@ -108,14 +108,14 @@ const SaveFeedDialog: Component<{
           >
             Cancel
           </ButtonSecondary>
-          <ButtonPremium
+          <ButtonPrimary
             onClick={() => {
               settings?.actions.addFeed(generateFeedDefinition(), props.feedType);
               props.setOpen && props.setOpen(false);
             }}
           >
             Save
-          </ButtonPremium>
+          </ButtonPrimary>
         </div>
       </div>
     </AdvancedSearchDialog>

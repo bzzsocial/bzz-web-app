@@ -26,7 +26,14 @@ import FollowButton from '../components/FollowButton/FollowButton';
 import { useMediaContext } from '../contexts/MediaContext';
 import { profile as t, actions as tActions, toast as tToast, toastZapProfile } from '../translations';
 import ConfirmModal from '../components/ConfirmModal/ConfirmModal';
-import { fetchKnownProfiles, isAccountVerified, reportUser } from '../lib/profile';
+import {
+  trimVerification,
+  getCommonFollowers,
+  isUserFollowing,
+  isAccountVerified,
+  reportUser,
+} from '../lib/profile';
+
 import { APP_ID } from '../App';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 import ButtonSecondary from '../components/Buttons/ButtonSecondary';
@@ -43,7 +50,7 @@ import { getAuthorSubscriptionTiers } from '../lib/feed';
 import { zapSubscription } from '../lib/zap';
 import { subsTo } from '../sockets';
 import ProfileFollowModal from '../components/ProfileFollowModal/ProfileFollowModal';
-import PremiumCohortInfo from './Premium/PremiumCohortInfo';
+
 import ProfileCardPhoneSkeleton from '../components/Skeleton/Phone/ProfileCardPhoneSkeleton';
 import { isIOS } from '../utils';
 import { accountStore, addFilterList, addToAllowlist, addToMuteList, removeFilterList, removeFromMuteList } from '../stores/accountStore';
@@ -91,19 +98,7 @@ const ProfileMobile: Component = () => {
 
   const resolveHex = async (vanityName: string | undefined) => {
     if (vanityName) {
-      const name = vanityName.toLowerCase();
-      const vanityProfile = await fetchKnownProfiles(name);
-
-      const hex = vanityProfile.names[name];
-
-      if (!hex) {
-        navigate('/404');
-        return;
-      }
-
-      setHex(() => hex);
-
-      profile?.profileKey !== hex && setProfile(hex);
+      navigate('/404');
       return;
     }
 
@@ -132,7 +127,7 @@ const ProfileMobile: Component = () => {
     resolveHex(params.vanityName)
   })
 
-  createEffect(on(() => profile?.profileKey, (v,p) => {
+  createEffect(on(() => profile?.profileKey, (v, p) => {
     if (!v || v === p) return;
     setIsProfileLoaded(false);
   }));
@@ -168,7 +163,7 @@ const ProfileMobile: Component = () => {
       profile?.profileKey,
     );
 
-    toaster?.sendSuccess(intl.formatMessage(tToast.addFeedToHomeSuccess, { name: profileName()}));
+    toaster?.sendSuccess(intl.formatMessage(tToast.addFeedToHomeSuccess, { name: profileName() }));
   };
 
   const removeFromHome = () => {
@@ -176,7 +171,7 @@ const ProfileMobile: Component = () => {
       profile?.profileKey,
     );
 
-    toaster?.sendSuccess(intl.formatMessage(tToast.removeFeedFromHomeSuccess, { name: profileName()}));
+    toaster?.sendSuccess(intl.formatMessage(tToast.removeFeedFromHomeSuccess, { name: profileName() }));
   };
 
   const hasFeedAtHome = () => {
@@ -312,22 +307,22 @@ const ProfileMobile: Component = () => {
   const profileContextForEveryone: () => MenuItem[] = () => {
 
     const addToFeedAction = hasFeedAtHome() ?
-    {
-      label: intl.formatMessage(tActions.profileContext.removeFeed),
-      action: () => {
-        removeFromHome();
-        setContext(false);
-      },
-      icon: 'feed_remove',
-    } :
-    {
-      label: intl.formatMessage(tActions.profileContext.addFeed),
-      action: () => {
-        addToHome();
-        setContext(false);
-      },
-      icon: 'feed_add',
-    };
+      {
+        label: intl.formatMessage(tActions.profileContext.removeFeed),
+        action: () => {
+          removeFromHome();
+          setContext(false);
+        },
+        icon: 'feed_remove',
+      } :
+      {
+        label: intl.formatMessage(tActions.profileContext.addFeed),
+        action: () => {
+          addToHome();
+          setContext(false);
+        },
+        icon: 'feed_add',
+      };
 
     return [
       addToFeedAction,
@@ -391,7 +386,7 @@ const ProfileMobile: Component = () => {
       };
 
     const separatorItem = {
-      action: () => {},
+      action: () => { },
       label: '',
       separator: true,
     }
@@ -413,8 +408,8 @@ const ProfileMobile: Component = () => {
   };
 
   const profileContext = () => accountStore.publicKey !== getHex() ?
-      [ ...profileContextForEveryone(), ...profileContextForOtherPeople()] :
-      profileContextForEveryone();
+    [...profileContextForEveryone(), ...profileContextForOtherPeople()] :
+    profileContextForEveryone();
 
   const doMuteUser = () => {
     const pk = getHex();
@@ -430,7 +425,7 @@ const ProfileMobile: Component = () => {
 
     reportUser(pk, `report_user_${APP_ID}`, profile?.userProfile);
     setContext(false);
-    toaster?.sendSuccess(intl.formatMessage(tToast.noteAuthorReported, { name: userName(profile?.userProfile)}));
+    toaster?.sendSuccess(intl.formatMessage(tToast.noteAuthorReported, { name: userName(profile?.userProfile) }));
   };
 
   const addToTheAllowlist = async () => {
@@ -464,7 +459,7 @@ const ProfileMobile: Component = () => {
   const [verification, setVerification] = createSignal(false);
 
   const checkVerification = async (pubkey: string | undefined) => {
-    if(!pubkey) {
+    if (!pubkey) {
       setVerification(false);
     }
 
@@ -643,53 +638,13 @@ const ProfileMobile: Component = () => {
     return text.length < 50;
   }
 
-  const isVisibleLegend = () => {
-    if (
-      !profile?.profileKey ||
-      !app?.memberCohortInfo[profile.profileKey]
-    ) return false;
+  const isVisibleLegend = () => false;
 
-
-    if (
-      app?.memberCohortInfo[profile.profileKey].tier === 'premium-legend' &&
-      app?.legendCustomization[profile.profileKey] &&
-      app?.legendCustomization[profile.profileKey].style !== ''
-    ) return true;
-
-    if (
-      app?.memberCohortInfo[profile.profileKey].tier === 'premium' &&
-      (app?.memberCohortInfo[profile.profileKey].expires_on || 0) > Math.floor((new Date()).getTime() / 1_000)
-    ) return true;
-
-    return false;
-  }
-
-  const showAvatarBorder = () => {
-    return !profile?.profileKey ||
-      !app?.legendCustomization[profile.profileKey] ||
-      !app?.memberCohortInfo[profile.profileKey] ||
-      app?.legendCustomization[profile.profileKey].style === '' ||
-      app?.memberCohortInfo[profile.profileKey].tier !== 'premium-legend';
-  }
-
+  const showAvatarBorder = () => false;
 
   const commonFollowers = () => {
     if (!profile?.commonFollowers || profile.commonFollowers.length === 0) return [];
-
-    let sorted: PrimalUser[] = profile.commonFollowers;
-
-    let re = sorted.toSorted((a, b) => {
-      const aIsLegend = (app?.memberCohortInfo[a.pubkey])?.tier === 'premium-legend';
-      const bIsLegend = (app?.memberCohortInfo[b.pubkey])?.tier === 'premium-legend';
-
-      let ret = 1;
-
-      if (aIsLegend && !bIsLegend) ret = -1;
-
-      return ret;
-    });
-
-    return re.slice(0, 5).reverse();
+    return profile.commonFollowers.toSorted((a, b) => 0).slice(0, 5).reverse();
   }
 
   return (
@@ -832,32 +787,26 @@ const ProfileMobile: Component = () => {
                     </div>
                   </Show>
 
-                  <Show when={isVisibleLegend()}>
-                    <PremiumCohortInfo
-                      user={profile?.userProfile}
-                      cohortInfo={app?.memberCohortInfo[profile?.profileKey!]!}
-                      legendConfig={app?.legendCustomization[profile?.profileKey!]}
-                    />
-                  </Show>
+
                 </div>
               </div>
               <div class={`${styles.verificationInfo} animated`}>
-                  <div class={styles.verified}>
-                    <Show when={profile?.userProfile?.nip05}>
-                      <div class={styles.nip05}>{nip05Verification(profile?.userProfile)}</div>
-                    </Show>
-                  </div>
-
-                  <Show when={profile?.userStats.time_joined}>
-                    <div class={styles.joined}>
-                      {intl.formatMessage(
-                        t.jointDate,
-                        {
-                          date: shortDate(profile?.userStats.time_joined),
-                        },
-                      )}
-                    </div>
+                <div class={styles.verified}>
+                  <Show when={profile?.userProfile?.nip05}>
+                    <div class={styles.nip05}>{nip05Verification(profile?.userProfile)}</div>
                   </Show>
+                </div>
+
+                <Show when={profile?.userStats.time_joined}>
+                  <div class={styles.joined}>
+                    {intl.formatMessage(
+                      t.jointDate,
+                      {
+                        date: shortDate(profile?.userStats.time_joined),
+                      },
+                    )}
+                  </div>
+                </Show>
               </div>
 
               <div class={`${styles.followings} ${styles.left}`}>

@@ -90,7 +90,7 @@ export const emptyStorage: LocalStore = {
   readsFeeds: [],
   msgContacts: { profiles: { other: {}, follows: {}, any: {} }, counts: {} },
   dmConversations: { profiles: {}, counts: {} },
-  theme: 'sunrise',
+  theme: 'bee_honey',
   homeSidebarSelection: undefined,
   userProfile: undefined,
   recomended: { profiles: [], stats: {} },
@@ -269,7 +269,7 @@ export const saveLikes = (pubkey: string | undefined, likes: string[]) => {
 
   const store = getStorage(pubkey);
 
-  store.likes = [ ...likes ];
+  store.likes = [...likes];
 
   setStorage(pubkey, store);
 };
@@ -280,7 +280,7 @@ export const saveFeeds = (pubkey: string | undefined, feeds: PrimalFeed[]) => {
   }
   const store = getStorage(pubkey);
 
-  store.feeds = [ ...feeds ];
+  store.feeds = [...feeds];
 
   setStorage(pubkey, store);
 };
@@ -291,7 +291,7 @@ export const saveHomeFeeds = (pubkey: string | undefined, feeds: PrimalArticleFe
   }
   const store = getStorage(pubkey);
 
-  store.homeFeeds = [ ...feeds ];
+  store.homeFeeds = [...feeds];
 
   setStorage(pubkey, store);
 };
@@ -302,7 +302,7 @@ export const saveReadsFeeds = (pubkey: string | undefined, feeds: PrimalArticleF
   }
   const store = getStorage(pubkey);
 
-  store.readsFeeds = [ ...feeds ];
+  store.readsFeeds = [...feeds];
 
   setStorage(pubkey, store);
 };
@@ -325,7 +325,7 @@ export const readTheme = (pubkey: string | undefined) => {
 
   const store = getStorage(pubkey);
 
-  return store.theme || 'sunrise';
+  return store.theme || 'bee_honey';
 }
 
 
@@ -491,7 +491,7 @@ export const saveUploadTime = (pubkey: string | undefined, uploadTime: Record<st
 
 export const readUploadTime = (pubkey: string | undefined) => {
   if (!pubkey) {
-    return {...defaultUploadTime};
+    return { ...defaultUploadTime };
   }
 
   const store = getStorage(pubkey);
@@ -574,7 +574,7 @@ export const getStoredProfile = (pubkey: string) => {
 export const setStoredProfile = (profile: PrimalUser) => {
   const store = getStorage(profile.pubkey);
 
-  store.userProfile = {...profile};
+  store.userProfile = { ...profile };
 
   setStorage(profile.pubkey, store);
 };
@@ -703,7 +703,7 @@ export const saveBookmarks = (pubkey: string | undefined, bookmarks: string[]) =
 
   const store = getStorage(pubkey);
 
-  store.bookmarks = [ ...bookmarks ];
+  store.bookmarks = [...bookmarks];
 
   setStorage(pubkey, store);
 };
@@ -722,7 +722,7 @@ export const saveDVMs = (pubkey: string | undefined, dvms: PrimalDVM[]) => {
 
   const store = getStorage(pubkey);
 
-  store.dvms = [ ...dvms ];
+  store.dvms = [...dvms];
 
   setStorage(pubkey, store);
 };
@@ -917,7 +917,7 @@ export const loadEventQueue = (pubkey: string) => {
 export const saveEventQueue = (pubkey: string, eventQueue: NostrRelaySignedEvent[]) => {
   let store = getStorage(pubkey);
 
-  store.eventQueue = [ ...eventQueue ];
+  store.eventQueue = [...eventQueue];
 
   setStorage(pubkey, store);
 };

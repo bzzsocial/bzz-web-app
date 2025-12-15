@@ -53,11 +53,11 @@ const ArticleOverviewContextMenu: Component<{
   };
 
   createEffect(() => {
-    if(!context) return;
+    if (!context) return;
 
     if (!props.open) {
       setTimeout(() => {
-        context?.setAttribute('style',`top: -1024px; left: -1034px;`);
+        context?.setAttribute('style', `top: -1024px; left: -1034px;`);
       }, 200)
       return;
     }
@@ -68,7 +68,7 @@ const ArticleOverviewContextMenu: Component<{
       left: (Math.floor(position()?.left || 0)),
     }
 
-    context.setAttribute('style',`top: ${pos.top + 12}px; left: ${pos.left + 12}px;`);
+    context.setAttribute('style', `top: ${pos.top + 12}px; left: ${pos.left + 12}px;`);
 
     const height = 440;
     const orient = Math.floor(position()?.bottom || 0) + height < window.innerHeight ? 'down' : 'up';
@@ -104,14 +104,14 @@ const ArticleOverviewContextMenu: Component<{
 
     reportUser(note()?.user.pubkey, `report_user_${APP_ID}`, note()?.user);
     props.onClose();
-    toaster?.sendSuccess(intl.formatMessage(tToast.noteAuthorReported, { name: userName(note()?.user)}));
+    toaster?.sendSuccess(intl.formatMessage(tToast.noteAuthorReported, { name: userName(note()?.user) }));
   };
 
 
   const noteLinkId = () => {
     try {
       return `e/${note().noteId}`;
-    } catch(e) {
+    } catch (e) {
       return '404';
     }
   };
@@ -185,15 +185,7 @@ const ArticleOverviewContextMenu: Component<{
     let link = noteLinkId();
 
     if (note().noteId.startsWith('naddr')) {
-      const vanityName = app?.verifiedUsers[note().pubkey];
-
-      if (vanityName) {
-        const decoded = nip19.decode(note().noteId);
-
-        const data = decoded.data as nip19.AddressPointer;
-
-        link = `${vanityName}/${urlEncode(data.identifier)}`;
-      }
+      link = `a/${note().noteId}`;
     }
 
     navigator.clipboard.writeText(`${window.location.origin}/${link}`);
@@ -240,12 +232,12 @@ const ArticleOverviewContextMenu: Component<{
     }
 
     if (!accountStore.sec || accountStore.sec.length === 0) {
-        const sec = readSecFromStorage();
-        if (sec) {
-          setShowPin(sec);
-          return;
-        }
+      const sec = readSecFromStorage();
+      if (sec) {
+        setShowPin(sec);
+        return;
       }
+    }
 
     const { success } = await broadcastEvent(
       note().msg as NostrRelaySignedEvent,
@@ -327,7 +319,7 @@ const ArticleOverviewContextMenu: Component<{
 
     return [
       {
-        label: isMuted ?  intl.formatMessage(tActions.noteContext.unmuteAuthor) : intl.formatMessage(tActions.noteContext.muteAuthor),
+        label: isMuted ? intl.formatMessage(tActions.noteContext.unmuteAuthor) : intl.formatMessage(tActions.noteContext.muteAuthor),
         action: () => {
           isMuted ? doUnmuteUser() : setConfirmMuteUser(true);
           props.onClose()
@@ -348,8 +340,8 @@ const ArticleOverviewContextMenu: Component<{
   };
 
   const noteContext = () => accountStore.publicKey !== note()?.pubkey ?
-      [ ...noteContextForEveryone, ...noteContextForOtherPeople()] :
-      noteContextForEveryone;
+    [...noteContextForEveryone, ...noteContextForOtherPeople()] :
+    noteContextForEveryone;
 
   let context: HTMLDivElement | undefined;
 

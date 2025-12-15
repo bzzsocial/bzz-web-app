@@ -29,7 +29,7 @@ const PeopleList: Component<{
     const tzpk = (props.note?.topZaps[0] || {}).pubkey;
 
     const curatedMentions = props.people.filter(m => {
-      return [ ...mpks, tzpk].includes(m.pubkey);
+      return [...mpks, tzpk].includes(m.pubkey);
     });
 
     return curatedMentions.filter(p => p.pubkey !== author()?.pubkey);
@@ -45,44 +45,29 @@ const PeopleList: Component<{
     if (repliers().length === 0) return [];
     if (!props.sortBy) return repliers();
 
-    let sorted: PrimalUser[] = [ ...repliers() ];
-
-    if (props.sortBy === 'legend') {
-      sorted = sorted.toSorted((a, b) => {
-        const aIsLegend = (app?.memberCohortInfo[a.pubkey])?.tier === 'premium-legend';
-        const bIsLegend = (app?.memberCohortInfo[b.pubkey])?.tier === 'premium-legend';
-
-        if (aIsLegend) return -1;
-        if (bIsLegend) return 1;
-
-        return 0;
-      });
-    }
-
-
-    return sorted;
+    return [...repliers()];
   }
 
   return (
-      <div id={props.id} class={styles.stickyWrapper}>
-        <Show when={author()}>
-          <MentionedPeople
-            mentioned={mentioned()}
-            author={author()}
-            label={props.mentionLabel || ''}
+    <div id={props.id} class={styles.stickyWrapper}>
+      <Show when={author()}>
+        <MentionedPeople
+          mentioned={mentioned()}
+          author={author()}
+          label={props.mentionLabel || ''}
+        />
+      </Show>
+
+      <Transition name='slide-fade'>
+        <Show when={sortedPeople().length > 0}>
+          <Repliers
+            people={sortedPeople()}
+            label={props.label || ''}
+            singleFile={props.singleFile}
           />
         </Show>
-
-        <Transition name='slide-fade'>
-          <Show when={sortedPeople().length > 0}>
-            <Repliers
-              people={sortedPeople()}
-              label={props.label || ''}
-              singleFile={props.singleFile}
-            />
-          </Show>
-        </Transition>
-      </div>
+      </Transition>
+    </div>
   );
 }
 

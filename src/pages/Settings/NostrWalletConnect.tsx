@@ -7,7 +7,7 @@ import PageCaption from '../../components/PageCaption/PageCaption';
 import { A } from '@solidjs/router';
 import PageTitle from '../../components/PageTitle/PageTitle';
 
-import logo from "../../assets/icons/logo.svg";
+import logo from "../../assets/icons/logo.png";
 import nwc from "../../assets/icons/nwc.svg";
 import NWCItem from '../../components/NWCItem/NWCItem';
 import AdvancedSearchDialog from '../../components/AdvancedSearch/AdvancedSearchDialog';
@@ -73,26 +73,26 @@ const NostrWalletConnect: Component = () => {
   }
 
   const checkActiveWallet = (pubkey: string) => {
-      const walletSocket = new WebSocket('wss://wallet.primal.net/v1');
+    const walletSocket = new WebSocket('wss://wallet.primal.net/v1');
 
-      walletSocket.addEventListener('open', async () => {
-        logInfo('WALLET SOCKET OPENED');
-        const isActive = await checkPrimalWalletActive(pubkey, walletSocket);
+    walletSocket.addEventListener('open', async () => {
+      logInfo('WALLET SOCKET OPENED');
+      const isActive = await checkPrimalWalletActive(pubkey, walletSocket);
 
-        if (walletStatus['primal'] === 'connected') {
-          return;
-        }
+      if (walletStatus['primal'] === 'connected') {
+        return;
+      }
 
-        if (isActive) {
-          setWalletStatus('primal', () => 'active');
-        } else {
-          setWalletStatus('primal', () => 'inactive')
-        }
+      if (isActive) {
+        setWalletStatus('primal', () => 'active');
+      } else {
+        setWalletStatus('primal', () => 'inactive')
+      }
 
-      });
-      walletSocket.addEventListener('close', () => {
-        logInfo('WALLET SOCKET CLOSED');
-      });
+    });
+    walletSocket.addEventListener('close', () => {
+      logInfo('WALLET SOCKET CLOSED');
+    });
   }
 
   const connectToPrimalWallet = () => {
@@ -265,12 +265,12 @@ const NostrWalletConnect: Component = () => {
             )}
           </For>
           <NWCItem
-              logo={nwc}
-              name="Nostr Wallet Connect"
-              desc="Connect an external wallet that supports NWC"
-              status="none"
-              onConnect={() => setOpenNewWallet(true)}
-            />
+            logo={nwc}
+            name="Nostr Wallet Connect"
+            desc="Connect an external wallet that supports NWC"
+            status="none"
+            onConnect={() => setOpenNewWallet(true)}
+          />
         </div>
       </div>
 

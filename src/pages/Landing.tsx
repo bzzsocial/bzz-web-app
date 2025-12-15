@@ -2,25 +2,17 @@ import { Component, Match, onCleanup, onMount, Show, Switch } from 'solid-js';
 
 import styles from './Landing.module.scss';
 
-import primalWeb from '../assets/images/primal_web.png';
-import primalIOS from '../assets/images/appstore_download.png';
-import primalAndroid from '../assets/images/playstore_download.png';
-import primalQR from '../assets/images/primal_qr.png';
+
 
 import nvk from '../assets/images/nvk.png';
 import odell from '../assets/images/odell.png';
 import preston from '../assets/images/preston.png';
 import pablo from '../assets/images/pablo.png';
 
-import primalLogo from '../assets/icons/logo.svg';
-import primalName from '../assets/icons/primal.svg';
-
-
-import { appStoreLink, playstoreLink } from '../constants';
+import bzzLogo from '../assets/images/bzz_logo.png';
 import { A, useNavigate } from '@solidjs/router';
 import { useIntl } from '@cookbook/solid-intl';
 import { landing as t } from '../translations';
-import { isAndroid, isIOS } from '@kobalte/utils';
 
 const Landing: Component = () => {
   const intl = useIntl();
@@ -30,7 +22,7 @@ const Landing: Component = () => {
     return localStorage.getItem('pubkey');
   };
 
-  onMount(()=> {
+  onMount(() => {
     if (hasUserInfo()) {
       navigate('/home');
       return;
@@ -52,8 +44,7 @@ const Landing: Component = () => {
     <div class={styles.landingPage}>
       <div class={styles.landingContent}>
         <div class={styles.mobileBranding}>
-          <img src={primalLogo} />
-          <img src={primalName} />
+          <img src={bzzLogo} />
         </div>
         <div class={styles.landingVideo}>
           <video
@@ -67,8 +58,7 @@ const Landing: Component = () => {
         </div>
         <div class={styles.landingInfo}>
           <div class={styles.branding}>
-            <img src={primalLogo} width={64} height={64} />
-            <img src={primalName} height={60} />
+            <img src={bzzLogo} width={128} />
           </div>
           <div class={styles.text}>
             <div class={styles.tagline}>
@@ -80,21 +70,11 @@ const Landing: Component = () => {
           </div>
           <div class={styles.actions}>
             <div class={styles.qrCode}>
-              <img src={primalQR} width={180} />
+              <img src={bzzLogo} width={180} />
             </div>
             <div class={styles.appLinks}>
-              <Show when={isIOS() || !isAndroid()}>
-                <a href={appStoreLink} target="_blank">
-                  <img src={primalIOS} />
-                </a>
-              </Show>
-              <Show when={isAndroid() || !isIOS()}>
-                <a href={playstoreLink} target="_blank">
-                  <img src={primalAndroid} />
-                </a>
-              </Show>
               <A href="/home" class={styles.linkToWeb}>
-                <img src={primalWeb} />
+                <img src={bzzLogo} />
                 <p>{intl.formatMessage(t.browserOption)}</p>
               </A>
             </div>
@@ -104,14 +84,14 @@ const Landing: Component = () => {
       <div class={styles.landingTestemonials}>
         <div class={styles.testemonial}>
           <p class={styles.pink}>
-            Nostr & Bitcoin Lightning is a game changer. Primal is not just better than Wallet of Satoshi, it is 1000x better than Venmo.
+            Nostr & Bitcoin Lightning is a game changer. Bzz is not just better than Wallet of Satoshi, it is 1000x better than Venmo.
           </p>
           <img src={nvk} />
         </div>
 
         <div class={styles.testemonial}>
           <p class={styles.cyan}>
-            Primal is the freedom tech alternative to platforms like Twitter and TikTok. True free speech does not have gatekeepers.</p>
+            Bzz is the freedom tech alternative to platforms like Twitter and TikTok. True free speech does not have gatekeepers.</p>
           <img src={odell} />
         </div>
 
@@ -124,7 +104,7 @@ const Landing: Component = () => {
 
         <div class={styles.testemonial}>
           <p class={styles.blue}>
-            The Primal wallet has erased all my memories of other wallets. Having an integrated social graph is a game-changer.
+            The Bzz wallet has erased all my memories of other wallets. Having an integrated social graph is a game-changer.
           </p>
           <img src={pablo} />
         </div>

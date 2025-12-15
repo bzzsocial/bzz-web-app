@@ -35,9 +35,7 @@ import { getExploreMedia, getExplorePeople, getExploreTopics, getExploreZaps, ge
 import { convertToUser, emptyUser } from "./stores/profile";
 import { emptyStats } from "./contexts/ProfileContext";
 import { getMessageCounts, getNewMessages, getOldMessages } from "./lib/messages";
-import { LeaderboardSort } from "./pages/Premium/PremiumLegendLeaderboard";
-import { LegendCustomizationConfig, fetchLeaderboard } from "./lib/premium";
-import { CohortInfo } from "./contexts/AppContext";
+
 import { nip19 } from './lib/nTools';
 
 export type PaginationInfo = {
@@ -56,13 +54,7 @@ export type DMContact = {
   dmInfo: SenderMessageCount,
 }
 
-export type LeaderboardInfo = {
-  index: number,
-  pubkey: string,
-  donated_btc: number,
-  last_donation: number,
-  premium_since: number,
-}
+
 
 export type MegaFeedResults = {
   users: PrimalUser[],
@@ -75,9 +67,6 @@ export type MegaFeedResults = {
   page: MegaFeedPage,
   dmContacts: DMContact[],
   encryptedMessages: NostrMessageEncryptedContent[],
-  legendCustomization: Record<string, LegendCustomizationConfig>,
-  memberCohortInfo: Record<string, CohortInfo>,
-  leaderboard: LeaderboardInfo[],
 };
 
 export type FeedPaging = {
@@ -153,41 +142,41 @@ export const fetchMegaFeed = (
   subId: string,
   paging?: FeedPaging,
 ) => {
-    return new Promise<MegaFeedResults>((resolve) => {
-      let page: MegaFeedPage = {...emptyMegaFeedPage()};
+  return new Promise<MegaFeedResults>((resolve) => {
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
-      const unsub = subsTo(subId, {
-        onEose: () => {
-          unsub();
-          resolve(pageResolve(page));
-        },
-        onEvent: (s, content) => {
-          updateFeedPage(page, content);
-        }
-      });
-
-      const until = paging?.until || 0;
-      const since = paging?.since || 0;
-      const limit = paging?.limit || 0;
-
-      let offset = 0;
-
-      if (typeof paging?.offset === 'number') {
-        offset = paging.offset;
+    const unsub = subsTo(subId, {
+      onEose: () => {
+        unsub();
+        resolve(pageResolve(page));
+      },
+      onEvent: (s, content) => {
+        updateFeedPage(page, content);
       }
-      else if (Array.isArray(paging?.offset)) {
-        if (until > 0) {
-          offset = (paging?.offset || []).filter(v => v === until).length;
-        }
-
-        if (since > 0) {
-          offset = (paging?.offset || []).filter(v => v === since).length;
-        }
-      }
-
-      getMegaFeed(pubkey, specification, subId, until, limit, since, offset);
-
     });
+
+    const until = paging?.until || 0;
+    const since = paging?.since || 0;
+    const limit = paging?.limit || 0;
+
+    let offset = 0;
+
+    if (typeof paging?.offset === 'number') {
+      offset = paging.offset;
+    }
+    else if (Array.isArray(paging?.offset)) {
+      if (until > 0) {
+        offset = (paging?.offset || []).filter(v => v === until).length;
+      }
+
+      if (since > 0) {
+        offset = (paging?.offset || []).filter(v => v === since).length;
+      }
+    }
+
+    getMegaFeed(pubkey, specification, subId, until, limit, since, offset);
+
+  });
 };
 
 export const fetchScoredContent = (
@@ -196,7 +185,7 @@ export const fetchScoredContent = (
   subId: string,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEose: () => {
@@ -229,7 +218,7 @@ export const fetchRecomendedReads = (
       },
       onEvent: (_, content) => {
         const recomended = JSON.parse(content?.content || '{}');
-        ids = recomended.reads.reduce((acc: string[], r: string[]) => r[0] ? [ ...acc, r[0] ] : acc, []);
+        ids = recomended.reads.reduce((acc: string[], r: string[]) => r[0] ? [...acc, r[0]] : acc, []);
       }
     });
 
@@ -243,7 +232,7 @@ export const fetchReadThread = (
   subId: string,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const decoded = decodeIdentifier(naddr);
 
@@ -260,7 +249,7 @@ export const fetchReadThread = (
       },
       onNotice: (_, reason) => {
         unsub();
-        resolve({ ...emptyMegaFeedResults()});
+        resolve({ ...emptyMegaFeedResults() });
       }
     });
 
@@ -274,7 +263,7 @@ export const fetchExplorePeople = (
   paging?: FeedPaging,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
@@ -319,7 +308,7 @@ export const fetchExploreZaps = (
   paging?: FeedPaging,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
@@ -408,7 +397,7 @@ export const fetchExploreTopics = (
   subId: string,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
@@ -435,7 +424,7 @@ export const fetchDMContacts = (
   paging?: FeedPaging,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
@@ -481,7 +470,7 @@ export const fetchDMConversation = (
   paging?: FeedPaging,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
@@ -532,7 +521,7 @@ export const fetchDMConversationNew = (
       return;
     }
 
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
@@ -566,45 +555,7 @@ export const fetchDMConversationNew = (
         offset = (paging?.offset || []).filter(v => v === since).length;
       }
     }
-
     getNewMessages(reciever, sender, subId, since, limit, offset);
-  });
-}
-
-export const fetchLeaderboardThread = (
-  subId: string,
-  order: LeaderboardSort,
-  type: 'legend' | 'premium',
-  paging?: FeedPaging,
-) => {
-  return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
-
-    const unsub = subsTo(subId, {
-      onEvent: (_, content) => {
-        content && updateFeedPage(page, content);
-      },
-      onEose: () => {
-        unsub();
-        resolve(pageResolve(page));
-      },
-      onNotice: (_, reason) => {
-        unsub();
-        resolve({ ...emptyMegaFeedResults()});
-      }
-    });
-
-    const until = paging?.until || 0;
-    const since = paging?.since || 0;
-    const limit = paging?.limit || 0;
-
-    let offset = 0;
-
-    if (typeof paging?.offset === 'number') {
-      offset = paging.offset;
-    }
-
-    fetchLeaderboard(subId, type, order, since, limit, offset);
   });
 }
 
@@ -613,7 +564,7 @@ export const fetchPeople = (
   subId: string,
 ) => {
   return new Promise<MegaFeedResults>((resolve) => {
-    let page: MegaFeedPage = {...emptyMegaFeedPage()};
+    let page: MegaFeedPage = { ...emptyMegaFeedPage() };
 
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
@@ -659,9 +610,6 @@ export const pageResolve = (page: MegaFeedPage) => {
   const topicStats = convertToTopicStatsMega(page);
   const dmContacts = convertToContactsMega(page);
   const encryptedMessages = [...page.encryptedMessages];
-  const legendCustomization = { ...page.legendCustomization };
-  const memberCohortInfo = { ...page.memberCohortInfo };
-  const leaderboard = [ ...page.leaderboard ];
 
   return {
     users,
@@ -672,9 +620,6 @@ export const pageResolve = (page: MegaFeedPage) => {
     topicStats,
     dmContacts,
     encryptedMessages,
-    legendCustomization,
-    memberCohortInfo,
-    leaderboard,
     paging: {
       since: page.since,
       until: page.until,
@@ -727,11 +672,11 @@ export const updateFeedPage = (page: MegaFeedPage, content: NostrEventContent) =
   }
 
   if ([Kind.Draft].includes(content.kind)) {
-      const message = content as NostrNoteContent;
+    const message = content as NostrNoteContent;
 
-      page.drafts.push({ ...message });
-      return;
-    }
+    page.drafts.push({ ...message });
+    return;
+  }
 
   if (content.kind === Kind.NoteStats) {
     const statistic = content as NostrStatsContent;
@@ -745,7 +690,7 @@ export const updateFeedPage = (page: MegaFeedPage, content: NostrEventContent) =
     const mentionContent = content as NostrMentionContent;
     const mention = JSON.parse(mentionContent.content);
 
-    page.mentions[mention.id] = { ...mention};
+    page.mentions[mention.id] = { ...mention };
     return;
   }
 
@@ -815,9 +760,9 @@ export const updateFeedPage = (page: MegaFeedPage, content: NostrEventContent) =
       return;
     }
 
-    const newZaps = [ ...oldZaps, { ...topZap }].sort((a, b) => b.amount - a.amount);
+    const newZaps = [...oldZaps, { ...topZap }].sort((a, b) => b.amount - a.amount);
 
-    page.topZaps[eventId] = [ ...newZaps ];
+    page.topZaps[eventId] = [...newZaps];
 
     return;
   }
@@ -869,36 +814,7 @@ export const updateFeedPage = (page: MegaFeedPage, content: NostrEventContent) =
   }
 
 
-  if (content.kind === Kind.LegendCustomization) {
-    const config = JSON.parse(content.content) as Record<string, LegendCustomizationConfig>;
 
-    Object.entries(config).forEach(([pubkey, customization]) => {
-      page.legendCustomization[pubkey] = { ...customization }
-    });
-
-  }
-
-  if (content.kind === Kind.MembershipCohortInfo) {
-    const config = JSON.parse(content.content) as Record<string, CohortInfo>;
-
-    Object.entries(config).forEach(([pubkey, customization]) => {
-      page.memberCohortInfo[pubkey] = { ...customization }
-    });
-  }
-
-  if ([Kind.LegendLeaderboard, Kind.PremiumLeaderboard].includes(content.kind)) {
-    let leaderboard = JSON.parse(content.content || '[]');
-
-    leaderboard = leaderboard.map((l: any) => ({
-      index: l.index,
-      pubkey: l.pubkey,
-      donated_btc: l.donated_btc ? parseFloat(l.donated_btc) : 0,
-      last_donation: l.last_donation || 0,
-      premium_since: l.premium_since || 0,
-    }));
-
-    page.leaderboard = [ ...leaderboard ];
-  }
 
 };
 
@@ -912,7 +828,7 @@ export const filterAndSortNotes = (notes: PrimalNote[], paging: PaginationInfo) 
 
       processedIds.push(note.id);
 
-      return [ ...acc, { ...note } ];
+      return [...acc, { ...note }];
     },
     [],
   );
@@ -923,7 +839,7 @@ export const filterAndSortReads = (reads: PrimalArticle[], paging: PaginationInf
     (acc, id) => {
       const read = reads.find(n => n.id === id);
 
-      return read ? [ ...acc, { ...read } ] : acc;
+      return read ? [...acc, { ...read }] : acc;
     },
     [],
   );
@@ -934,7 +850,7 @@ export const filterAndSortDrafts = (drafts: PrimalDraft[], paging: PaginationInf
     (acc, id) => {
       const read = drafts.find(n => n.id === id);
 
-      return read ? [ ...acc, { ...read } ] : acc;
+      return read ? [...acc, { ...read }] : acc;
     },
     [],
   );
@@ -945,7 +861,7 @@ export const filterAndSortZaps = (zaps: PrimalZap[], paging: PaginationInfo) => 
     (acc, id) => {
       const zap = zaps.find(n => n.id === id);
 
-      return zap ? [ ...acc, { ...zap } ] : acc;
+      return zap ? [...acc, { ...zap }] : acc;
     },
     [],
   );
@@ -969,28 +885,19 @@ export const filterAndSortUsers = (users: PrimalUser[], paging: PaginationInfo, 
       };
     }
 
-    return f ? [...acc, {...f}] : acc;
-  } , []);
+    return f ? [...acc, { ...f }] : acc;
+  }, []);
 }
 
 
-export const filterAndSortLeaderboard = (lb: LeaderboardInfo[], paging: PaginationInfo) => {
-  return paging.elements.reduce<LeaderboardInfo[]>(
-    (acc, id) => {
-      let leader = lb.find(n => n.pubkey === id);
 
-      return leader ? [ ...acc, { ...leader } ] : acc;
-    },
-    [],
-  );
-}
 
 const convertToZapsMega = (page: MegaFeedPage) => {
   const pageZaps = page.zaps;
 
   let zaps: PrimalZap[] = [];
 
-  for (let i=0; i< pageZaps.length; i++) {
+  for (let i = 0; i < pageZaps.length; i++) {
     const zapContent = pageZaps[i];
 
     const bolt11 = (zapContent.tags.find(t => t[0] === 'bolt11') || [])[1];

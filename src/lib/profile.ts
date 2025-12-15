@@ -11,7 +11,7 @@ export const getUserProfiles = (pubkeys: string[], subid: string) => {
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["user_infos", { pubkeys }]},
+    { cache: ["user_infos", { pubkeys }] },
   ]));
 }
 
@@ -19,7 +19,7 @@ export const getUsersRelayInfo = (pubkeys: string[], subid: string) => {
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["get_user_relays_2", { pubkeys }]},
+    { cache: ["get_user_relays_2", { pubkeys }] },
   ]));
 }
 
@@ -39,7 +39,7 @@ export const getUserProfileInfo = (pubkey: string | undefined, user_pubkey: stri
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["user_profile", payload]},
+    { cache: ["user_profile", payload] },
   ]));
 }
 
@@ -51,7 +51,7 @@ export const isUserFollowing = (pubkey: string | undefined, user_pubkey: string 
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["is_user_following", { pubkey, user_pubkey }]},
+    { cache: ["is_user_following", { pubkey, user_pubkey }] },
   ]));
 };
 
@@ -63,7 +63,7 @@ export const getProfileContactList = (pubkey: string | undefined, subid: string,
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["contact_list", { pubkey, extended_response: extended }]},
+    { cache: ["contact_list", { pubkey, extended_response: extended }] },
   ]));
 }
 
@@ -75,7 +75,7 @@ export const getProfileFollowerList = (pubkey: string | undefined, subid: string
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["user_followers", { pubkey }]},
+    { cache: ["user_followers", { pubkey }] },
   ]));
 }
 
@@ -99,7 +99,7 @@ export const getProfileZapList = (pubkey: string | undefined, subid: string, unt
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["user_zaps_sent", payload]},
+    { cache: ["user_zaps_sent", payload] },
   ]));
 }
 
@@ -111,7 +111,7 @@ export const getProfileMuteList = (pubkey: string | undefined, subid: string, ex
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["mutelist", { pubkey, extended_response: extended }]},
+    { cache: ["mutelist", { pubkey, extended_response: extended }] },
   ]));
 }
 
@@ -123,7 +123,7 @@ export const getCategorizedList = (pubkey: string | undefined, category: string,
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["parameterized_replaceable_list", { pubkey, identifier: category, extended_response: extended }]},
+    { cache: ["parameterized_replaceable_list", { pubkey, identifier: category, extended_response: extended }] },
   ]));
 }
 
@@ -135,7 +135,7 @@ export const getProfileScoredNotes = (pubkey: string | undefined, user_pubkey: s
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["user_profile_scored_content", { pubkey, limit, user_pubkey }]},
+    { cache: ["user_profile_scored_content", { pubkey, limit, user_pubkey }] },
   ]));
 }
 
@@ -147,7 +147,7 @@ export const getCommonFollowers = (pubkey: string | undefined, user_pubkey: stri
   sendMessage(JSON.stringify([
     "REQ",
     subId,
-    {cache: ["user_profile_followed_by", { pubkey, limit, user_pubkey }]},
+    { cache: ["user_profile_followed_by", { pubkey, limit, user_pubkey }] },
   ]));
 }
 
@@ -157,7 +157,7 @@ export const getTrendingUsers = (subid: string, user_pubkey: string | undefined)
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["scored_users_24h", { user_pubkey }]},
+    { cache: ["scored_users_24h", { user_pubkey }] },
   ]));
 }
 
@@ -170,20 +170,7 @@ export const trimVerification = (address: string | undefined) => {
   return address.split('@');
 }
 
-export const fetchKnownProfiles: (vanityName: string) => Promise<VanityProfiles> = async (vanityName: string) => {
-  try {
-    const name = vanityName.toLowerCase();
-    const origin = window.location.origin.startsWith('http://localhost') ? 'https://dev.primal.net' : window.location.origin;
 
-    const content = await fetch(`${origin}/.well-known/nostr.json?name=${name}`);
-
-    return await content.json();
-  } catch (e) {
-    logError('Failed to fetch known users: ', vanityName, e);
-
-    return { ...minKnownProfiles };
-  }
-};
 
 export const isVerifiedByPrimal = async (user: PrimalUser | undefined) => {
   const nip05 = user?.nip05;
@@ -249,7 +236,7 @@ export const reportUser = async (pubkey: string | undefined, subid: string, user
     sendMessage(JSON.stringify([
       "REQ",
       subid,
-      {cache: ["report_user", { pubkey, event_from_user: signedEvent }]},
+      { cache: ["report_user", { pubkey, event_from_user: signedEvent }] },
     ]));
 
     return true;
@@ -267,7 +254,7 @@ export const getFilterlists = (pubkey: string | undefined, subid: string, extend
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["mutelists", { pubkey, extended_response: extended }]},
+    { cache: ["mutelists", { pubkey, extended_response: extended }] },
   ]));
 };
 
@@ -303,7 +290,7 @@ export const getAllowlist = (pubkey: string | undefined, subid: string, extended
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["allowlist", { pubkey, extended_response: extended }]},
+    { cache: ["allowlist", { pubkey, extended_response: extended }] },
   ]));
 };
 
@@ -327,7 +314,7 @@ export const getSuggestions = async (subid: string) => {
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["get_suggested_users"]},
+    { cache: ["get_suggested_users"] },
   ]));
 };
 
@@ -338,7 +325,7 @@ export const getRelays = async (pubkey: string | undefined, subid: string) => {
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["get_user_relays", { pubkey }]},
+    { cache: ["get_user_relays", { pubkey }] },
   ]));
 };
 
@@ -346,7 +333,7 @@ export const getRelays = async (pubkey: string | undefined, subid: string) => {
 export const sendRelays = async (relaySettings: NostrRelays) => {
   const tags = Object.entries(relaySettings).reduce<string[][]>((acc, [url, config]) => {
     if (config.read && config.write) {
-      return [ ...acc, ['r', url]];
+      return [...acc, ['r', url]];
     }
 
     if (!config.read && !config.write) {
@@ -355,7 +342,7 @@ export const sendRelays = async (relaySettings: NostrRelays) => {
 
     const permission: string = config.read ? 'read' : 'write';
 
-    return [ ...acc, ['r', url, permission]];
+    return [...acc, ['r', url, permission]];
   }, []);
 
   const event = {
@@ -387,7 +374,7 @@ export const getBookmarks = async (pubkey: string | undefined, subid: string) =>
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["get_bookmarks", { pubkey }]},
+    { cache: ["get_bookmarks", { pubkey }] },
   ]));
 };
 
@@ -413,7 +400,7 @@ export const extractRelayConfigFromTags = (tags: string[][]) => {
 
 export const getExplorePeople = async (subid: string, user_pubkey: string | undefined, until: number, limit: number, since: number, offset: number) => {
 
-  let payload:any = { limit: limit || 10, offset: offset || 0 };
+  let payload: any = { limit: limit || 10, offset: offset || 0 };
 
   if (until > 0) {
     // @ts-ignore
@@ -433,14 +420,14 @@ export const getExplorePeople = async (subid: string, user_pubkey: string | unde
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["explore_people", { ...payload }]},
+    { cache: ["explore_people", { ...payload }] },
   ]));
 };
 
 
 export const getExploreZaps = async (subid: string, user_pubkey: string | undefined, until: number, limit: number, since: number, offset: number) => {
 
-  let payload:any = { limit: limit || 20, offset: offset || 0 };
+  let payload: any = { limit: limit || 20, offset: offset || 0 };
 
   if (until > 0) {
     // @ts-ignore
@@ -460,14 +447,14 @@ export const getExploreZaps = async (subid: string, user_pubkey: string | undefi
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["explore_zaps", { ...payload }]},
+    { cache: ["explore_zaps", { ...payload }] },
   ]));
 };
 
 
 export const getExploreMedia = async (subid: string, user_pubkey: string | undefined, until: number, limit: number, since: number, offset: number) => {
 
-  let payload:any = { limit: limit || 20, offset: offset || 0 };
+  let payload: any = { limit: limit || 20, offset: offset || 0 };
 
   if (until > 0) {
     // @ts-ignore
@@ -487,7 +474,7 @@ export const getExploreMedia = async (subid: string, user_pubkey: string | undef
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["explore_media", { ...payload }]},
+    { cache: ["explore_media", { ...payload }] },
   ]));
 };
 
@@ -504,6 +491,6 @@ export const getExploreTopics = async (subid: string, user_pubkey: string | unde
   sendMessage(JSON.stringify([
     "REQ",
     subid,
-    {cache: ["explore_topics"]},
+    { cache: ["explore_topics"] },
   ]));
 };

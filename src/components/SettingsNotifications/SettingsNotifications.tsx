@@ -148,9 +148,9 @@ const SettingsNotifications: Component<{ id?: string }> = (props) => {
   }
 
   const themedIcons = (notif: string) => {
-    const theme = settings?.theme || 'sunset';
+    const theme = settings?.theme || 'cyber_hive';
 
-    if (['sunset', 'midnight'].includes(theme)) {
+    if (theme === 'cyber_hive') {
       return icons[notif];
     }
 

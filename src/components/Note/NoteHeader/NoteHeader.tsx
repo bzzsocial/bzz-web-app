@@ -57,16 +57,16 @@ const NoteHeader: Component<{
   const doReportUser = () => {
     reportUser(props.note.user.pubkey, `report_user_${APP_ID}`, props.note.user);
     setContext(false);
-    toaster?.sendSuccess(intl.formatMessage(tToast.noteAuthorReported, { name: userName(props.note.user)}));
+    toaster?.sendSuccess(intl.formatMessage(tToast.noteAuthorReported, { name: userName(props.note.user) }));
   };
 
   const noteLinkId = () => {
-      try {
-        return `/e/${props.note.noteId}`;
-      } catch(e) {
-        return '/404';
-      }
-    };
+    try {
+      return `/e/${props.note.noteId}`;
+    } catch (e) {
+      return '/404';
+    }
+  };
 
   const copyNoteLink = () => {
     navigator.clipboard.writeText(`${window.location.origin}${noteLinkId()}`);
@@ -128,10 +128,7 @@ const NoteHeader: Component<{
     }
   });
 
-  const isVerifiedByPrimal = () => {
-    return !!props.note.user.nip05 &&
-      props.note.user.nip05.endsWith('primal.net');
-  }
+
 
   const noteContextForEveryone: MenuItem[] = [
     {
@@ -196,26 +193,25 @@ const NoteHeader: Component<{
   ];
 
   const noteContext = accountStore.publicKey !== props.note.post.pubkey ?
-      [ ...noteContextForEveryone, ...noteContextForOtherPeople] :
-      noteContextForEveryone;
+    [...noteContextForEveryone, ...noteContextForOtherPeople] :
+    noteContextForEveryone;
 
   return (
     <div id={props.id} class={styles.header}>
       <div class={styles.headerInfo}>
         <div
-            class={styles.avatar}
-            title={props.note?.user?.npub}
+          class={styles.avatar}
+          title={props.note?.user?.npub}
+        >
+          <A
+            href={app?.actions.profileLink(props.note.user.npub) || ''}
           >
-            <A
-              href={app?.actions.profileLink(props.note.user.npub) || ''}
-            >
-              <Avatar
-                user={props.note?.user}
-                size="vs"
-                highlightBorder={isVerifiedByPrimal()}
-              />
-            </A>
-          </div>
+            <Avatar
+              user={props.note?.user}
+              size="vs"
+            />
+          </A>
+        </div>
         <div class={styles.postInfo}>
           <div class={styles.userInfo}>
 

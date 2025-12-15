@@ -8,32 +8,27 @@
 
 /* Default theme */
 :root[data-theme="dark"],
-:root[data-theme="sunset"],
 :root:not([data-theme="dark"]),
-:root:not([data-theme="sunset"]),
-:root:not([data-theme="sunrise"]),
-:root:not([data-theme="midinght"]),
-:root:not([data-theme="ice"]) {
-  @include sunset_wave();
+:root:not([data-theme="bee_honey"]),
+:root:not([data-theme="cyber_hive"]) {
+  @include cyber_hive();
 }
 
 :root[data-theme="light"],
-:root[data-theme="sunrise"] {
-  @include sunrise_wave();
+:root[data-theme='bee_honey'] {
+  @include bee_honey();
 }
 
-:root[data-theme="midnight"] {
-  @include midnight_wave();
+:root[data-theme='cyber_hive'] {
+  @include cyber_hive();
 }
 
-:root[data-theme="ice"] {
-  @include ice_wave();
-}
+
 
 /* Automatically enabled if user has Dark mode enabled */
 @media only screen and (prefers-color-scheme: dark) {
   :root {
-    @include sunset_wave();
+    @include cyber_hive();
   }
 }
 
@@ -47,6 +42,7 @@
   //   animation: none !important;
   // }
 }
+
 :root[data-animated="false"] {
   // $animation-enabled: false;
   // *:not([role="presentation"], [data-open="true"], .pswp) {
@@ -131,6 +127,7 @@
   .mentioned_user {
     color: var(--accent);
   }
+
   .hash_tag {
     color: var(--accent);
   }
@@ -202,155 +199,83 @@ a {
   border: 2px solid red;
 }
 
-body::after{
-  position:absolute; width:0; height:0; overflow:hidden; z-index:-1; // hide images
+body::after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1; // hide images
   content:
-    url(./assets/images/5stars.svg)
-    url(./assets/images/legend.png)
-    url(./assets/images/forever.png)
-    url(./assets/images/beta.png)
-    url(./assets/images/preston.png)
-    url(./assets/images/media.png)
-
-    url(./assets/icons/nav/bookmarks.svg)
-    url(./assets/icons/nav/bookmarks_selected.svg)
-    url(./assets/icons/nav/home.svg)
-    url(./assets/icons/nav/home_selected.svg)
-    url(./assets/icons/nav/search.svg)
-    url(./assets/icons/nav/search_selected.svg)
-    url(./assets/icons/nav/messages.svg)
-    url(./assets/icons/nav/messages_selected.svg)
-    url(./assets/icons/nav/notifications.svg)
-    url(./assets/icons/nav/notifications_selected.svg)
-    url(./assets/icons/nav/downloads.svg)
-    url(./assets/icons/nav/downloads_selected.svg)
-    url(./assets/icons/nav/settings.svg)
-    url(./assets/icons/nav/settings_selected.svg)
-    url(./assets/icons/nav/long.svg)
-    url(./assets/icons/nav/long_selected.svg)
-    url(./assets/images/reads_image_dark.png)
-    url(./assets/images/reads_image_light.png)
-    url(./assets/icons/highlight_create.svg)
-    url(./assets/icons/highlight_quote.svg)
-    url(./assets/icons/highlight_comment.svg)
-    url(./assets/icons/highlight_remove.svg)
-    url(./assets/icons/copy.svg)
-    url(./assets/icons/search.svg)
-    url(./assets/icons/search_filled.svg)
-    url(./assets/icons/close.svg)
-    url(./assets/icons/caret.svg)
-    url(./assets/icons/check.svg)
-    url(./assets/icons/purple_check.svg)
-    url(./assets/icons/purple_ostrich.svg)
-    url(./assets/icons/video.svg)
-    url(./assets/icons/gallery.svg)
-    url(./assets/icons/lightning_white.svg)
-    url(./assets/icons/feed_reply.svg)
-    url(./assets/icons/feed_reply_fill.svg)
-    url(./assets/icons/feed_repost.svg)
-    url(./assets/icons/feed_repost_fill.svg)
-    url(./assets/icons/feed_zap.svg)
-    url(./assets/icons/feed_zap_fill.svg)
-    url(./assets/icons/feed_like.svg)
-    url(./assets/icons/feed_like_fill.svg)
-    url(./assets/icons/attach_media.svg)
-    url(./assets/icons/emoji.svg)
-    url(./assets/icons/latest.svg)
-    url(./assets/icons/heart.svg)
-    url(./assets/icons/weather.svg)
-    url(./assets/icons/edit.svg)
-    url(./assets/icons/share.svg)
-    url(./assets/icons/unpublish.svg)
-    url(./assets/icons/quote.svg)
-    url(./assets/icons/clock.svg)
-    url(./assets/icons/lf_editor_toolbar/bold.svg)
-    url(./assets/icons/lf_editor_toolbar/bullet.svg)
-    url(./assets/icons/lf_editor_toolbar/image.svg)
-    url(./assets/icons/lf_editor_toolbar/info.svg)
-    url(./assets/icons/lf_editor_toolbar/Italic.svg)
-    url(./assets/icons/lf_editor_toolbar/link.svg)
-    url(./assets/icons/lf_editor_toolbar/mention.svg)
-    url(./assets/icons/lf_editor_toolbar/mode.svg)
-    url(./assets/icons/lf_editor_toolbar/ordered.svg)
-    url(./assets/icons/lf_editor_toolbar/separator.svg)
-    url(./assets/icons/lf_editor_toolbar/strike.svg)
-    url(./assets/icons/lf_editor_toolbar/table.svg)
-    url(./assets/icons/lf_editor_toolbar/uline.svg)
-
-    url(./assets/images/extension_dark.svg)
-    url(./assets/images/extension_light.svg)
-    url(./assets/images/nsec_dark.svg)
-    url(./assets/images/nsec_light.svg)
-    url(./assets/images/npub_dark.svg)
-    url(./assets/images/npub_light.svg)
-
-    url(./assets/icons/table/del_table.svg)
-    url(./assets/icons/table/col_after.svg)
-    url(./assets/icons/table/col_before.svg)
-    url(./assets/icons/table/row_below.svg)
-    url(./assets/icons/table/row_above.svg)
-    url(./assets/icons/table/merge.svg)
-    url(./assets/icons/table/split.svg)
-    url(./assets/icons/table/del_row_dark.svg)
-    url(./assets/icons/table/del_col_dark.svg)
-    url(./assets/images/editor-phone-message.png)
-    ;
+    url(./assets/images/5stars.svg) url(./assets/images/legend.png) url(./assets/images/forever.png) url(./assets/images/beta.png) url(./assets/images/preston.png) url(./assets/images/media.png) url(./assets/icons/nav/bookmarks.svg) url(./assets/icons/nav/bookmarks_selected.svg) url(./assets/icons/nav/home.svg) url(./assets/icons/nav/home_selected.svg) url(./assets/icons/nav/search.svg) url(./assets/icons/nav/search_selected.svg) url(./assets/icons/nav/messages.svg) url(./assets/icons/nav/messages_selected.svg) url(./assets/icons/nav/notifications.svg) url(./assets/icons/nav/notifications_selected.svg) url(./assets/icons/nav/downloads.svg) url(./assets/icons/nav/downloads_selected.svg) url(./assets/icons/nav/settings.svg) url(./assets/icons/nav/settings_selected.svg) url(./assets/icons/nav/long.svg) url(./assets/icons/nav/long_selected.svg) url(./assets/images/reads_image_dark.png) url(./assets/images/reads_image_light.png) url(./assets/icons/highlight_create.svg) url(./assets/icons/highlight_quote.svg) url(./assets/icons/highlight_comment.svg) url(./assets/icons/highlight_remove.svg) url(./assets/icons/copy.svg) url(./assets/icons/search.svg) url(./assets/icons/search_filled.svg) url(./assets/icons/close.svg) url(./assets/icons/caret.svg) url(./assets/icons/check.svg) url(./assets/icons/purple_check.svg) url(./assets/icons/purple_ostrich.svg) url(./assets/icons/video.svg) url(./assets/icons/gallery.svg) url(./assets/icons/lightning_white.svg) url(./assets/icons/feed_reply.svg) url(./assets/icons/feed_reply_fill.svg) url(./assets/icons/feed_repost.svg) url(./assets/icons/feed_repost_fill.svg) url(./assets/icons/feed_zap.svg) url(./assets/icons/feed_zap_fill.svg) url(./assets/icons/feed_like.svg) url(./assets/icons/feed_like_fill.svg) url(./assets/icons/attach_media.svg) url(./assets/icons/emoji.svg) url(./assets/icons/latest.svg) url(./assets/icons/heart.svg) url(./assets/icons/weather.svg) url(./assets/icons/edit.svg) url(./assets/icons/share.svg) url(./assets/icons/unpublish.svg) url(./assets/icons/quote.svg) url(./assets/icons/clock.svg) url(./assets/icons/lf_editor_toolbar/bold.svg) url(./assets/icons/lf_editor_toolbar/bullet.svg) url(./assets/icons/lf_editor_toolbar/image.svg) url(./assets/icons/lf_editor_toolbar/info.svg) url(./assets/icons/lf_editor_toolbar/Italic.svg) url(./assets/icons/lf_editor_toolbar/link.svg) url(./assets/icons/lf_editor_toolbar/mention.svg) url(./assets/icons/lf_editor_toolbar/mode.svg) url(./assets/icons/lf_editor_toolbar/ordered.svg) url(./assets/icons/lf_editor_toolbar/separator.svg) url(./assets/icons/lf_editor_toolbar/strike.svg) url(./assets/icons/lf_editor_toolbar/table.svg) url(./assets/icons/lf_editor_toolbar/uline.svg) url(./assets/images/extension_dark.svg) url(./assets/images/extension_light.svg) url(./assets/images/nsec_dark.svg) url(./assets/images/nsec_light.svg) url(./assets/images/npub_dark.svg) url(./assets/images/npub_light.svg) url(./assets/icons/table/del_table.svg) url(./assets/icons/table/col_after.svg) url(./assets/icons/table/col_before.svg) url(./assets/icons/table/row_below.svg) url(./assets/icons/table/row_above.svg) url(./assets/icons/table/merge.svg) url(./assets/icons/table/split.svg) url(./assets/icons/table/del_row_dark.svg) url(./assets/icons/table/del_col_dark.svg) url(./assets/images/editor-phone-message.png);
 }
 
 .reply_icon {
   -webkit-mask: url(./assets/icons/feed_reply.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_reply_fill.svg) no-repeat 0 / 100%;
 }
+
 .reply_icon {
   -webkit-mask: url(./assets/icons/feed_reply_fill.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_reply_fill.svg) no-repeat 0 / 100%;
 }
+
 .repost_icon {
   -webkit-mask: url(./assets/icons/feed_repost.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_repost_fill.svg) no-repeat 0 / 100%;
 }
+
 .repost_icon {
   -webkit-mask: url(./assets/icons/feed_repost_fill.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_repost_fill.svg) no-repeat 0 / 100%;
 }
+
 .zap_icon {
   -webkit-mask: url(./assets/icons/feed_zap.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_zap_fill.svg) no-repeat 0 / 100%;
 }
+
 .zap_icon {
   -webkit-mask: url(./assets/icons/feed_zap_fill.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_zap_fill.svg) no-repeat 0 / 100%;
 }
+
 .like_icon {
   -webkit-mask: url(./assets/icons/feed_like.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_like_fill.svg) no-repeat 0 / 100%;
 }
+
 .like_icon {
   -webkit-mask: url(./assets/icons/feed_like_fill.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/feed_like_fill.svg) no-repeat 0 / 100%;
 }
+
 .attach_icon {
   -webkit-mask: url(./assets/icons/attach_media.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/attach_media.svg) no-repeat 0 / 100%;
 }
+
 .emoji_icon {
   -webkit-mask: url(./assets/icons/emoji.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/emoji.svg) no-repeat 0 / 100%;
 }
+
 .latest_icon {
   -webkit-mask: url(./assets/icons/latest.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/latest.svg) no-repeat 0 / 100%;
 }
+
 .heart_icon {
   -webkit-mask: url(./assets/icons/heart.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/heart.svg) no-repeat 0 / 100%;
 }
+
 .weather_icon {
   -webkit-mask: url(./assets/icons/weather.svg) no-repeat 0 / 100%;
   mask: url(./assets/icons/weather.svg) no-repeat 0 / 100%;
 }
+
 .bordered {
-  border:solid 1px var(--subtile-devider);
+  border: solid 1px var(--subtile-devider);
   border-radius: 8px;
   margin-block: 8px;
   overflow: hidden;
@@ -374,6 +299,7 @@ body::after{
   display: block !important;
   width: fit-content;
 }
+
 .galleryimage {
   // margin-block: 4px !important;
   display: block !important;
@@ -419,6 +345,7 @@ body::after{
       "cell1 cell1"
       "cell2 cell3";
   }
+
   &.grid-4 {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 250px 250px;
@@ -443,33 +370,39 @@ body::after{
       "cell1 cell1 cell2 cell3"
       "cell4 cell5 cell6 cell6";
   }
+
   .cell_1 {
     grid-area: cell1;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .cell_2 {
     grid-area: cell2;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .cell_3 {
     grid-area: cell3;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .cell_4 {
     grid-area: cell4;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .cell_5 {
     grid-area: cell5;
   }
+
   .cell_6 {
     grid-area: cell6;
   }
@@ -484,18 +417,23 @@ body::after{
     .cell_1 {
       grid-area: unset;
     }
+
     .cell_2 {
       grid-area: unset;
     }
+
     .cell_3 {
       grid-area: unset;
     }
+
     .cell_4 {
       grid-area: unset;
     }
+
     .cell_5 {
       grid-area: unset;
     }
+
     .cell_6 {
       grid-area: unset;
     }
@@ -515,6 +453,7 @@ body::after{
   // cursor: pointer !important;
   z-index: var(--z-index-header);
 }
+
 .medium-zoom-image-opened {
   z-index: var(--z-index-floater);
 
@@ -550,7 +489,7 @@ body::after{
 
 // Checkboxes
 
-[type="checkbox"]  {
+[type="checkbox"] {
   background-color: var(--background-card);
   border-color: var(--text-tertiary-2);
   -webkit-appearance: none;
@@ -585,7 +524,7 @@ body::after{
     border-color: var(--text-tertiary-2);
   }
 
-  & ~ label {
+  &~label {
     display: inline-block;
     margin-right: 0;
     margin-bottom: 0;
@@ -623,7 +562,8 @@ button:focus {
   width: 100%;
   left: 0;
   top: 0;
-  transition: opacity 120ms linear !important; /* override default */
+  transition: opacity 120ms linear !important;
+  /* override default */
 }
 
 .pswp-caption-content {
@@ -658,7 +598,7 @@ button:focus {
 
 .pswp__dynamic-caption--mobile {
   width: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   padding: 10px 15px;
 
   right: 0;
@@ -669,6 +609,7 @@ button:focus {
   top: auto !important;
   left: 0 !important;
 }
+
 .pswp__dynamic-caption--aside {
   // margin-top: 20px;
   padding: 0;
@@ -676,7 +617,8 @@ button:focus {
 
 @import '@rnwonder/solid-date-picker/dist/style.css';
 
-.date-picker-wrapper, .date-selector-wrapper {
+.date-picker-wrapper,
+.date-selector-wrapper {
   background-color: var(--background-input);
   color: var(--text-secondary);
   padding-block: 12px;
@@ -686,8 +628,10 @@ button:focus {
   }
 }
 
-.date-picker-top, .selector-picker-top {
+.date-picker-top,
+.selector-picker-top {
   padding-inline: 20px;
+
   button {
     width: fit-content;
     color: var(--text-primary);
@@ -733,9 +677,11 @@ button:focus {
     &[data-day-hover="true"] {
       background-color: var(--subtile-devider);
     }
+
     &[data-day-number-range-start-or-end="true"] {
       background-color: var(--text-tertiary-2);
     }
+
     &[data-day-number-range-between="true"] {
       background-color: var(--subtile-devider);
     }
@@ -765,8 +711,8 @@ button:focus {
   width: 0px;
   height: 0px;
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   visibility: hidden;
 }
 
@@ -779,173 +725,180 @@ button:focus {
 }
 
 
-  .slide-fade-enter-active,
-  .slide-fade-exit-active {
-    .animated
-    {
-      // transition: opacity 150ms, transform 150ms;
-      // transition-delay: 50ms * 1;
-    }
+.slide-fade-enter-active,
+.slide-fade-exit-active {
+  .animated {
+    // transition: opacity 150ms, transform 150ms;
+    // transition-delay: 50ms * 1;
   }
+}
 
-  .slide-fade-exit-active, .none-exit-active {
-    >div
-    {
-      display: none;
-    }
+.slide-fade-exit-active,
+.none-exit-active {
+  >div {
+    display: none;
   }
-  .slide-fade-enter,
-  .slide-fade-exit-to {
-    .animated
-    {
-      // transform: translateY(-10px);
-      opacity: 0;
-    }
-  }
-  .slide-fade-enter {
-    // .animated
-    // {
-    //   transform: translateY(10px);
-    // }
-    // $elements: 20;
-    // @for $i from 0 to $elements {
-    //   .animated:nth-child(#{$i + 1}) {
-    //     transform: translateY(10px + 2px*$i);
-    //   }
-    // }
-  }
+}
 
-  .slide-fade-exit-active {
-    display: none !important;
-    transition: opacity 0.1s;
-  }
-  .slide-fade-exit-to {
+.slide-fade-enter,
+.slide-fade-exit-to {
+  .animated {
+    // transform: translateY(-10px);
     opacity: 0;
   }
+}
 
-
-  .anim-fade-enter-active,
-  .anim-fade-exit-active {
-    .animated
-    {
-      // transition: opacity 150ms;
-    }
-  }
-
-  .anim-fade-exit-active, .none-exit-active {
-    >div
-    {
-      display: none;
-    }
-  }
-  .anim-fade-enter,
-  .anim-fade-exit-to {
-    .animated
-    {
-      opacity: 0;
-    }
-  }
-  .anim-fade-enter {
-    .animated
-    {
-      // transition: opacity 150ms;
-    }
-    // .animated
-    // {
-    //   transform: translateY(10px);
-    // }
-    // $elements: 10;
-    // @for $i from 0 to $elements {
-    //   .animated:nth-child(#{$i + 1}) {
-    //     transform: translateY(10px + 2px*$i);
-    //   }
-    // }
-  }
-
-  // .anim-fade-exit-active {
-  //   transition: opacity 0.1s;
+.slide-fade-enter {
+  // .animated
+  // {
+  //   transform: translateY(10px);
   // }
-  // .anim-fade-exit-to {
-  //   opacity: 0;
-  // }
-
-
-  .slide-down-fade-enter-active,
-  .slide-down-fade-exit-active {
-    $elements: 10;
-    @for $i from 0 to $elements {
-      .animated:nth-child(#{$i})
-        {
-          // transition: opacity 350ms;//, transform 150ms;
-          // transition-delay: 0.05s * $i;
-        }}
-  }
-
-  .slide-down-fade-exit-active, .none-exit-active {
-    // display: none;
-    >div
-    {
-      display: none;
-    }
-  }
-  .slide-down-fade-enter,
-  .slide-down-fade-exit-to {
-    .animated
-    {
-      // transform: translateY(10px);
-      opacity: 0;
-    }
-  }
-  // .slide-down-fade-enter {
-  //   // .animated
-  //   // {
-  //   //   transform: translateY(10px);
-  //   // }
-  //   $elements: 10;
-  //   @for $i from 0 to $elements {
-  //     .animated:nth-child(#{$i + 1}) {
-  //       // transform: translateY(-10px - 2px*$i);
-  //     }
+  // $elements: 20;
+  // @for $i from 0 to $elements {
+  //   .animated:nth-child(#{$i + 1}) {
+  //     transform: translateY(10px + 2px*$i);
   //   }
   // }
+}
 
-  .slide-down-fade-exit-active {
-    // transition: opacity 0.1s;
+.slide-fade-exit-active {
+  display: none !important;
+  transition: opacity 0.1s;
+}
+
+.slide-fade-exit-to {
+  opacity: 0;
+}
+
+
+.anim-fade-enter-active,
+.anim-fade-exit-active {
+  .animated {
+    // transition: opacity 150ms;
   }
-  .slide-down-fade-exit-to {
+}
+
+.anim-fade-exit-active,
+.none-exit-active {
+  >div {
+    display: none;
+  }
+}
+
+.anim-fade-enter,
+.anim-fade-exit-to {
+  .animated {
     opacity: 0;
   }
+}
+
+.anim-fade-enter {
+  .animated {
+    // transition: opacity 150ms;
+  }
+
+  // .animated
+  // {
+  //   transform: translateY(10px);
+  // }
+  // $elements: 10;
+  // @for $i from 0 to $elements {
+  //   .animated:nth-child(#{$i + 1}) {
+  //     transform: translateY(10px + 2px*$i);
+  //   }
+  // }
+}
+
+// .anim-fade-exit-active {
+//   transition: opacity 0.1s;
+// }
+// .anim-fade-exit-to {
+//   opacity: 0;
+// }
+
+
+.slide-down-fade-enter-active,
+.slide-down-fade-exit-active {
+  $elements: 10;
+
+  @for $i from 0 to $elements {
+    .animated:nth-child(#{$i}) {
+      // transition: opacity 350ms;//, transform 150ms;
+      // transition-delay: 0.05s * $i;
+    }
+  }
+}
+
+.slide-down-fade-exit-active,
+.none-exit-active {
+
+  // display: none;
+  >div {
+    display: none;
+  }
+}
+
+.slide-down-fade-enter,
+.slide-down-fade-exit-to {
+  .animated {
+    // transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+// .slide-down-fade-enter {
+//   // .animated
+//   // {
+//   //   transform: translateY(10px);
+//   // }
+//   $elements: 10;
+//   @for $i from 0 to $elements {
+//     .animated:nth-child(#{$i + 1}) {
+//       // transform: translateY(-10px - 2px*$i);
+//     }
+//   }
+// }
+
+.slide-down-fade-exit-active {
+  // transition: opacity 0.1s;
+}
+
+.slide-down-fade-exit-to {
+  opacity: 0;
+}
 
 :root[data-animated="true"] {
+
   .slide-fade-enter-active,
   .slide-fade-exit-active {
-    .animated
-    {
+    .animated {
       transition: opacity 150ms, transform 150ms;
       transition-delay: 50ms * 1;
     }
   }
 
-  .slide-fade-exit-active, .none-exit-active {
-    >div
-    {
+  .slide-fade-exit-active,
+  .none-exit-active {
+    >div {
       display: none;
     }
   }
+
   .slide-fade-enter,
   .slide-fade-exit-to {
-    .animated
-    {
+    .animated {
       transform: translateY(-10px);
       opacity: 0;
     }
   }
+
   .slide-fade-enter {
     // .animated
     // {
     //   transform: translateY(10px);
     // }
     $elements: 20;
+
     @for $i from 0 to $elements {
       .animated:nth-child(#{$i + 1}) {
         transform: translateY(10px + 2px*$i);
@@ -957,6 +910,7 @@ button:focus {
     display: none !important;
     transition: opacity 0.1s;
   }
+
   .slide-fade-exit-to {
     opacity: 0;
   }
@@ -964,30 +918,30 @@ button:focus {
 
   .anim-fade-enter-active,
   .anim-fade-exit-active {
-    .animated
-    {
+    .animated {
       transition: opacity 150ms;
     }
   }
 
-  .anim-fade-exit-active, .none-exit-active {
-    >div
-    {
+  .anim-fade-exit-active,
+  .none-exit-active {
+    >div {
       display: none;
     }
   }
+
   .anim-fade-enter,
   .anim-fade-exit-to {
-    .animated
-    {
+    .animated {
       opacity: 0;
     }
   }
+
   .anim-fade-enter {
-    .animated
-    {
+    .animated {
       transition: opacity 150ms;
     }
+
     // .animated
     // {
     //   transform: translateY(10px);
@@ -1011,29 +965,32 @@ button:focus {
   .slide-down-fade-enter-active,
   .slide-down-fade-exit-active {
     $elements: 10;
+
     @for $i from 0 to $elements {
-      .animated:nth-child(#{$i})
-        {
-          transition: opacity 350ms;//, transform 150ms;
-          transition-delay: 0.05s * $i;
-        }}
+      .animated:nth-child(#{$i}) {
+        transition: opacity 350ms; //, transform 150ms;
+        transition-delay: 0.05s * $i;
+      }
+    }
   }
 
-  .slide-down-fade-exit-active, .none-exit-active {
+  .slide-down-fade-exit-active,
+  .none-exit-active {
+
     // display: none;
-    >div
-    {
+    >div {
       display: none;
     }
   }
+
   .slide-down-fade-enter,
   .slide-down-fade-exit-to {
-    .animated
-    {
+    .animated {
       // transform: translateY(10px);
       opacity: 0;
     }
   }
+
   // .slide-down-fade-enter {
   //   // .animated
   //   // {
@@ -1050,6 +1007,7 @@ button:focus {
   .slide-down-fade-exit-active {
     transition: opacity 0.1s;
   }
+
   .slide-down-fade-exit-to {
     opacity: 0;
   }
@@ -1065,9 +1023,13 @@ button:focus {
   background-color: var(--background-site);
 }
 
-th.selectedCell, td.selectedCell {
+th.selectedCell,
+td.selectedCell {
   content: "";
-  left: 0; right: 0; top: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   pointer-events: none;
   position: absolute;
   z-index: 2;
@@ -1087,11 +1049,13 @@ th.selectedCell, td.selectedCell {
 
 /* Style the live seekbar differently */
 .video-js.vjs-live .vjs-progress-holder {
-  background: rgba(255, 0, 0, 0.2) !important; /* Red tint for live */
+  background: rgba(255, 0, 0, 0.2) !important;
+  /* Red tint for live */
 }
 
 .video-js.vjs-live .vjs-play-progress {
-  background: #ff4444 !important; /* Red progress for live */
+  background: #ff4444 !important;
+  /* Red progress for live */
 }
 
 /* Show live edge indicator */

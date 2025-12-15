@@ -16,6 +16,7 @@ import { NoteContent } from '../ParsedNote/ParsedNote';
 import { isInterpunction, isUrl, isImage, isMp4Video, isOggVideo, isWebmVideo, isYouTube, isSpotify, isTwitch, isMixCloud, isSoundCloud, isAppleMusic, isWavelake, getLinkPreview, isNoteMention, isUserMention, isAddrMention, isTagMention, isHashtag, isCustomEmoji, isUnitifedLnAddress, isLnbc, is3gppVideo } from '../../lib/notes';
 import { generatePrivateKey } from '../../lib/nTools';
 import { useMediaContext } from '../../contexts/MediaContext';
+import { useSettingsContext } from '../../contexts/SettingsContext';
 import NoteImage from '../NoteImage/NoteImage';
 import { getMediaUrl as getMediaUrlDefault } from "../../lib/media";
 import LinkPreview from '../LinkPreview/LinkPreview';
@@ -39,6 +40,7 @@ const DirectMessageParsedContent: Component<{
 }> = (props) => {
   const app = useAppContext();
   const media = useMediaContext();
+  const settings = useSettingsContext();
   const dms = useDMContext();
 
   // const [tokens, setTokens] = createStore<string[]>([]);
@@ -56,13 +58,13 @@ const DirectMessageParsedContent: Component<{
 
   const updateContent = (contentArray: NoteContent[], type: string, token: string, meta?: Record<string, any>) => {
     const len = contentArray.length;
-    const index = contentArray.length -1
+    const index = contentArray.length - 1
 
-    if (len > 0 && contentArray[len -1].type === type) {
+    if (len > 0 && contentArray[len - 1].type === type) {
 
-      setContent(index, 'tokens' , (els) => [...els, token]);
+      setContent(index, 'tokens', (els) => [...els, token]);
 
-      meta && setContent(index, 'meta' , () => ({ ...meta }));
+      meta && setContent(index, 'meta', () => ({ ...meta }));
 
       return;
     }
@@ -74,7 +76,7 @@ const DirectMessageParsedContent: Component<{
 
     const tokens = parseContent();
 
-    for (let i=0; i<tokens.length; i++) {
+    for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i];
 
       parseToken(token);
@@ -101,6 +103,8 @@ const DirectMessageParsedContent: Component<{
   }
 
   const parseToken = (token: string) => {
+
+
     if (token === '__LB__') {
       if (isAfterEmbed) {
         return;
@@ -161,7 +165,7 @@ const DirectMessageParsedContent: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/mp4'});
+          updateContent(content, 'video', token, { videoType: 'video/mp4' });
           return;
         }
 
@@ -169,7 +173,7 @@ const DirectMessageParsedContent: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/ogg'});
+          updateContent(content, 'video', token, { videoType: 'video/ogg' });
           return;
         }
 
@@ -177,7 +181,7 @@ const DirectMessageParsedContent: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/webm'});
+          updateContent(content, 'video', token, { videoType: 'video/webm' });
           return;
         }
 
@@ -185,7 +189,7 @@ const DirectMessageParsedContent: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/3gpp'});
+          updateContent(content, 'video', token, { videoType: 'video/3gpp' });
           return;
         }
 
@@ -258,7 +262,7 @@ const DirectMessageParsedContent: Component<{
         preview &&
         preview.url &&
         ((!!preview.description && preview.description.length > 0) ||
-          !preview.images?.some((x:any) => x === '') ||
+          !preview.images?.some((x: any) => x === '') ||
           !!preview.title
         );
 
@@ -371,15 +375,15 @@ const DirectMessageParsedContent: Component<{
     // Allow max consecutive linebreak
     const len = Math.min(2, tokens.length);
 
-    const lineBreaks = Array(len).fill(<br/>)
+    const lineBreaks = Array(len).fill(<br />)
 
-    return <For each={lineBreaks}>{_ => <br/>}</For>
+    return <For each={lineBreaks}>{_ => <br />}</For>
   };
 
   const renderText = (item: NoteContent) => {
     let tokens = [];
 
-    for (let i=0;i<item.tokens.length;i++) {
+    for (let i = 0; i < item.tokens.length; i++) {
       const token = item.tokens[i];
       tokens.push(token)
     }
@@ -395,7 +399,7 @@ const DirectMessageParsedContent: Component<{
     const imageGroup = generatePrivateKey();
 
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     if (groupCount === 1) {
@@ -436,7 +440,7 @@ const DirectMessageParsedContent: Component<{
             token;
 
           return <NoteImage
-            class={`noteimage_gallery cell_${index()+1}`}
+            class={`noteimage_gallery cell_${index() + 1}`}
             src={url}
             isDev={isDev()}
             media={image}
@@ -454,7 +458,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderVideo = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>{
@@ -468,8 +472,8 @@ const DirectMessageParsedContent: Component<{
         if (mVideo) {
           const margins = 20;
           const ratio = mVideo.w / mVideo.h;
-          h = ((noteWidth() - 2*margins) / ratio);
-          w = h > 680 ? 680 * ratio : noteWidth() - 2*margins;
+          h = ((noteWidth() - 2 * margins) / ratio);
+          w = h > 680 ? 680 * ratio : noteWidth() - 2 * margins;
           h = h > 680 ? 680 : h;
         }
 
@@ -499,7 +503,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderYouTube = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -522,7 +526,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderSpotify = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -547,7 +551,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderTwitch = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -570,7 +574,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderMixCloud = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -594,7 +598,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderSoundCloud = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -615,7 +619,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderAppleMusic = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -640,7 +644,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderWavelake = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -670,7 +674,7 @@ const DirectMessageParsedContent: Component<{
           return (
             <LinkPreview
               preview={item.meta.preview}
-              isLast={index === content.length-1}
+              isLast={index === content.length - 1}
             />
           );
         }
@@ -738,7 +742,7 @@ const DirectMessageParsedContent: Component<{
 
   const renderLongFormMention = (mention: PrimalArticle | undefined, index?: number) => {
 
-    if(!mention) return <></>;
+    if (!mention) return <></>;
 
     return (
       <div class={styles.articlePreview}>
@@ -820,7 +824,7 @@ const DirectMessageParsedContent: Component<{
 
           if (typeof kind !== 'number') return link;
 
-          if ( [Kind.Text].includes(kind)) {
+          if ([Kind.Text].includes(kind)) {
             if (!props.noLinks) {
               const ment = mentionedNotes && mentionedNotes[hex];
 
@@ -836,12 +840,12 @@ const DirectMessageParsedContent: Component<{
                     <EmbeddedNote
                       note={ment}
                       mentionedUsers={mentionedUsers || {}}
-                      isLast={index === content.length-1}
+                      isLast={index === content.length - 1}
                       // alternativeBackground={props.altEmbeds}
                       // footerSize={props.footerSize}
                       hideFooter={true}
-                      // embedLevel={props.embedLevel}
-                      // rootNote={rn}
+                    // embedLevel={props.embedLevel}
+                    // rootNote={rn}
                     />
                   </div>;
                 }
@@ -884,7 +888,8 @@ const DirectMessageParsedContent: Component<{
           link = <span class={styles.error}>{token}</span>;
         }
 
-        return link;}}
+        return link;
+      }}
     </For>
   };
 
@@ -913,7 +918,7 @@ const DirectMessageParsedContent: Component<{
           id = id.slice(0, i);
         }
 
-        const mentionedUsers = { ...(dms?.referecedUsers || {})}
+        const mentionedUsers = { ...(dms?.referecedUsers || {}) }
 
         try {
           const profileId = nip19.decode(id).data as string | nip19.ProfilePointer;

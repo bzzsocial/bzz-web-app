@@ -1,6 +1,6 @@
-
 .themeOption {
   width: 128px;
+
   >p {
     font-size: 14px;
     line-height: 16px;
@@ -38,25 +38,19 @@
   border: solid 1px var(--accent) !important;
 }
 
-.sunset {
+
+
+.cyber_hive {
   @include themeOptionButton();
   background-color: var(--dark-back);
 }
 
-.midnight {
-  @include themeOptionButton();
-  background-color: var(--dark-back);
-}
-
-.sunrise {
+.bee_honey {
   @include themeOptionButton();
   background-color: var(--light-back);
 }
 
-.ice {
-  @include themeOptionButton();
-  background-color: var(--light-back);
-}
+
 
 .themeChecked {
   position: absolute;
@@ -71,6 +65,7 @@
   justify-content: center;
   background: var(--accent);
   border-radius: 50%;
+
   >img {
     width: 10px;
     height: 10px;

@@ -9,7 +9,7 @@ import { hookForDev } from '../../lib/devTools';
 import { useDMContext } from '../../contexts/DMContext';
 import { accountStore } from '../../stores/accountStore';
 
-const NavMenu: Component< { id?: string } > = (props) => {
+const NavMenu: Component<{ id?: string }> = (props) => {
   const notifications = useNotificationsContext();
   const dms = useDMContext();
   const intl = useIntl();
@@ -47,19 +47,6 @@ const NavMenu: Component< { id?: string } > = (props) => {
       icon: 'notificationsIcon',
       bubble: () => notifications?.notificationCount || 0,
       hiddenOnSmallScreens: true,
-    },
-    {
-      to: '/downloads',
-      label: intl.formatMessage(t.downloads),
-      icon: 'downloadIcon',
-      bubble: () => notifications?.downloadsCount || 0,
-    },
-    {
-      to: '/premium',
-      label: intl.formatMessage(t.premium),
-      icon: 'premiumIcon',
-      hiddenOnSmallScreens: true,
-      bubble: () => accountStore.premiumReminder ? 1 : 0,
     },
     {
       to: '/settings',

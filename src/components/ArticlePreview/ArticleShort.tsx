@@ -72,16 +72,7 @@ const ArticleShort: Component<{
 
   const articleUrl = () => {
     if (!props.article) return '';
-
-    const vanityName = app?.verifiedUsers[props.article.pubkey];
-
-    if (!vanityName) return `/a/${props.article.naddr}`;
-
-    const decoded = nip19.decode(props.article.naddr);
-
-    const data = decoded.data as nip19.AddressPointer;
-
-    return `/${vanityName}/${urlEncode(data.identifier)}`;
+    return `/a/${props.article.naddr}`;
   }
 
   return (
@@ -91,7 +82,7 @@ const ArticleShort: Component<{
       data-event={props.article.id}
     >
       <div class={styles.header}>
-        <Avatar user={props.article.user} size="micro"/>
+        <Avatar user={props.article.user} size="micro" />
         <div class={styles.userName}>{userName(props.article.user)}</div>
         <div class={styles.time}>
           &bull;&nbsp;

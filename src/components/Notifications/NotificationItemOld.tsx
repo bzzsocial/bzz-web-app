@@ -86,7 +86,7 @@ const typeIcons: Record<string, string> = {
 
   [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_ZAPPED]: mentionedPostZapped,
   [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_LIKED]: mentionedPostLiked,
-  [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPOSTED]:mentionedPostReposted,
+  [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPOSTED]: mentionedPostReposted,
   [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPLIED_TO]: mentionedPostReplied,
 
   [NotificationType.YOUR_POST_WAS_HIGHLIGHTED]: postHighlighted,
@@ -118,7 +118,7 @@ const typeIconsLight: Record<string, string> = {
 
   [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_ZAPPED]: mentionedPostZappedLight,
   [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_LIKED]: mentionedPostLikedLight,
-  [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPOSTED]:mentionedPostRepostedLight,
+  [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPOSTED]: mentionedPostRepostedLight,
   [NotificationType.POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPLIED_TO]: mentionedPostRepliedLight,
 
   [NotificationType.YOUR_POST_WAS_HIGHLIGHTED]: postHighlightedLight,
@@ -219,7 +219,7 @@ const NotificationItemOld: Component<NotificationItemProps> = (props) => {
       NotificationType.USER_UNFOLLOWED_YOU,
       NotificationType.REPLY_TO_REPLY,
       ...mentionedNotifTypes,
-    ]. includes(type())) {
+    ].includes(type())) {
       return label;
     }
 
@@ -238,7 +238,7 @@ const NotificationItemOld: Component<NotificationItemProps> = (props) => {
   }
 
   const isLight = () => {
-    return ['sunrise', 'ice'].includes(settings?.theme || 'sunset');
+    return settings?.theme === 'bee_honey';
   }
 
   createEffect(() => {

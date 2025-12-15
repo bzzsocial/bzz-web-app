@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, JSX,  JSXElement,  onMount, Show } from "solid-js";
+import { Component, createEffect, createSignal, JSX, JSXElement, onMount, Show } from "solid-js";
 import styles from "./NostrImage.module.scss";
 import { generatePrivateKey } from "../../lib/nTools";
 import { MediaVariant, NostrImageContent, NostrUserContent } from "../../types/primal";
@@ -38,9 +38,9 @@ const NostrImage: Component<{
 
   onMount(() => {
     // setTimeout(
-      // () =>
+    // () =>
     // lightbox.init();
-      // 100,
+    // 100,
     // )
   });
 
@@ -65,7 +65,7 @@ const NostrImage: Component<{
   });
 
   createEffect(() => {
-    if (isImageLoaded()){
+    if (isImageLoaded()) {
       lightbox.init();
     }
   })
@@ -111,9 +111,7 @@ const NostrImage: Component<{
     return userContent ? convertToUser(userContent as NostrUserContent, userContent.pubkey || '') : undefined;
   }
 
-  const isVerifiedByPrimal = () => {
-    return !!author()?.nip05 && author()?.nip05.endsWith('primal.net');
-  }
+
 
   return (
     <Show

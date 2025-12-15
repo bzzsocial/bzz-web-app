@@ -4,7 +4,7 @@ import { JSX } from "solid-js";
 import { SetStoreFunction } from "solid-js/store";
 import { Kind } from "../constants";
 import { CohortInfo } from "../contexts/AppContext";
-import { LegendCustomizationConfig } from "../lib/premium";
+
 import { LeaderboardInfo } from "../megaFeeds";
 import { StreamingData } from "../lib/streaming";
 
@@ -424,7 +424,7 @@ export type NostrPrimalMediaStats = {
   tags?: string[][],
 };
 
-export type NostrPrimalMediaList= {
+export type NostrPrimalMediaList = {
   kind: Kind.MediaList,
   content: string,
   created_at?: number,
@@ -433,7 +433,7 @@ export type NostrPrimalMediaList= {
   tags?: string[][],
 };
 
-export type NostrContactList= {
+export type NostrContactList = {
   kind: Kind.ContentStats,
   content: string,
   created_at?: number,
@@ -442,7 +442,7 @@ export type NostrContactList= {
   tags?: string[][],
 };
 
-export type NostrOrderHistory= {
+export type NostrOrderHistory = {
   kind: Kind.OrderHistory,
   content: string,
   created_at?: number,
@@ -451,7 +451,7 @@ export type NostrOrderHistory= {
   tags?: string[][],
 };
 
-export type NostrLegendCustomization= {
+export type NostrLegendCustomization = {
   kind: Kind.LegendCustomization,
   content: string,
   created_at?: number,
@@ -460,7 +460,7 @@ export type NostrLegendCustomization= {
   tags?: string[][],
 };
 
-export type NostrBroadcastStatus= {
+export type NostrBroadcastStatus = {
   kind: Kind.BroadcastStatus,
   content: string,
   created_at?: number,
@@ -469,7 +469,7 @@ export type NostrBroadcastStatus= {
   tags?: string[][],
 };
 
-export type NostrMembershipCohortInfo= {
+export type NostrMembershipCohortInfo = {
   kind: Kind.MembershipCohortInfo,
   content: string,
   created_at?: number,
@@ -478,7 +478,7 @@ export type NostrMembershipCohortInfo= {
   tags?: string[][],
 };
 
-export type NostrBlossom= {
+export type NostrBlossom = {
   kind: Kind.Blossom,
   content: string,
   created_at?: number,
@@ -487,7 +487,7 @@ export type NostrBlossom= {
   tags?: string[][],
 };
 
-export type NostrRelayList= {
+export type NostrRelayList = {
   kind: Kind.RelayList,
   content?: string,
   created_at?: number,
@@ -496,7 +496,7 @@ export type NostrRelayList= {
   tags?: string[][],
 };
 
-export type NostrImageContent= {
+export type NostrImageContent = {
   kind: Kind.Image,
   content?: string,
   created_at?: number,
@@ -505,7 +505,7 @@ export type NostrImageContent= {
   tags?: string[][],
 };
 
-export type NostrLiveEvent= {
+export type NostrLiveEvent = {
   kind: Kind.LiveEvent,
   content?: string,
   created_at?: number,
@@ -514,7 +514,7 @@ export type NostrLiveEvent= {
   tags?: string[][],
 };
 
-export type ArticleStatsEvent= {
+export type ArticleStatsEvent = {
   kind: Kind.ArticlesStats,
   content?: string,
   created_at?: number,
@@ -713,12 +713,12 @@ export type MegaFeedPage = {
   elements: string[],
   userStats: Record<string, UserStats>,
   userFollowerCounts: Record<string, number>,
-  userFollowerIncrease: Record<string, { increase: number, ratio: number, count: number}>,
+  userFollowerIncrease: Record<string, { increase: number, ratio: number, count: number }>,
   wordCount: Record<string, number>,
   dmContacts: Record<string, SenderMessageCount>,
   encryptedMessages: NostrMessageEncryptedContent[],
   memberCohortInfo: Record<string, CohortInfo>,
-  legendCustomization: Record<string, LegendCustomizationConfig>,
+
   leaderboard: LeaderboardInfo[],
 };
 
@@ -848,7 +848,7 @@ export type PrimalDVM = {
 }
 export type DVMStats = { likes: number, satszapped: number };
 
-export type DVMMetadata = { kind: 'reads' | 'notes', isPrimal: boolean};
+export type DVMMetadata = { kind: 'reads' | 'notes', isPrimal: boolean };
 
 
 export type UserStats = {
@@ -1063,7 +1063,7 @@ export type ExploreFeedPayload = {
   scope: string,
   limit: number,
   user_pubkey?: string,
-  since? : number,
+  since?: number,
   until?: number,
   created_after?: number,
 }
@@ -1086,7 +1086,7 @@ export type PrimalLinkPreview = {
   favicons?: string[],
 };
 
-export type PrimalTheme = { name: string, label: string, logo: string, dark?: boolean};
+export type PrimalTheme = { name: string, label: string, logo?: string, dark?: boolean };
 
 export type ChildrenProp = { children: number | boolean | Node | JSX.ArrayElement | (string & {}) | null | undefined; };
 
@@ -1237,18 +1237,6 @@ export type ContactsData = {
   tags: string[][],
   following: string[],
 }
-
-export type MembershipStatus = {
-  pubkey?: string,
-  tier?: string,
-  name?: string,
-  rename?: string,
-  nostr_address?: string,
-  lightning_address?: string,
-  primal_vip_profile?: string,
-  used_storage?: number,
-  expires_on?: number,
-};
 
 export type LncbSectionNetwork = {
   name: 'lightning_network',

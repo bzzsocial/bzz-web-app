@@ -1,131 +1,52 @@
-@mixin sunset_wave {
-  --brand-text: #D5D5D5;
+@mixin cyber_hive {
+  --brand-text: #FFC107;
 
   --background-site: #000000;
-  --background-card: #000000;
-  --background-input: #222222;
-  --background-sheet: #121212;
+  --background-card: #0a0a0a;
+  --background-input: #1a1a1a;
+  --background-sheet: #141414;
   --background-header-input: #1a1a1a;
 
-  --devider: #222222;
+  --devider: #2a2a2a;
 
   --text-primary: #ffffff;
   --text-primary-button: #ffffff;
-  --text-secondary: #aaaaaa;
-  --text-secondary-2: #aaaaaa;
+  --text-secondary: #b3b3b3;
+  --text-secondary-2: #b3b3b3;
   --text-tertiary: #757575;
-  --text-tertiary-2: #666666;
+  --text-tertiary-2: #757575;
 
   --subtile-devider: #444444;
 
-  --accent: #ca077c;
-  --accent-links: #f800c1;
-  --accent-dm: #ca077c;
-  --accent-pro: #E47C00;
+  --accent: #FFC107;
+  --accent-links: #FFD54F;
+  --accent-dm: #FFB300;
+  --accent-pro: #FFA000;
 
-  --brand-gradient: linear-gradient(141deg, #EF404A 6.36%, #5B12A4 97.61%);
+  --brand-gradient: linear-gradient(135deg, #FFC107 0%, #FF6F00 100%);
 
-  --success-bright: #66E205;
-  --success-dim: #487E1F;
-  --warning-bright: #FA3C3C;
-  --warning-bright-two: #e20505;
+  --success-bright: #69F0AE;
+  --success-dim: #2E7D32;
+  --warning-bright: #FF5252;
   --warning-bright-shadow: #e2050588;
   --warning-dim: #480101;
 
   --active-reply: #cccccc;
   --active-zap: #ffa02f;
-  --active-liked: #f800c1;
-  --active-reposted: #66e205;
-  --active-bookmarked: #0C7DD8;
+  --active-liked: #FF5252;
+  --active-reposted: #69F0AE;
+  --active-bookmarked: #40C4FF;
   --background-modal: #00000070;
 
-  --highlight: #2E3726;
-  --highlight-selected: #516440;
+  --highlight: #2E2E1E;
+  --highlight-selected: #4D4D33;
   --text-highlight: #FFFFFF;
 
   --profile-indicator-border: var(--background-site);
 
   --check-image: url('./assets/icons/check.svg');
-  --logo: url('./assets/icons/logo_fire.svg');
-  --logo-big: url('./assets/icons/logo_fire_big.svg');
-  --icon-follows: url('./assets/icons/follows.svg');
-  --icon-tribe: url('./assets/icons/tribe.svg');
-  --icon-global: url('./assets/icons/global.svg');
-  --icon-network: url('./assets/icons/network.svg');
-
-  --icon-follows-latest: url('./assets/icons/follows_latest.svg');
-  --icon-follows-popular: url('./assets/icons/follows_popular.svg');
-  --icon-follows-trending: url('./assets/icons/follows_trending.svg');
-
-  --icon-tribe-latest: url('./assets/icons/tribe_latest.svg');
-  --icon-tribe-popular: url('./assets/icons/tribe_popular.svg');
-  --icon-tribe-trending: url('./assets/icons/tribe_trending.svg');
-
-  --icon-global-latest: url('./assets/icons/global_latest.svg');
-  --icon-global-popular: url('./assets/icons/global_popular.svg');
-  --icon-global-trending: url('./assets/icons/global_trending.svg');
-
-  --icon-network-latest: url('./assets/icons/network_latest.svg');
-  --icon-network-popular: url('./assets/icons/network_popular.svg');
-  --icon-network-trending: url('./assets/icons/network_trending.svg');
-
-  --reads-placeholder-image: url('./assets/images/reads_image_dark.png');
-
-  select {
-    background-color: var(--background-site);
-  }
-
-}
-
-@mixin midnight_wave {
-  --brand-text: #D5D5D5;
-
-  --background-site: #000000;
-  --background-card: #000000;
-  --background-input: #222222;
-  --background-sheet: #121212;
-  --background-header-input: #1a1a1a;
-
-  --devider: #222222;
-
-  --text-primary: #ffffff;
-  --text-primary-button: #ffffff;
-  --text-secondary: #aaaaaa;
-  --text-secondary-2: #aaaaaa;
-  --text-tertiary: #757575;
-  --text-tertiary-2: #666666;
-
-  --subtile-devider: #444444;
-
-  --accent: #2394EF;
-  --accent-links: #2394EF;
-  --accent-dm: #0C7DD8;
-  --accent-pro: #E47C00;
-
-  --brand-gradient: linear-gradient(128deg, #14B9FF 0%, #690DFF 100%);
-
-  --success-bright: #66E205;
-  --success-dim: #487E1F;
-  --warning-bright: #FA3C3C;
-  --warning-bright-shadow: #e2050588;
-  --warning-dim: #480101;
-
-  --active-reply: #cccccc;
-  --active-zap: #ffa02f;
-  --active-liked: #f800c1;
-  --active-reposted: #66e205;
-  --active-bookmarked: #0C7DD8;
-  --background-modal: #00000070;
-
-  --highlight: #2E3726;
-  --highlight-selected: #516440;
-  --text-highlight: #FFFFFF;
-
-  --profile-indicator-border: var(--background-site);
-
-  --check-image: url('./assets/icons/check.svg');
-  --logo: url('./assets/icons/logo_ice.svg');
-  --logo-big: url('./assets/icons/logo_ice_big.svg');
+  --logo: url('./assets/images/bzz_logo_dark.png');
+  --logo-big: url('./assets/images/bzz_logo_large_dark.png');
   --icon-follows: url('./assets/icons/follows.svg');
   --icon-tribe: url('./assets/icons/tribe.svg');
   --icon-global: url('./assets/icons/global.svg');
@@ -154,55 +75,55 @@
   }
 }
 
-@mixin sunrise_wave {
-  --brand-text: #444444;
+@mixin bee_honey {
+  --brand-text: #F57F17;
 
-  --background-site: #ffffff;
-  --background-card: #ffffff;
-  --background-input: #e5e5e5;
-  --background-sheet: #f5f5f5;
+  --background-site: #FFFFFF;
+  --background-card: #FAFAFA;
+  --background-input: #F0F0F0;
+  --background-sheet: #F5F5F5;
   --background-header-input: #eeeeee;
 
-  --devider: #e5e5e5;
+  --devider: #E0E0E0;
 
-  --text-primary: #111111;
+  --text-primary: #121212;
   --text-primary-button: #ffffff;
-  --text-secondary: #666666;
-  --text-secondary-2: #666666;
-  --text-tertiary: #808080;
-  --text-tertiary-2: #808080;
+  --text-secondary: #555555;
+  --text-secondary-2: #555555;
+  --text-tertiary: #888888;
+  --text-tertiary-2: #888888;
 
   --subtile-devider: #c8c8c8;
 
-  --accent: #ca077c;
-  --accent-links: #CA077C;
-  --accent-dm: #CA077C;
+  --accent: #FFB300;
+  --accent-links: #F57F17;
+  --accent-dm: #FFA000;
   --accent-pro: #E47C00;
 
-  --brand-gradient: linear-gradient(141deg, #EF404A 6.36%, #5B12A4 97.61%);
+  --brand-gradient: linear-gradient(135deg, #FFB300 0%, #F57F17 100%);
 
-  --success-bright: #52CE0A;
-  --success-dim: #569724;
-  --warning-bright: #FA3C3C;
+  --success-bright: #2E7D32;
+  --success-dim: #1B5E20;
+  --warning-bright: #D32F2F;
   --warning-bright-shadow: #C4000088;
-  --warning-dim: #FAC3C3;
+  --warning-dim: #FFCDD2;
 
   --active-reply: #444444;
   --active-zap: #ffa02f;
-  --active-liked: #CA079F;
-  --active-reposted: #52CE0A;
-  --active-bookmarked: #0C7DD8;
-  --background-modal: #f5f5f570;
+  --active-liked: #D32F2F;
+  --active-reposted: #2E7D32;
+  --active-bookmarked: #0288D1;
+  --background-modal: #f5f5f590;
 
-  --highlight: #E8F3E8;
-  --highlight-selected: #A3D0A2;
+  --highlight: #FFF8E1;
+  --highlight-selected: #FFECB3;
   --text-highlight: #111111;
 
   --profile-indicator-border: var(--accent);
 
   --check-image: url('./assets/icons/check.svg');
-  --logo: url('./assets/icons/logo_fire.svg');
-  --logo-big: url('./assets/icons/logo_fire_big_l.svg');
+  --logo: url('./assets/images/bzz_logo.png');
+  --logo-big: url('./assets/images/bzz_logo_large.png');
   --icon-follows: url('./assets/icons/follows.svg');
   --icon-tribe: url('./assets/icons/tribe.svg');
   --icon-global: url('./assets/icons/global.svg');
@@ -229,83 +150,4 @@
   select {
     background-color: var(--background-site);
   }
-}
-
-
-@mixin ice_wave {
-  --brand-text: #444444;
-
-  --background-site: #ffffff;
-  --background-card: #ffffff;
-  --background-input: #e5e5e5;
-  --background-sheet: #f5f5f5;
-  --background-header-input: #eeeeee;
-
-  --devider: #e5e5e5;
-
-  --text-primary: #111111;
-  --text-primary-button: #ffffff;
-  --text-secondary: #666666;
-  --text-secondary-2: #666666;
-  --text-tertiary: #808080;
-  --text-tertiary-2: #808080;
-
-  --subtile-devider: #c8c8c8;
-
-  --accent: #2394EF;
-  --accent-links: #2394EF;
-  --accent-dm: #0C7DD8;
-  --accent-pro: #E47C00;
-
-  --brand-gradient: linear-gradient(128deg, #14B9FF 0%, #690DFF 100%);
-
-  --success-bright: #52CE0A;
-  --success-dim: #569724;
-  --warning-bright: #FA3C3C;
-  --warning-bright-shadow: #C4000088;
-  --warning-dim: #FAC3C3;
-
-  --active-reply: #444444;
-  --active-zap: #ffa02f;
-  --active-liked: #CA079F;
-  --active-reposted: #52CE0A;
-  --active-bookmarked: #0C7DD8;
-  --background-modal: #f5f5f570;
-
-  --highlight: #E8F3E8;
-  --highlight-selected: #A3D0A2;
-  --text-highlight: #111111;
-
-  --profile-indicator-border: var(--accent);
-
-  --check-image: url('./assets/icons/check.svg');
-  --logo: url('./assets/icons/logo_ice.svg');
-  --logo-big: url('./assets/icons/logo_ice_big_l.svg');
-  --icon-follows: url('./assets/icons/follows.svg');
-  --icon-tribe: url('./assets/icons/tribe.svg');
-  --icon-global: url('./assets/icons/global.svg');
-  --icon-network: url('./assets/icons/network.svg');
-
-  --icon-follows-latest: url('./assets/icons/follows_latest.svg');
-  --icon-follows-popular: url('./assets/icons/follows_popular.svg');
-  --icon-follows-trending: url('./assets/icons/follows_trending.svg');
-
-  --icon-tribe-latest: url('./assets/icons/tribe_latest.svg');
-  --icon-tribe-popular: url('./assets/icons/tribe_popular.svg');
-  --icon-tribe-trending: url('./assets/icons/tribe_trending.svg');
-
-  --icon-global-latest: url('./assets/icons/global_latest.svg');
-  --icon-global-popular: url('./assets/icons/global_popular.svg');
-  --icon-global-trending: url('./assets/icons/global_trending.svg');
-
-  --icon-network-latest: url('./assets/icons/network_latest.svg');
-  --icon-network-popular: url('./assets/icons/network_popular.svg');
-  --icon-network-trending: url('./assets/icons/network_trending.svg');
-
-  --reads-placeholder-image: url('./assets/images/reads_image_light.png');
-
-  select {
-    background-color: var(--background-site);
-  }
-
 }

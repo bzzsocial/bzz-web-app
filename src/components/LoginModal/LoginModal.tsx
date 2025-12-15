@@ -113,7 +113,7 @@ const LoginModal: Component<{
         const decoded = nip19.decode(key);
 
         return decoded.type === 'nsec' && decoded.data ? true : false;
-      } catch(e) {
+      } catch (e) {
         return false;
       }
     }
@@ -133,7 +133,7 @@ const LoginModal: Component<{
         const decoded = nip19.decode(key);
 
         return decoded.type === 'npub' && decoded.data ? true : false;
-      } catch(e) {
+      } catch (e) {
         return false;
       }
     }
@@ -353,9 +353,9 @@ const LoginModal: Component<{
                             onKeyUp={onKeyUp}
                             onInput={(e) => setEnteredNpub(e.target.value)}
                             placeholder='bunker://...'
-                            // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
-                            // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
-                            // inputClass={styles.nsecInput}
+                          // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
+                          // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
+                          // inputClass={styles.nsecInput}
                           />
                           <ButtonPrimary
                             disabled={isLoggingInProgress()}
@@ -375,7 +375,7 @@ const LoginModal: Component<{
                         <div class={styles.loginListItem}>
                           <div class={styles.number}>1</div>
                           <div class={styles.itemLabel}>
-                            Open your Primal mobile app
+                            Open your Bzz mobile app
                           </div>
                         </div>
 
@@ -417,7 +417,7 @@ const LoginModal: Component<{
                     <div class={styles.nsecDesc}>
                       <div class={styles.nsecWarning}>
                         <span class={styles.bold}>Warning: </span>
-                          This login method is insecure. If you must use a private key to login, we recommend setting a password to encrypt your key.
+                        This login method is insecure. If you must use a private key to login, we recommend setting a password to encrypt your key.
                       </div>
 
                       <div class={styles.inputGroup}>
@@ -431,15 +431,15 @@ const LoginModal: Component<{
                           type="password"
                           onInput={(e) => setEnteredKey(e.target.value)}
                           placeholder='nsec1...'
-                          // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
-                          // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
-                          // inputClass={styles.nsecInput}
+                        // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
+                        // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
+                        // inputClass={styles.nsecInput}
                         />
                       </div>
 
                       <div class={styles.inputGroup}>
                         <div class={styles.description}>
-                           Password to encrypt your key (optional):
+                          Password to encrypt your key (optional):
                         </div>
 
                         <div class={styles.inputWrapper}>
@@ -452,9 +452,9 @@ const LoginModal: Component<{
                               setPinInvalid(pin.length > 0 && pin.length < 4);
                               setPasswordKey(pin);
                             }}
-                            // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
-                            // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
-                            // inputClass={styles.nsecInput}
+                          // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
+                          // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
+                          // inputClass={styles.nsecInput}
                           />
                           <Show when={isPinInvalid()}>
                             <div class={styles.inputError}>
@@ -478,7 +478,7 @@ const LoginModal: Component<{
                     <div class={styles.npubDesc}>
                       <div class={styles.npubWarning}>
                         <span class={styles.bold}>Be aware: </span>
-                          Logging in with your public key will allow you to browse Nostr in ready-only mode.
+                        Logging in with your public key will allow you to browse Nostr in ready-only mode.
                       </div>
                       <div class={styles.inputGroup}>
                         <div class={styles.description}>
@@ -490,9 +490,9 @@ const LoginModal: Component<{
                           type="password"
                           onInput={(e) => setEnteredNpub(e.target.value)}
                           placeholder='npub1...'
-                          // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
-                          // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
-                          // inputClass={styles.nsecInput}
+                        // validationState={enteredKey().length === 0 || isValidNsec() ? 'valid' : 'invalid'}
+                        // errorMessage={intl.formatMessage(tLogin.invalidNsec)}
+                        // inputClass={styles.nsecInput}
                         />
                       </div>
 

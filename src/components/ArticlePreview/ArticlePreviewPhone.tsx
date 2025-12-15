@@ -137,7 +137,7 @@ const ArticlePreviewPhone: Component<{
 
     if (!pubkey) return;
 
-    const oldZaps = [ ...reactionsState.topZaps ];
+    const oldZaps = [...reactionsState.topZaps];
 
     latestTopZap = uuidv4() as string;
 
@@ -153,7 +153,7 @@ const ArticlePreviewPhone: Component<{
       thread?.actions.fetchUsers([pubkey])
     }
 
-    const zaps = [ ...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount);
+    const zaps = [...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount);
     updateReactionsState('topZaps', () => [...zaps]);
   };
 
@@ -168,7 +168,7 @@ const ArticlePreviewPhone: Component<{
 
     if (!pubkey) return;
 
-    const oldZaps = [ ...reactionsState.topZapsFeed ];
+    const oldZaps = [...reactionsState.topZapsFeed];
 
     latestTopZapFeed = uuidv4() as string;
 
@@ -180,7 +180,7 @@ const ArticlePreviewPhone: Component<{
       id: latestTopZapFeed,
     };
 
-    const zaps = [ ...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount).slice(0, 4);
+    const zaps = [...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount).slice(0, 4);
     updateReactionsState('topZapsFeed', () => [...zaps]);
   }
 
@@ -197,7 +197,7 @@ const ArticlePreviewPhone: Component<{
     onCancel: onCancelZap,
   });
 
-  const openReactionModal = (openOn = 'likes') =>  {
+  const openReactionModal = (openOn = 'likes') => {
     app?.actions.openReactionModal(props.article.naddr, {
       likes: reactionsState.likes,
       zaps: reactionsState.zapCount,
@@ -279,7 +279,7 @@ const ArticlePreviewPhone: Component<{
     let src: string = authorAvatar();
 
     if (image.src === src || image.src.endsWith(src)) {
-      src = ['sunrise_wave', 'ice_wave'].includes(settings?.theme || '') ? defaultAvatarLight : defaultAvatarDark;
+      src = ['bee_honey_wave', 'ice_wave'].includes(settings?.theme || '') ? defaultAvatarLight : defaultAvatarDark;
     }
 
     image.onerror = "";
@@ -329,15 +329,7 @@ const ArticlePreviewPhone: Component<{
   }
 
   const articleUrl = () => {
-    const vanityName = app?.verifiedUsers[props.article.pubkey];
-
-    if (!vanityName) return `/a/${props.article.naddr}`;
-
-    const decoded = nip19.decode(props.article.naddr);
-
-    const data = decoded.data as nip19.AddressPointer;
-
-    return `/${vanityName}/${urlEncode(data.identifier)}`;
+    return `/a/${props.article.naddr}`;
   }
 
   return (
@@ -358,7 +350,7 @@ const ArticlePreviewPhone: Component<{
 
       <div class={styles.header}>
         <div class={styles.userInfo}>
-          <Avatar user={props.article.user} size="micro"/>
+          <Avatar user={props.article.user} size="micro" />
           <div class={styles.userName}>{userName(props.article.user)}</div>
           <VerificationCheck user={props.article.user} />
         </div>
@@ -413,7 +405,7 @@ const ArticlePreviewPhone: Component<{
           <div class={styles.zaps}>
             <NoteTopZapsTiny
               note={props.article}
-              action={() => {}}
+              action={() => { }}
               topZaps={props.article.topZaps}
               topZapLimit={3}
               hideMessage={true}

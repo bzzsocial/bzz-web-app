@@ -12,7 +12,7 @@ import { ConfirmInfo, useAppContext } from '../../contexts/AppContext';
 import { DropdownMenu } from '@kobalte/core/dropdown-menu';
 import { accountStore } from '../../stores/accountStore';
 
-const NavPhone: Component< { id?: string } > = (props) => {
+const NavPhone: Component<{ id?: string }> = (props) => {
   const notifications = useNotificationsContext();
   const intl = useIntl();
   const media = useMediaContext();
@@ -25,33 +25,21 @@ const NavPhone: Component< { id?: string } > = (props) => {
       to: '/home',
       label: intl.formatMessage(t.home),
       icon: 'homeIcon',
+      bubble: undefined,
     },
     {
       type: 'link',
       to: '/reads',
       label: intl.formatMessage(t.reads),
       icon: 'readsIcon',
+      bubble: undefined,
     },
     {
       type: 'link',
       to: '/explore',
       label: intl.formatMessage(t.explore),
       icon: 'exploreIcon',
-    },
-    {
-      type: 'link',
-      to: '/downloads',
-      label: intl.formatMessage(t.downloads),
-      icon: 'downloadIcon',
-      bubble: () => notifications?.downloadsCount || 0,
-    },
-    {
-      type: 'link',
-      to: '/premium',
-      label: intl.formatMessage(t.premium),
-      icon: 'premiumIcon',
-      hiddenOnSmallScreens: true,
-      bubble: () => accountStore.premiumReminder ? 1 : 0,
+      bubble: undefined,
     },
     {
       type: 'menu',

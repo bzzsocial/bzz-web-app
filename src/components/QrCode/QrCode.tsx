@@ -4,8 +4,7 @@ import { Component, createEffect, createSignal, onMount } from 'solid-js';
 import qrNostrich from '../../assets/icons/qr_nostrich.svg'
 import qrLightning from '../../assets/icons/qr_lightning.svg';
 
-import primalLogoFire from '../../assets/icons/primal_wave_fire.svg'
-import primalLogoIce from '../../assets/icons/primal_wave_ice.svg'
+
 
 import styles from './QrCode.module.scss';
 
@@ -52,15 +51,15 @@ const QrCode: Component<{
       },
       imageOptions: {
         hideBackgroundDots: false,
-        imageSize:0.2,
+        imageSize: 0.2,
         margin: 0,
       },
-      dotsOptions:{
+      dotsOptions: {
         type: "dots",
         color: 'black',
       },
       cornersSquareOptions: {
-        type: 'extra-rounded' ,
+        type: 'extra-rounded',
         color: 'black',
       },
       cornersDotOptions: {

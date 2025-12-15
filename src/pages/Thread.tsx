@@ -9,7 +9,7 @@ import { logError, logWarning } from '../lib/logger';
 import { APP_ID } from '../App';
 import { subsTo } from '../sockets';
 import { getEvents } from '../lib/feed';
-import { fetchKnownProfiles } from '../lib/profile';
+
 import { useAppContext } from '../contexts/AppContext';
 import { getStreamingEvent } from '../lib/streaming';
 import { accountStore } from '../stores/accountStore';
@@ -30,7 +30,7 @@ const EventPage: Component = () => {
         if (content.kind === Kind.LongForm) {
           const idr = (content.tags.find((t: string[]) => t[0] === 'd') || [])[1];
 
-          if (idr){
+          if (idr) {
             try {
               const naddr = nip19.naddrEncode({ kind: Kind.LongForm, pubkey: content.pubkey, identifier: idr });
 
@@ -48,11 +48,11 @@ const EventPage: Component = () => {
         }
 
         if (content.kind === Kind.Text) {
-          const eventPointer: nip19.EventPointer ={
+          const eventPointer: nip19.EventPointer = {
             id: content.id,
             author: content.pubkey,
             kind: content.kind,
-            relays: content.tags.reduce((acc, t) => t[0] === 'r' && (t[1].startsWith('wss://' ) || t[1].startsWith('ws://')) ? [ ...acc, t[1]] : acc, []).slice(0,3),
+            relays: content.tags.reduce((acc, t) => t[0] === 'r' && (t[1].startsWith('wss://') || t[1].startsWith('ws://')) ? [...acc, t[1]] : acc, []).slice(0, 3),
           }
           try {
             setEvId(() => nip19.neventEncode(eventPointer));
@@ -89,15 +89,6 @@ const EventPage: Component = () => {
       const kind = data.kind;
 
       if (kind === Kind.LongForm) {
-        // await fetchUserProfile(account?.publicKey, pubkey, `thred_profile_info_${APP_ID}`);
-
-        const vanityName = app?.verifiedUsers[pubkey];
-
-        if (vanityName) {
-          navigate(`/${vanityName}/${identifier}`);
-          return;
-        }
-
         batch(() => {
           setComponent(() => 'read');
           setEvId(() => id);
@@ -106,19 +97,6 @@ const EventPage: Component = () => {
       }
 
       if (kind === Kind.LiveEvent) {
-        const stream = await getStreamingEvent(identifier, pubkey);
-
-        const host = stream.hosts?.[0] || stream.pubkey;
-
-        if (!host) throw new Error('no-pubkey');
-
-        const vanityName = app?.verifiedUsers[host];
-
-        if (vanityName) {
-          navigate(`/${vanityName}/live/${identifier}`);
-          return;
-        }
-
         batch(() => {
           setComponent(() => 'live');
           setEvId(() => id);
@@ -145,33 +123,6 @@ const EventPage: Component = () => {
     if (!id && !identifier) {
       setComponent(() => 'not_found');
       return;
-    }
-
-    if (identifier) {
-      const name = params.vanityName.toLowerCase();
-
-      if (!name) {
-        setComponent(() => 'not_found');
-        return;
-      }
-
-      const vanityProfile = await fetchKnownProfiles(name);
-
-      const pubkey = vanityProfile.names[name];
-      const kind = Kind.LongForm;
-
-      try {
-        const naddr = nip19.naddrEncode({ pubkey, kind, identifier: decodeURIComponent(identifier) });
-
-        setEvId(() => naddr);
-        setComponent(() => 'read');
-        return;
-      } catch (e) {
-        logError('Error encoding naddr: ', e);
-        setComponent(() => 'not_found');
-        return;
-      }
-
     }
 
     if (id) {

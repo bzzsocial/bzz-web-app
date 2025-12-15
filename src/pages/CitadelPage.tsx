@@ -204,7 +204,7 @@ const CitadelPage: Component = () => {
     if (subkey !== subId) return;
 
     if (type === 'EVENTS') {
-      for (let i=0;i<content.length;i++) {
+      for (let i = 0; i < content.length; i++) {
         const e = content[i];
         handleLiveEventMessage(e);
       }
@@ -223,7 +223,7 @@ const CitadelPage: Component = () => {
   const [people, setPeople] = createStore<PrimalUser[]>([]);
   const [fetchingPeople, setFetchingPeople] = createSignal(false);
 
-  let mutedEvents: NostrEventContent[]= [];
+  let mutedEvents: NostrEventContent[] = [];
 
   const fetchMissingUsers = async (pubkeys: string[]) => {
     const subId = `fetch_missing_people_${APP_ID}`;
@@ -235,7 +235,7 @@ const CitadelPage: Component = () => {
     setFetchingPeople(true);
     const { users } = await fetchPeople(pks, subId);
 
-    setPeople((peps) => [ ...peps, ...users]);
+    setPeople((peps) => [...peps, ...users]);
 
     setFetchingPeople(false);
 
@@ -247,7 +247,7 @@ const CitadelPage: Component = () => {
   const userFetcher = async () => {
     if (fetchingPeople()) return false;
 
-    let parts = [ ...(streamData.participants || []) ];
+    let parts = [...(streamData.participants || [])];
 
     let pks = events.reduce<string[]>((acc, e) => {
       let newPks: string[] = [];
@@ -321,7 +321,7 @@ const CitadelPage: Component = () => {
       return [...acc, ...newPks];
     }, []);
 
-    pks = [...pks, ...parts].filter(pk => !fetchedPubkeys.includes(pk) && pk .length > 0);
+    pks = [...pks, ...parts].filter(pk => !fetchedPubkeys.includes(pk) && pk.length > 0);
 
     if (pks.length > 0) {
       await fetchMissingUsers(pks);
@@ -393,7 +393,7 @@ const CitadelPage: Component = () => {
 
     if (initialLoadDone()) {
       setEvents((old) => {
-        let evs = [...old,  { ...content } ].sort((a, b) => {
+        let evs = [...old, { ...content }].sort((a, b) => {
           return (b.created_at || 0) - (a.created_at || 0);
         });
 
@@ -445,7 +445,7 @@ const CitadelPage: Component = () => {
 
   const handleLiveEOSEMessage = async () => {
     setEvents((old) => {
-      let evs = [...old,  ...newEvents ].sort((a, b) => {
+      let evs = [...old, ...newEvents].sort((a, b) => {
         return (b.created_at || 0) - (a.created_at || 0);
       });
 
@@ -463,7 +463,7 @@ const CitadelPage: Component = () => {
     resolveStreamingData(STREAM_ID, QA_PUBKEY);
 
     setTimeout(() => {
-      settings?.actions.setThemeByName('sunset', true)
+      settings?.actions.setThemeByName('cyber_hive', true)
     }, 1_000)
   });
 
@@ -510,7 +510,7 @@ const CitadelPage: Component = () => {
 
     if (
       selectedChatMesage() !== undefined &&
-        !details?.contains(target)
+      !details?.contains(target)
     ) {
       setSelectedChatMessage(() => undefined);
 
@@ -690,20 +690,20 @@ const CitadelPage: Component = () => {
   })
 
   const allZaps = () => {
-      if (topZapLimit() === 0) return [];
+    if (topZapLimit() === 0) return [];
 
-      const zaps = events.reduce<PrimalZap[]>((acc, e) => {
-        if (e.kind !== Kind.Zap) return acc;
-        try {
-          const z = convertToZap(e);
+    const zaps = events.reduce<PrimalZap[]>((acc, e) => {
+      if (e.kind !== Kind.Zap) return acc;
+      try {
+        const z = convertToZap(e);
 
-          return [...acc, { ...z }];
-        } catch (e) {
-          return acc;
-        }
-      }, []);
+        return [...acc, { ...z }];
+      } catch (e) {
+        return acc;
+      }
+    }, []);
 
-      return zaps.sort((a, b) => b.amount - a.amount);
+    return zaps.sort((a, b) => b.amount - a.amount);
   }
 
   // const topZaps = () => {
@@ -756,25 +756,25 @@ const CitadelPage: Component = () => {
 
     return <div class={styles.restZaps}>
 
-    <TransitionGroup
-      name="top-zaps"
-      enterClass={styles.topZapEnterTransition}
-      exitClass={styles.topZapExitTransition}
-    >
-      <For each={zaps}>
-        {zap => (
-          <div class={styles.topZap} onClick={() => setOpenZaps(true)}>
-            <Show
-              when={zap.id === 'NEW_USER_ZAP'}
-              fallback={<Avatar user={author(zap?.sender as string)} size="s38" />}
-            >
-              <Avatar user={accountStore.activeUser} size="s38" />
-            </Show>
-            <div class={styles.zapAmount}>{humanizeNumber(zap?.amount, false)}</div>
-          </div>
-        )}
-      </For>
-    </TransitionGroup>
+      <TransitionGroup
+        name="top-zaps"
+        enterClass={styles.topZapEnterTransition}
+        exitClass={styles.topZapExitTransition}
+      >
+        <For each={zaps}>
+          {zap => (
+            <div class={styles.topZap} onClick={() => setOpenZaps(true)}>
+              <Show
+                when={zap.id === 'NEW_USER_ZAP'}
+                fallback={<Avatar user={author(zap?.sender as string)} size="s38" />}
+              >
+                <Avatar user={accountStore.activeUser} size="s38" />
+              </Show>
+              <div class={styles.zapAmount}>{humanizeNumber(zap?.amount, false)}</div>
+            </div>
+          )}
+        </For>
+      </TransitionGroup>
     </div>
   }
 
@@ -795,7 +795,7 @@ const CitadelPage: Component = () => {
     const { success, note } = await sendEvent(messageEvent);
 
     if (success && note) {
-      setEvents((es) => [{ ...note }, ...es ]);
+      setEvents((es) => [{ ...note }, ...es]);
       return success;
     }
   }
@@ -952,7 +952,7 @@ const CitadelPage: Component = () => {
       }
 
       setEvents((old) => {
-        let evs = [...old,  { ...zap } ].sort((a, b) => {
+        let evs = [...old, { ...zap }].sort((a, b) => {
           return (b.created_at || 0) - (a.created_at || 0);
         });
 
@@ -1153,7 +1153,7 @@ const CitadelPage: Component = () => {
                             pk = typeof zap.sender === 'string' ? zap.sender : zap.sender.pubkey;
                           }
                         }
-                        catch (err) {}
+                        catch (err) { }
                       }
 
                       return pk === pubkey && !events.find(ev => ev.id === e.id);
@@ -1170,7 +1170,7 @@ const CitadelPage: Component = () => {
                           }
 
                         }
-                        catch(err) {}
+                        catch (err) { }
                       }
 
                       return pk !== pubkey;
@@ -1197,7 +1197,7 @@ const CitadelPage: Component = () => {
                         }
 
                       }
-                      catch (err) {}
+                      catch (err) { }
                     }
 
                     return pk === pubkey;
@@ -1205,7 +1205,7 @@ const CitadelPage: Component = () => {
 
                   let mutedEventIds = mutedEvents.map(e => e.id);
 
-                  for (let i = 0; i < eventsToMute.length;i++) {
+                  for (let i = 0; i < eventsToMute.length; i++) {
                     const e = eventsToMute[i];
 
                     if (!mutedEventIds.includes(e.id)) {

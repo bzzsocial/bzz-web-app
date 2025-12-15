@@ -95,7 +95,7 @@ export type SettingsContextStore = {
     getDefaultHomeFeeds: () => void,
     restoreReadsFeeds: () => void,
     restoreHomeFeeds: () => void,
-    addProfileHomeFeed: ( name: string, pubkey: string | undefined) => void,
+    addProfileHomeFeed: (name: string, pubkey: string | undefined) => void,
     removeProfileHomeFeed: (pubkey: string | undefined) => void,
     hasProfileFeedAtHome: (pubkey: string | undefined) => boolean,
     moveHomeFeed: (fromIndex: number, toIndex: number) => void,
@@ -114,7 +114,7 @@ export type SettingsContextStore = {
 
 export const initialData = {
   locale: 'en-us',
-  theme: 'sunrise',
+  theme: 'bee_honey',
   themes,
   useSystemTheme: false,
   isAnimated: true,
@@ -149,21 +149,17 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
   const toaster = useToastContext();
   const intl = useIntl();
 
-// ACTIONS --------------------------------------
+  // ACTIONS --------------------------------------
 
   const isLightTheme = (): boolean => {
-    return ['sunrise', 'ice'].includes(store.theme);
+    return store.theme === 'bee_honey';
   }
 
   const setUseSystemTheme = (flag: boolean) => {
     updateStore('useSystemTheme', () => flag);
     saveSystemDarkMode(accountStore.publicKey, flag);
 
-    if (['sunrise', 'sunset'].includes(store.theme)) {
-      setThemeByName(flag ? 'sunset' : 'sunrise', true);
-    } else {
-      setThemeByName(flag ? 'midnight' : 'ice', true);
-    }
+    setThemeByName(flag ? 'cyber_hive' : 'bee_honey', true);
   }
 
   const getRecomendedBlossomServers = () => {
@@ -172,7 +168,7 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
     const unsub = subsTo(subId, {
       onEvent: (_, content) => {
         const list = JSON.parse(content.content || '[]') as string[];
-        updateStore('recomendedBlossomServers', () => [ ...list ]);
+        updateStore('recomendedBlossomServers', () => [...list]);
       },
       onEose: () => {
         unsub();
@@ -241,7 +237,7 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
   const setTheme = (theme: PrimalTheme | null, temp?: boolean) => {
     const forced = localStorage.getItem('forceTheme');
 
-    if (forced && ['sunrise', 'sunset', 'midnight', 'ice'].includes(forced)) {
+    if (forced && ['bee_honey', 'cyber_hive'].includes(forced)) {
       updateStore('theme', () => forced);
       return;
     }
@@ -352,7 +348,7 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
       feedkind: 'user',
     };
 
-    const list = [ ...store.homeFeeds, { ...feed }];
+    const list = [...store.homeFeeds, { ...feed }];
 
     updateHomeFeeds(list);
   }
@@ -550,13 +546,13 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
   }
 
   const addHomeFeed = (feed: PrimalArticleFeed) => {
-    const list = [ ...store.homeFeeds, {...feed}];
+    const list = [...store.homeFeeds, { ...feed }];
 
     updateHomeFeeds(list);
   };
 
   const addReadsFeed = (feed: PrimalArticleFeed) => {
-    const list = [ ...store.readsFeeds, {...feed}];
+    const list = [...store.readsFeeds, { ...feed }];
 
     updateReadsFeeds(list);
   };
@@ -752,8 +748,8 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
     updateStore('homeFeedsReloaded', () => false);
     updateStore('readsFeedsReloaded', () => false);
 
-    updateStore('homeFeeds', () => [ ...loadHomeFeeds(pubkey) ])
-    updateStore('readsFeeds', () => [ ...loadReadsFeeds(pubkey) ])
+    updateStore('homeFeeds', () => [...loadHomeFeeds(pubkey)])
+    updateStore('readsFeeds', () => [...loadReadsFeeds(pubkey)])
 
     updateStore('homeFeedsReloaded', () => true);
     updateStore('readsFeedsReloaded', () => true);
@@ -786,11 +782,7 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
           if (store.useSystemTheme) {
 
             runColorMode((isDark) => {
-              if (['sunrise', 'sunset'].includes(theme)) {
-                setThemeByName(isDark ? 'sunset' : 'sunrise', true);
-              } else {
-                setThemeByName(isDark ? 'midnight' : 'ice', true);
-              }
+              setThemeByName(isDark ? 'cyber_hive' : 'bee_honey', true);
             }, () => {
               theme && setThemeByName(theme, true);
             })
@@ -814,18 +806,18 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
             updateStore('availableZapOptions', () => [...zapConfig]);
           }
           else {
-            const newConfig = defaultZapOptions.map((o, i) => ({ ...o, amount: zapOptions[i]}));
+            const newConfig = defaultZapOptions.map((o, i) => ({ ...o, amount: zapOptions[i] }));
             updateStore('availableZapOptions', () => [...newConfig]);
           }
 
-          updateStore('defaultZapAmountOld' , () => defaultZapAmount);
+          updateStore('defaultZapAmountOld', () => defaultZapAmount);
           updateStore('zapOptionsOld', () => zapOptions);
 
           if (notifications) {
             updateStore('notificationSettings', () => ({ ...notifications }));
           }
           else {
-            updateStore('notificationSettings', () => ({ ...defaultNotificationSettings}));
+            updateStore('notificationSettings', () => ({ ...defaultNotificationSettings }));
           }
 
           if (notificationsAdditional) {
@@ -841,14 +833,14 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
             updateStore('contentModeration', () => [...defaultContentModeration]);
           }
           else if (Array.isArray(contentModeration)) {
-            for (let i=0; i < contentModeration.length; i++) {
+            for (let i = 0; i < contentModeration.length; i++) {
               const m = contentModeration[i];
               const index = store.contentModeration.findIndex((x: ContentModeration) => x.name === m.name);
 
               updateStore(
                 'contentModeration',
                 index < 0 ? store.contentModeration.length : index,
-                () => ({...m}),
+                () => ({ ...m }),
               );
             }
           }
@@ -1008,7 +1000,12 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
   }
 
   const resolveTheme = () => {
-    const storedTheme = localStorage.getItem('theme') || 'sunrise';
+    let storedTheme = localStorage.getItem('theme') || 'bee_honey';
+
+    // Legacy theme migration
+    if (storedTheme === 'sunrise' || storedTheme === 'sunset') storedTheme = 'bee_honey';
+    if (storedTheme === 'midnight' || storedTheme === 'ice') storedTheme = 'cyber_hive';
+
     const pubkey = localStorage.getItem('pubkey') || undefined;
     const useSystemDarkMode = readSystemDarkMode(pubkey);
 
@@ -1016,11 +1013,7 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
 
     if (useSystemDarkMode) {
       runColorMode((isDark) => {
-        if (['sunrise', 'sunset'].includes(storedTheme)) {
-          setThemeByName(isDark ? 'sunset' : 'sunrise', true);
-        } else {
-          setThemeByName(isDark ? 'midnight' : 'ice', true);
-        }
+        setThemeByName(isDark ? 'cyber_hive' : 'bee_honey', true);
       }, () => {
         setThemeByName(storedTheme, true);
       })
@@ -1029,12 +1022,12 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
     }
   }
 
-// EFFECTS --------------------------------------
+  // EFFECTS --------------------------------------
 
   onMount(() => {
     const forced = localStorage.getItem('forceTheme');
 
-    if (forced && ['sunrise', 'sunset', 'midnight', 'ice'].includes(forced)) {
+    if (forced && ['bee_honey', 'cyber_hive'].includes(forced)) {
       updateStore('theme', () => forced);
       return;
     }
@@ -1083,7 +1076,7 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
     html?.setAttribute('data-animated', `${store.isAnimated}`);
   });
 
-// STORES ---------------------------------------
+  // STORES ---------------------------------------
 
 
   const [store, updateStore] = createStore<SettingsContextStore>({
@@ -1134,7 +1127,7 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
     },
   });
 
-// RENDER ---------------------------------------
+  // RENDER ---------------------------------------
 
   return (
     <SettingsContext.Provider value={store}>

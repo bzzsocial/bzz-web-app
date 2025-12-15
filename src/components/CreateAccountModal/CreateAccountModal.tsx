@@ -12,11 +12,8 @@ import { useNavigate } from '@solidjs/router';
 import AdvancedSearchDialog from '../AdvancedSearch/AdvancedSearchDialog';
 import { loginUsingExtension, logUserIn, setLoginType } from '../../stores/accountStore';
 
-import { appStoreLink, playstoreLink, apkLink } from '../../constants';
 
-import appstoreImg from '../../assets/images/appstore_download.svg';
-import playstoreImg from '../../assets/images/playstore_download.svg';
-import primalQr from '../../assets/images/primal_qr.png';
+import bzzLogo from '../../assets/images/bzz_logo.png';
 
 const CreateAccountModal: Component<{
   id?: string,
@@ -38,15 +35,15 @@ const CreateAccountModal: Component<{
       open={props.open}
       setOpen={(isOpen: boolean) => !isOpen && props.onAbort && props.onAbort()}
       title={
-      <div class={styles.title}>
-        {intl.formatMessage(tActions.getStartedTitle)}
-      </div>
+        <div class={styles.title}>
+          {intl.formatMessage(tActions.getStartedTitle)}
+        </div>
       }
       triggerClass={styles.hidden}
     >
       <div id={props.id} class={styles.modal}>
         <div class={styles.infoWrapper}>
-          <img src={primalQr}></img>
+          <img src={bzzLogo}></img>
           <div class={styles.loginSteps}>
             <div class={styles.loginExplain}>
               {intl.formatMessage(t.createNewDescription)}
@@ -79,21 +76,7 @@ const CreateAccountModal: Component<{
         </div>
 
         <div class={styles.bellowInfo}>
-          <div class={styles.appLinks}>
-            <a
-              href={appStoreLink}
-              target='_blank'
-            >
-              <img src={appstoreImg} />
-            </a>
 
-            <a
-              href={playstoreLink}
-              target='_blank'
-            >
-              <img src={playstoreImg} />
-            </a>
-          </div>
 
           <div class={styles.loginNow}>
             {intl.formatMessage(t.alreadyHaveAccount)}&nbsp;

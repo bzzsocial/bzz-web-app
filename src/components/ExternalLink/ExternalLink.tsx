@@ -17,7 +17,7 @@ const ExternalLink: Component<{
   return (
     <div id={props.id} class={styles.externalLink}>
       <Show
-        when={['sunset', 'midnight'].includes(settings?.theme || 'sunset')}
+        when={settings?.theme === 'cyber_hive'}
         fallback={
           <img src={props.darkIcon} />
         }

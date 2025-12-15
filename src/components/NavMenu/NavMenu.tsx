@@ -14,7 +14,7 @@ import { useDMContext } from '../../contexts/DMContext';
 import ButtonSecondary from '../Buttons/ButtonSecondary';
 import { accountStore, hasPublicKey, showGetStarted, showNewNoteForm } from '../../stores/accountStore';
 
-const NavMenu: Component< { id?: string } > = (props) => {
+const NavMenu: Component<{ id?: string }> = (props) => {
   const notifications = useNotificationsContext();
   const dms = useDMContext();
   const intl = useIntl();
@@ -57,19 +57,7 @@ const NavMenu: Component< { id?: string } > = (props) => {
       bubble: () => notifications?.notificationCount || 0,
       hiddenOnSmallScreens: true,
     },
-    {
-      to: '/downloads',
-      label: intl.formatMessage(t.downloads),
-      icon: 'downloadIcon',
-      bubble: () => notifications?.downloadsCount || 0,
-    },
-    {
-      to: '/premium',
-      label: intl.formatMessage(t.premium),
-      icon: 'premiumIcon',
-      hiddenOnSmallScreens: true,
-      bubble: () => accountStore.premiumReminder ? 1 : 0,
-    },
+
     {
       to: '/settings',
       label: intl.formatMessage(t.settings),
@@ -110,7 +98,7 @@ const NavMenu: Component< { id?: string } > = (props) => {
           }
         </For>
       </nav>
-      <Show when={hasPublicKey() && !loc.pathname.startsWith('/messages') && !loc.pathname.startsWith('/premium')}>
+      <Show when={hasPublicKey() && !loc.pathname.startsWith('/messages')}>
         <div class={styles.callToAction}>
           <Switch
             fallback={

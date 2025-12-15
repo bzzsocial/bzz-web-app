@@ -9,7 +9,6 @@ import VerificationCheck from '../VerificationCheck/VerificationCheck';
 
 import styles from './Avatar.module.scss';
 import { useAppContext } from '../../contexts/AppContext';
-import { LegendCustomizationConfig } from '../../lib/premium';
 import { useSearchParams } from '@solidjs/router';
 
 const Avatar: Component<{
@@ -21,8 +20,6 @@ const Avatar: Component<{
   showCheck?: boolean,
   zoomable?: boolean,
   showBorderRing?: boolean,
-  legendConfig?: LegendCustomizationConfig,
-  legendWhite?: boolean,
 }> = (props) => {
 
   const media = useMediaContext();
@@ -93,55 +90,8 @@ const Avatar: Component<{
     return true;
   }
 
-  const legendClass = () => {
-    if (props.user){
-      const legendConfig = props.legendConfig || app?.legendCustomization[props.user?.pubkey];
 
-      if (legendConfig) {
-        return legendConfig.avatar_glow ? styles.legend : '';
-      }
-    }
-
-    return '';
-
-  }
-
-  const highlightClass = () => {
-    if (props.legendWhite) {
-      return `${styles.legend} ${styles[`legend_WHITE`]}`;
-    }
-    if (props.user){
-      const legendConfig = props.legendConfig || app?.legendCustomization[props.user?.pubkey];
-
-      if (legendConfig) {
-        const style = legendConfig.style
-
-        const showHighlight = style !== '' &&
-          legendConfig.avatar_glow;
-
-        const showGlow = style !== '' &&
-          legendConfig.avatar_glow;
-
-        let klass = '';
-
-        if (showHighlight) {
-          klass += `${styles.legend} ${styles[`legend_${style}`]}`;
-        }
-
-        if (showGlow) {
-          klass += ` ${styles.legendGlow} ${styles[`legend_glow_${style}`]}`;
-        }
-
-        return klass;
-      }
-    }
-
-    if (props.highlightBorder) {
-      return styles.highlightBorder;
-    }
-
-    return '';
-  };
+  /* Removed highlightClass logic */
 
   const imageSrc = createMemo(() => {
     let size: MediaSize = 'm';
@@ -221,10 +171,17 @@ const Avatar: Component<{
     return `${app?.actions.profileLink(props.user?.pubkey || stream.pubkey)}/live/${stream.id}`;
   }
 
+  const highlightClass = () => {
+    if (props.highlightBorder) {
+      return styles.highlightBorder;
+    }
+    return '';
+  }
+
   return (
     <div
       id={props.id}
-      class={`${avatarClass[selectedSize]} ${legendClass()} ${highlightClass()} ${props.showBorderRing ? styles.borderRing : ''}`}
+      class={`${avatarClass[selectedSize]} ${highlightClass()} ${props.showBorderRing ? styles.borderRing : ''}`}
       data-user={props.user?.pubkey}
     >
       <Show
@@ -237,7 +194,7 @@ const Avatar: Component<{
       >
         <div class={`${styles.missingBack} ${notCachedFlag()}`}>
           <Show when={props.zoomable} fallback={
-            <img src={imageSrc()} alt="avatar" onerror={imgError}/>
+            <img src={imageSrc()} alt="avatar" onerror={imgError} />
           }>
             <NoteImage
               class={props.zoomable ? 'profile_image' : ''}
@@ -258,7 +215,7 @@ const Avatar: Component<{
         </div>
       </Show>
 
-      <Show when={media?.actions.isStreaming(props.user?.pubkey || 'n/a') && !props.legendWhite}>
+      <Show when={media?.actions.isStreaming(props.user?.pubkey || 'n/a')}>
         <div class={styles.centerBottom}>
           <a
             id={props.id}
@@ -273,5 +230,6 @@ const Avatar: Component<{
     </div>
   )
 }
+
 
 export default hookForDev(Avatar);

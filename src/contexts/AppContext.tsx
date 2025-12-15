@@ -42,9 +42,7 @@ import { Tier, TierCost } from "../components/SubscribeToAuthorModal/SubscribeTo
 import { nip19, nip46 } from "../lib/nTools";
 import { logInfo } from "../lib/logger";
 import { Kind } from "../constants";
-import { LegendCustomizationConfig } from "../lib/premium";
-import { StreamingData } from "../lib/streaming";
-import { loadLegendCustomization, saveLegendCustomization } from "../lib/localStore";
+
 
 export type ReactionStats = {
   likes: number,
@@ -140,8 +138,7 @@ export type AppContextStore = {
   subscribeToAuthor: PrimalUser | undefined,
   subscribeToTier: (tier: Tier) => void,
   verifiedUsers: Record<string, string>,
-  legendCustomization: Record<string, LegendCustomizationConfig>,
-  memberCohortInfo: Record<string, CohortInfo>,
+
   showProfileQr: PrimalUser | undefined,
   reportContent: PrimalNote | PrimalArticle | NostrLiveChat | undefined,
   signer: nip46.BunkerSigner | undefined,
@@ -198,7 +195,7 @@ export type AppContextStore = {
     openAuthorSubscribeModal: (author: PrimalUser | undefined, subscribeTo: (tier: Tier, cost: TierCost) => void) => void,
     closeAuthorSubscribeModal: () => void,
     profileLink: (pubkey: string | undefined, noP?: boolean) => string,
-    setLegendCustomization: (pubkey: string, config: LegendCustomizationConfig) => void,
+
     getUserBlossomUrls: (pubkey: string) => string[],
     openProfileQr: (user: PrimalUser) => void,
     closeProfileQr: () => void,
@@ -240,9 +237,8 @@ const initialData: Omit<AppContextStore, 'actions'> = {
   cashuMints: new Map(),
   subscribeToAuthor: undefined,
   verifiedUsers: {},
-  legendCustomization: {},
-  memberCohortInfo: {},
-  subscribeToTier: () => {},
+
+  subscribeToTier: () => { },
   showProfileQr: undefined,
   reportContent: undefined,
   signer: undefined,
@@ -358,21 +354,21 @@ export const AppProvider = (props: { children: JSXElement }) => {
   };
 
   const openArticleDraftContextMenu = (
-      note: PrimalArticle,
-      position: DOMRect | undefined,
-      openCustomZap: () => void,
-      openReactions: () => void,
-      onDelete: (id: string) => void,
-    ) => {
-      updateStore('articleDraftContextMenuInfo', reconcile({
-        note,
-        position,
-        openCustomZap,
-        openReactions,
-        onDelete,
-      }))
-      updateStore('showArticleDraftContextMenu', () => true);
-    };
+    note: PrimalArticle,
+    position: DOMRect | undefined,
+    openCustomZap: () => void,
+    openReactions: () => void,
+    onDelete: (id: string) => void,
+  ) => {
+    updateStore('articleDraftContextMenuInfo', reconcile({
+      note,
+      position,
+      openCustomZap,
+      openReactions,
+      onDelete,
+    }))
+    updateStore('showArticleDraftContextMenu', () => true);
+  };
 
   const openLnbcModal = (lnbc: string, onPay: () => void) => {
     updateStore('showLnInvoiceModal', () => true);
@@ -405,7 +401,7 @@ export const AppProvider = (props: { children: JSXElement }) => {
 
   const openConfirmModal = (confirmInfo: ConfirmInfo) => {
     updateStore('showConfirmModal', () => true);
-    updateStore('confirmInfo', () => ({...confirmInfo }));
+    updateStore('confirmInfo', () => ({ ...confirmInfo }));
   };
 
   const closeConfirmModal = () => {
@@ -463,10 +459,6 @@ export const AppProvider = (props: { children: JSXElement }) => {
       pk = nip19.decode(pk).data;
     }
 
-    const verifiedUser: string = store.verifiedUsers[pk];
-
-    if (verifiedUser) return `/${verifiedUser}`;
-
     try {
       const npub = nip19.nprofileEncode({ pubkey: pk });
       return `/${noP ? '' : 'p/'}${npub}`;
@@ -476,10 +468,6 @@ export const AppProvider = (props: { children: JSXElement }) => {
 
   }
 
-  const setLegendCustomization = (pubkey: string, config: LegendCustomizationConfig) => {
-    updateStore('legendCustomization', () => ({ [pubkey]: { ...config }}));
-    saveLegendCustomization(pubkey, config);
-  }
 
   const getUserBlossomUrls = (pubkey: string) => {
     const blossom = (store.events[Kind.Blossom] || []).find(b => b.pubkey === pubkey) as NostrBlossom | undefined;
@@ -487,7 +475,7 @@ export const AppProvider = (props: { children: JSXElement }) => {
     if (!blossom || !blossom.tags) return [];
 
     return blossom.tags.reduce<string[]>((acc, t) => {
-      return t[0] === 'server' ? [ ...acc, t[1]] : acc;
+      return t[0] === 'server' ? [...acc, t[1]] : acc;
     }, []);
   }
 
@@ -508,81 +496,71 @@ export const AppProvider = (props: { children: JSXElement }) => {
   }
 
 
-// SOCKET HANDLERS ------------------------------
+  // SOCKET HANDLERS ------------------------------
 
-const handleVerifiedUsersEvent = (content: NostrEventContent, subId?: string) => {
-  if (content.kind === Kind.VerifiedUsersDict) {
-    const verifiedUsers: Record<string, string> = JSON.parse(content.content);
+  const handleVerifiedUsersEvent = (content: NostrEventContent, subId?: string) => {
+    if (content.kind === Kind.VerifiedUsersDict) {
+      const verifiedUsers: Record<string, string> = JSON.parse(content.content);
 
-    updateStore('verifiedUsers', (vu) => ({ ...vu, ...verifiedUsers }));
-  }
+      updateStore('verifiedUsers', (vu) => ({ ...vu, ...verifiedUsers }));
+    }
 
-  if (content.kind === Kind.LegendCustomization) {
-    const config = JSON.parse(content.content) as Record<string, LegendCustomizationConfig>;
 
-    updateStore('legendCustomization', (lc) => ({ ...lc, ...config }));
-  }
 
-  if (content.kind === Kind.MembershipCohortInfo) {
-    const config = JSON.parse(content.content) as Record<string, CohortInfo>;
+    const events = store.events[content.kind] || [];
 
-    updateStore('memberCohortInfo', (lc) => ({ ...lc, ...config }));
-  }
+    if (content.kind === Kind.Mentions) {
+      const wrappedEvent = JSON.parse(content.content) as NostrEventContent;
 
-  const events = store.events[content.kind] || [];
+      content = { ...wrappedEvent };
+    }
 
-  if (content.kind === Kind.Mentions) {
-    const wrappedEvent = JSON.parse(content.content) as NostrEventContent;
-
-    content = { ...wrappedEvent };
-  }
-
-  if (events.length === 0) {
-    updateStore(
-      'events',
-      content.kind,
-      () => [{ ...content }],
-    );
-  } else if (!events.find((e: NostrEventContent) => e.id === content.id)) {
-    updateStore(
-      'events',
-      content.kind,
-      events.length,
-      () => ({ ...content }),
-    );
-  }
-
-}
-
-const onMessage = async (event: MessageEvent) => {
-  const data = await readData(event);
-  const message: NostrEvent | NostrEOSE | NostrEvents = JSON.parse(data);
-
-  const [type, subId, content] = message;
-
-  if (type === 'EVENTS') {
-    for (let i=0;i<content.length;i++) {
-      const e = content[i];
-      handleVerifiedUsersEvent(e);
+    if (events.length === 0) {
+      updateStore(
+        'events',
+        content.kind,
+        () => [{ ...content }],
+      );
+    } else if (!events.find((e: NostrEventContent) => e.id === content.id)) {
+      updateStore(
+        'events',
+        content.kind,
+        events.length,
+        () => ({ ...content }),
+      );
     }
 
   }
 
-  if (type === 'EVENT') {
-    handleVerifiedUsersEvent(content, subId)
-  }
-};
+  const onMessage = async (event: MessageEvent) => {
+    const data = await readData(event);
+    const message: NostrEvent | NostrEOSE | NostrEvents = JSON.parse(data);
 
-const onSocketClose = (closeEvent: CloseEvent) => {
-  const webSocket = closeEvent.target as WebSocket;
+    const [type, subId, content] = message;
 
-  removeSocketListeners(
-    webSocket,
-    { message: onMessage, close: onSocketClose },
-  );
-};
+    if (type === 'EVENTS') {
+      for (let i = 0; i < content.length; i++) {
+        const e = content[i];
+        handleVerifiedUsersEvent(e);
+      }
 
-// EFFECTS --------------------------------------
+    }
+
+    if (type === 'EVENT') {
+      handleVerifiedUsersEvent(content, subId)
+    }
+  };
+
+  const onSocketClose = (closeEvent: CloseEvent) => {
+    const webSocket = closeEvent.target as WebSocket;
+
+    removeSocketListeners(
+      webSocket,
+      { message: onMessage, close: onSocketClose },
+    );
+  };
+
+  // EFFECTS --------------------------------------
 
   onMount(() => {
     document.addEventListener('mousemove', monitorActivity);
@@ -600,26 +578,7 @@ const onSocketClose = (closeEvent: CloseEvent) => {
     document.removeEventListener('keydown', monitorActivity);
   });
 
-  createEffect(() => {
-    const config = store.legendCustomization;
-    const pubkey = accountStore.publicKey;
 
-    if (!pubkey || !config || !config[pubkey]) return;
-
-    saveLegendCustomization(pubkey, config[pubkey]);
-  })
-
-  createEffect(() => {
-    if (hasPublicKey()) {
-      const pubkey = accountStore.publicKey;
-
-      const legendConfig = loadLegendCustomization(pubkey);
-
-      if (!pubkey || !legendConfig) return;
-
-      updateStore('legendCustomization', () => ({ [pubkey]: { ...legendConfig } }));
-    }
-  });
 
   let wakingTimeout = 0;
 
@@ -674,7 +633,7 @@ const onSocketClose = (closeEvent: CloseEvent) => {
     );
   });
 
-// STORES ---------------------------------------
+  // STORES ---------------------------------------
 
   const [store, updateStore] = createStore<AppContextStore>({
     ...initialData,
@@ -704,7 +663,7 @@ const onSocketClose = (closeEvent: CloseEvent) => {
       openAuthorSubscribeModal,
       closeAuthorSubscribeModal,
       profileLink,
-      setLegendCustomization,
+
       getUserBlossomUrls,
       openProfileQr,
       closeProfileQr,
@@ -714,9 +673,9 @@ const onSocketClose = (closeEvent: CloseEvent) => {
   });
 
   return (
-      <AppContext.Provider value={store}>
-        {props.children}
-      </AppContext.Provider>
+    <AppContext.Provider value={store}>
+      {props.children}
+    </AppContext.Provider>
   );
 }
 

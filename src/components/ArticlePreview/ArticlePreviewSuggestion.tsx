@@ -31,7 +31,7 @@ export const renderArticlePreview = (props: ArticleProps) => (
   <div>
     <ArticlePreviewSuggestion {...props} />
   </div> as HTMLDivElement
-  ).innerHTML;
+).innerHTML;
 
 const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
   const app = useAppContext();
@@ -132,7 +132,7 @@ const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
 
     if (!pubkey) return;
 
-    const oldZaps = [ ...reactionsState.topZaps ];
+    const oldZaps = [...reactionsState.topZaps];
 
     latestTopZap = uuidv4() as string;
 
@@ -148,7 +148,7 @@ const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
       thread?.actions.fetchUsers([pubkey])
     }
 
-    const zaps = [ ...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount);
+    const zaps = [...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount);
     updateReactionsState('topZaps', () => [...zaps]);
   };
 
@@ -163,7 +163,7 @@ const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
 
     if (!pubkey) return;
 
-    const oldZaps = [ ...reactionsState.topZapsFeed ];
+    const oldZaps = [...reactionsState.topZapsFeed];
 
     latestTopZapFeed = uuidv4() as string;
 
@@ -175,7 +175,7 @@ const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
       id: latestTopZapFeed,
     };
 
-    const zaps = [ ...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount).slice(0, 4);
+    const zaps = [...oldZaps, { ...newZap }].sort((a, b) => b.amount - a.amount).slice(0, 4);
     updateReactionsState('topZapsFeed', () => [...zaps]);
   }
 
@@ -192,7 +192,7 @@ const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
     onCancel: onCancelZap,
   });
 
-  const openReactionModal = (openOn = 'likes') =>  {
+  const openReactionModal = (openOn = 'likes') => {
     app?.actions.openReactionModal(props.article.naddr, {
       likes: reactionsState.likes,
       zaps: reactionsState.zapCount,
@@ -274,7 +274,7 @@ const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
     let src: string = authorAvatar();
 
     if (image.src === src || image.src.endsWith(src)) {
-      src = ['sunrise_wave', 'ice_wave'].includes(settings?.theme || '') ? defaultAvatarLight : defaultAvatarDark;
+      src = ['bee_honey_wave', 'ice_wave'].includes(settings?.theme || '') ? defaultAvatarLight : defaultAvatarDark;
     }
 
     image.onerror = "";
@@ -354,7 +354,7 @@ const ArticlePreviewSuggestion: Component<ArticleProps> = (props) => {
 
       <div class={styles.header}>
         <div class={styles.userInfo}>
-          <Avatar user={props.article.user} size="micro"/>
+          <Avatar user={props.article.user} size="micro" />
           <div class={styles.userName}>{userName(props.article.user)}</div>
           <VerificationCheck user={props.article.user} />
           <div class={styles.nip05}>{props.article.user?.nip05 || ''}</div>

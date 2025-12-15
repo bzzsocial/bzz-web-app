@@ -86,7 +86,7 @@ const Uploader: Component<{
   createEffect(() => {
     if (props.openSockets) {
       shouldCloseSockets = false;
-      for (let i=0; i < maxParallelChunks; i++) {
+      for (let i = 0; i < maxParallelChunks; i++) {
         const socket = new WebSocket(uploadServer);
 
         socket.addEventListener('close', () => {
@@ -113,7 +113,7 @@ const Uploader: Component<{
   });
 
   createEffect(() => {
-    calcUploadLimit(accountStore.membershipStatus.tier);
+    calcUploadLimit(undefined);
   });
 
   onCleanup(() => {
@@ -128,20 +128,10 @@ const Uploader: Component<{
   });
 
   const calcUploadLimit = (membershipTier: string | undefined) => {
-
-    if (membershipTier === 'premium') {
-      setUploadState('uploadLimit', () => uploadLimit.premium);
-      return;
-    }
-    if (membershipTier === 'premium-legend') {
-      setUploadState('uploadLimit', () => uploadLimit.premiumLegend);
-      return;
-    }
-
-    setUploadState('uploadLimit',  () => uploadLimit.regular);
+    setUploadState('uploadLimit', () => uploadLimit.regular);
   };
 
-  const subTo = (socket: WebSocket, subId: string, cb: (type: NostrEventType, subId: string, content?: NostrEventContent) => void ) => {
+  const subTo = (socket: WebSocket, subId: string, cb: (type: NostrEventType, subId: string, content?: NostrEventContent) => void) => {
     const listener = (event: MessageEvent) => {
       const message: NostrEvent | NostrEOSE = JSON.parse(event.data);
       const [type, subscriptionId, content] = message;
@@ -284,7 +274,7 @@ const Uploader: Component<{
 
           if (!uploadState.isUploading) return;
 
-          setUploadState('uploadedChunks', n => n+1);
+          setUploadState('uploadedChunks', n => n + 1);
 
           const len = chunkMap.length;
 
@@ -293,7 +283,7 @@ const Uploader: Component<{
           setUploadState('progress', () => progress);
 
           if (uploadState.uploadedChunks < len && uploadState.chunkIndex < len - 1) {
-            setUploadState('chunkIndex', i => i+1);
+            setUploadState('chunkIndex', i => i + 1);
             return;
           }
 
@@ -373,7 +363,7 @@ const Uploader: Component<{
 
     totalStart = Date.now();
 
-    for (let i=0;i < chunkLimit; i++) {
+    for (let i = 0; i < chunkLimit; i++) {
       setTimeout(() => {
         setUploadState('chunkIndex', () => i);
       }, 0)

@@ -1,6 +1,8 @@
 import { ContentModeration, FeedPage, LnbcInvoice, } from "./types/primal";
-import logoFire from './assets/icons/logo_fire.svg';
-import logoIce from './assets/icons/logo_ice.svg';
+import bzzLogo from './assets/images/bzz_logo.png';
+
+import bzzLogoDark from './assets/images/bzz_logo_dark.png';
+
 
 export const second = 1000;
 export const minute = 60 * second;
@@ -17,7 +19,7 @@ export const emptyPage: FeedPage = {
   streams: [],
 }
 
-export const nostrHighlights ='9a500dccc084a138330a1d1b2be0d5e86394624325d25084d3eca164e7ea698a';
+export const nostrHighlights = '9a500dccc084a138330a1d1b2be0d5e86394624325d25084d3eca164e7ea698a';
 
 export const trendingFeed = {
   name: 'Trending, my network',
@@ -27,30 +29,18 @@ export const trendingFeed = {
 
 export const themes = [
   {
-    name: 'sunset',
-    label: 'sunset wave',
-    logo: logoFire,
+    name: 'bee_honey',
+    label: 'Bee Honey',
+    logo: bzzLogo,
+  },
+  {
+    name: 'cyber_hive',
+    label: 'Cyber Hive',
+    logo: bzzLogoDark,
     dark: true,
-  },
-  {
-    name: 'sunrise',
-    label: 'sunrise wave',
-    logo: logoFire,
-  },
-  {
-    name: 'midnight',
-    label: 'midnight wave',
-    logo: logoIce,
-    dark: true,
-  },
-  {
-    name:  'ice',
-    label: 'ice wave',
-    logo: logoIce,
-  },
-];
+  },];
 
-export const minKnownProfiles: {"names": Record<string,string>} = {
+export const minKnownProfiles: { "names": Record<string, string> } = {
   "names": {
     "miljan": "d61f3bc5b3eb4400efdae6169a5c17cabf3246b514361de939ce4a1a0da6ef4a",
     "marko": "123afae7d187ba36d6ddcd97dbf4acc59aeffe243f782592ff8f25ed579df306",
@@ -88,7 +78,7 @@ export const scopeLabels: Record<string, string> = {
 
 export const noKey = 'no-key';
 
-export enum Kind  {
+export enum Kind {
   Metadata = 0,
   Text = 1,
   RecommendRelay = 2,
@@ -158,26 +148,23 @@ export enum Kind  {
   UserFollowerCounts = 10_000_133,
   SuggestedUsersByCategory = 10_000_134,
   UploadChunk = 10_000_135,
-  UserRelays=10_000_139,
-  RelayHint=10_000_141,
-  NoteQuoteStats=10_000_143,
-  WordCount=10_000_144,
-  FeaturedAuthors=10_000_148,
-  DVMFollowsActions=10_000_156,
-  UserFollowerIncrease=10_000_157,
-  VerifiedUsersDict=10_000_158,
-  DVMMetadata=10_000_159,
-  NoteTopicStat=10_000_160,
-  MediaStats=10_000_163,
-  MediaList=10_000_164,
-  ContentStats=10_000_166,
-  BroadcastStatus=10_000_167,
-  LegendCustomization=10_000_168,
-  MembershipCohortInfo = 10_000_169,
-  LegendLeaderboard=10_000_170,
-  PremiumLeaderboard=10_000_171,
-  ArticlesStats=10_000_174,
-  LiveEventStats=10_000_176,
+  UserRelays = 10_000_139,
+  RelayHint = 10_000_141,
+  NoteQuoteStats = 10_000_143,
+  WordCount = 10_000_144,
+  FeaturedAuthors = 10_000_148,
+  DVMFollowsActions = 10_000_156,
+  UserFollowerIncrease = 10_000_157,
+  VerifiedUsersDict = 10_000_158,
+  DVMMetadata = 10_000_159,
+  NoteTopicStat = 10_000_160,
+  MediaStats = 10_000_163,
+  MediaList = 10_000_164,
+  ContentStats = 10_000_166,
+  BroadcastStatus = 10_000_167,
+
+  ArticlesStats = 10_000_174,
+  LiveEventStats = 10_000_176,
 
   WALLET_OPERATION = 10_000_300,
   WALLET_NWC_ACTIVE = 10_000_802,
@@ -216,12 +203,12 @@ export enum NotificationType {
   POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPOSTED = 203,
   POST_YOUR_POST_WAS_MENTIONED_IN_WAS_REPLIED_TO = 204,
 
-  YOUR_POST_WAS_HIGHLIGHTED=301,
-  YOUR_POST_WAS_BOOKMARKED=302,
-  YOUR_POST_HAD_REACTION=303,
+  YOUR_POST_WAS_HIGHLIGHTED = 301,
+  YOUR_POST_WAS_BOOKMARKED = 302,
+  YOUR_POST_HAD_REACTION = 303,
 
-  LIVE_EVENT_HAPPENING=501,
-  REPLY_TO_REPLY=601,
+  LIVE_EVENT_HAPPENING = 501,
+  REPLY_TO_REPLY = 601,
 };
 
 export const mentionedNotifTypes = [
@@ -389,7 +376,7 @@ export const mdImageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|webp|gif|format=png
 export const specialCharsRegex = /[^A-Za-z0-9]/;
 export const hashtagCharsRegex = /[^A-Za-z0-9\-\_]/;
 
-  export const eventAddresRegex = /[0-9]+:[A-Za-z0-9]+:[A-Za-z0-9]+/;
+export const eventAddresRegex = /[0-9]+:[A-Za-z0-9]+:[A-Za-z0-9]+/;
 
 // How long, in words, should a short note be
 export const shortNoteWords = 200;
@@ -439,13 +426,10 @@ export const today = (new Date()).getTime();
 // iOS
 export const iosRD = (new Date('12/19/2023')).getTime();
 export const iosVersion = '1.1.10';
-export const appStoreLink = 'https://apps.apple.com/us/app/primal/id1673134518';
 
 // Android
 export const andRD = (new Date('02/02/2024')).getTime();
 export const andVersion = '0.91.2';
-export const playstoreLink = 'https://play.google.com/store/apps/details?id=net.primal.android';
-export const apkLink = `https://github.com/PrimalHQ/primal-android-app/releases/tag/${andVersion}`;
 
 // ----------------------------------------
 
@@ -477,7 +461,7 @@ export const defaultContentModeration: ContentModeration[] = [
   nsfwContentModeration,
 ];
 
-export const algoNpub ='npub1tkpg9lyfgy83c4mgrgkrhzl90t732ekzvt73m6658xva88g5rj6qy6ntw4';
+export const algoNpub = 'npub1tkpg9lyfgy83c4mgrgkrhzl90t732ekzvt73m6658xva88g5rj6qy6ntw4';
 
 export const specialAlgos = ['primal_spam', 'primal_nsfw'];
 
@@ -518,8 +502,6 @@ export const threadLenghtInMs = 900;
 
 export const uploadLimit = {
   regular: 100,
-  premium: 1024,
-  premiumLegend: 10 * 1024,
 }
 
 export const emptyInvoice: LnbcInvoice = {
@@ -531,7 +513,7 @@ export const emptyInvoice: LnbcInvoice = {
 
 export const supportedBookmarkTypes = ['a', 'e'];
 
-export const floatingPoints: Record<string,number> = {
+export const floatingPoints: Record<string, number> = {
   sats: 0,
   USD: 2,
   _: 2,

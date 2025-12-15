@@ -91,6 +91,7 @@ import LiveEventPreview from '../LiveVideo/LiveEventPreview';
 import ExternalLiveEventPreview from '../LiveVideo/ExternalLiveEventPreview';
 import NoteVideo from './NoteVideo';
 import { accountStore } from '../../stores/accountStore';
+import { useSettingsContext } from '../../contexts/SettingsContext';
 
 const groupGridLimit = 5;
 
@@ -102,77 +103,77 @@ export type NoteContent = {
 
 export const groupGalleryImages = (noteHolder: HTMLDivElement | undefined) => {
 
-      // Go through the note and find all images to group them in sections separated by non-image content.
-      // Once grouped we will combine them in a grid layout to save screen space.
+  // Go through the note and find all images to group them in sections separated by non-image content.
+  // Once grouped we will combine them in a grid layout to save screen space.
 
-      if (!noteHolder) return;
+  if (!noteHolder) return;
 
-      // Get all images
-      const allImgs: NodeListOf<HTMLAnchorElement> = noteHolder.querySelectorAll('a.noteimage');
+  // Get all images
+  const allImgs: NodeListOf<HTMLAnchorElement> = noteHolder.querySelectorAll('a.noteimage');
 
-      if (allImgs.length === 0) return;
+  if (allImgs.length === 0) return;
 
-      // If there is only a single image, just remove thumbnail cropping, nothing more is needed.
-      if (allImgs.length === 1) {
-        allImgs[0].removeAttribute('data-cropped');
-        return;
-      }
+  // If there is only a single image, just remove thumbnail cropping, nothing more is needed.
+  if (allImgs.length === 1) {
+    allImgs[0].removeAttribute('data-cropped');
+    return;
+  }
 
-      let grouped: { group: string, images: HTMLAnchorElement[]}[] = [];
+  let grouped: { group: string, images: HTMLAnchorElement[] }[] = [];
 
-      // Sort images into groups, based on `data-image-group` attribute
-      allImgs.forEach((img) => {
-        // @ts-ignore
-        const group: string = img.attributes['data-image-group'].nodeValue;
+  // Sort images into groups, based on `data-image-group` attribute
+  allImgs.forEach((img) => {
+    // @ts-ignore
+    const group: string = img.attributes['data-image-group'].nodeValue;
 
-        let g = grouped.find((g) => g.group === group);
+    let g = grouped.find((g) => g.group === group);
 
-        if (g) {
-          g.images.push(img);
-        }
-        else {
-          grouped.push({ group, images: [img] })
-        }
-      });
+    if (g) {
+      g.images.push(img);
+    }
+    else {
+      grouped.push({ group, images: [img] })
+    }
+  });
 
-      // Wrap each group into a div with a grid layout,
-      grouped.forEach(group => {
-        // if there is only one image in this group nothing further is needed
-        if (group.images.length < 2) return;
+  // Wrap each group into a div with a grid layout,
+  grouped.forEach(group => {
+    // if there is only one image in this group nothing further is needed
+    if (group.images.length < 2) return;
 
-        const groupCount = group.images.length;
-        const gridClass = groupCount < groupGridLimit ? `grid-${groupCount}` : 'grid-large';
+    const groupCount = group.images.length;
+    const gridClass = groupCount < groupGridLimit ? `grid-${groupCount}` : 'grid-large';
 
-        const first = group.images[0];
-        const parent = first.parentElement;
+    const first = group.images[0];
+    const parent = first.parentElement;
 
-        // Create the wrapper for this group
-        const wrapper = document.createElement('div');
+    // Create the wrapper for this group
+    const wrapper = document.createElement('div');
 
-        // Insert the wrapper into the note content, before the first image of the group
-        parent?.insertBefore(wrapper, first);
+    // Insert the wrapper into the note content, before the first image of the group
+    parent?.insertBefore(wrapper, first);
 
-        // Move each image of the group into the wrapper, also setting css classes and atributes for proper display
-        group.images.forEach((img, index) => {
-          img.classList.add(`cell_${index+1}`);
-          img.setAttribute('style', 'width: 100%; height: 100%;');
-          img.classList.remove('noteimage');
-          img.classList.add('noteimage_gallery');
+    // Move each image of the group into the wrapper, also setting css classes and atributes for proper display
+    group.images.forEach((img, index) => {
+      img.classList.add(`cell_${index + 1}`);
+      img.setAttribute('style', 'width: 100%; height: 100%;');
+      img.classList.remove('noteimage');
+      img.classList.add('noteimage_gallery');
 
-          img.classList.remove('roundedImage');
-          wrapper.appendChild(img as Node)
-        });
+      img.classList.remove('roundedImage');
+      wrapper.appendChild(img as Node)
+    });
 
-        // Add classes to the wrapper for layouting
-        wrapper.classList.add('imageGrid');
-        wrapper.classList.add(gridClass)
-      });
+    // Add classes to the wrapper for layouting
+    wrapper.classList.add('imageGrid');
+    wrapper.classList.add(gridClass)
+  });
 
-      const brs = [].slice.call(noteHolder.querySelectorAll('br + br + br'));
+  const brs = [].slice.call(noteHolder.querySelectorAll('br + br + br'));
 
-      brs.forEach((br: HTMLBRElement) =>{
-        br.parentNode?.removeChild(br);
-      });
+  brs.forEach((br: HTMLBRElement) => {
+    br.parentNode?.removeChild(br);
+  });
 };
 
 const ParsedNote: Component<{
@@ -281,13 +282,13 @@ const ParsedNote: Component<{
 
   const updateContent = (contentArray: NoteContent[], type: string, token: string, meta?: Record<string, any>) => {
     const len = contentArray.length;
-    const index = contentArray.length -1
+    const index = contentArray.length - 1
 
-    if (len > 0 && contentArray[len -1].type === type) {
+    if (len > 0 && contentArray[len - 1].type === type) {
 
-      setContent(index, 'tokens' , (els) => [...els, token]);
+      setContent(index, 'tokens', (els) => [...els, token]);
 
-      meta && setContent(index, 'meta' , () => ({ ...meta }));
+      meta && setContent(index, 'meta', () => ({ ...meta }));
 
       return;
     }
@@ -298,6 +299,8 @@ const ParsedNote: Component<{
   let lastSignificantContent = 'text';
   let isAfterEmbed = false;
   let totalLinks = 0;
+
+  const settings = useSettingsContext();
 
   const parseToken = (token: string) => {
     if (token === '__LB__') {
@@ -366,7 +369,7 @@ const ParsedNote: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/mp4'});
+          updateContent(content, 'video', token, { videoType: 'video/mp4' });
           return;
         }
 
@@ -374,7 +377,7 @@ const ParsedNote: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/ogg'});
+          updateContent(content, 'video', token, { videoType: 'video/ogg' });
           return;
         }
 
@@ -382,7 +385,7 @@ const ParsedNote: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/webm'});
+          updateContent(content, 'video', token, { videoType: 'video/webm' });
           return;
         }
 
@@ -390,7 +393,7 @@ const ParsedNote: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/3gpp'});
+          updateContent(content, 'video', token, { videoType: 'video/3gpp' });
           return;
         }
 
@@ -503,7 +506,7 @@ const ParsedNote: Component<{
         preview &&
         preview.url &&
         ((!!preview.description && preview.description.length > 0) ||
-          !preview.images?.some((x:any) => x === '') ||
+          !preview.images?.some((x: any) => x === '') ||
           !!preview.title
         );
 
@@ -594,7 +597,7 @@ const ParsedNote: Component<{
 
     parseContent();
 
-    for (let i=0; i<tokens.length; i++) {
+    for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i];
 
       parseToken(token);
@@ -622,15 +625,15 @@ const ParsedNote: Component<{
     // Allow max consecutive linebreak
     const len = Math.min(2, tokens.length);
 
-    const lineBreaks = Array(len).fill(<br/>)
+    const lineBreaks = Array(len).fill(<br />)
 
-    return <For each={lineBreaks}>{_ => <br/>}</For>
+    return <For each={lineBreaks}>{_ => <br />}</For>
   };
 
   const renderText = (item: NoteContent) => {
     let tokens = [];
 
-    for (let i=0;i<item.tokens.length;i++) {
+    for (let i = 0; i < item.tokens.length; i++) {
       const token = item.tokens[i];
 
       if (isNoteTooLong()) break;
@@ -661,7 +664,7 @@ const ParsedNote: Component<{
     }
 
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     if (groupCount === 1) {
@@ -721,7 +724,7 @@ const ParsedNote: Component<{
           }
 
           return <NoteImage
-            class={`noteimage_gallery image_${props.note.noteId} cell_${index()+1}`}
+            class={`noteimage_gallery image_${props.note.noteId} cell_${index() + 1}`}
             src={url}
             altSrc={url}
             isDev={dev}
@@ -745,7 +748,7 @@ const ParsedNote: Component<{
 
   const renderAudio = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>{
@@ -753,12 +756,12 @@ const ParsedNote: Component<{
         if (isNoteTooLong()) return;
 
         const audio = <div>
-            <audio
-              class={styles.audio}
-              controls={true}
-              src={token}
-            />
-          </div>
+          <audio
+            class={styles.audio}
+            controls={true}
+            src={token}
+          />
+        </div>
 
         return audio;
       }
@@ -767,7 +770,7 @@ const ParsedNote: Component<{
 
   const renderVideo = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>{
@@ -855,7 +858,7 @@ const ParsedNote: Component<{
 
   const renderYouTube = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -882,7 +885,7 @@ const ParsedNote: Component<{
 
   const renderSpotify = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -910,7 +913,7 @@ const ParsedNote: Component<{
 
   const renderTwitch = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -936,7 +939,7 @@ const ParsedNote: Component<{
 
   const renderMixCloud = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -963,7 +966,7 @@ const ParsedNote: Component<{
 
   const renderSoundCloud = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -987,7 +990,7 @@ const ParsedNote: Component<{
 
   const renderAppleMusic = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -1015,7 +1018,7 @@ const ParsedNote: Component<{
 
   const renderTwitchPlayer = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -1039,7 +1042,7 @@ const ParsedNote: Component<{
 
   const renderTidal = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -1076,7 +1079,7 @@ const ParsedNote: Component<{
 
   const renderRumble = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -1100,7 +1103,7 @@ const ParsedNote: Component<{
 
   const renderWavelake = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -1136,7 +1139,7 @@ const ParsedNote: Component<{
             <LinkPreview
               preview={item.meta.preview}
               bordered={props.isEmbeded}
-              isLast={index === content.length-1}
+              isLast={index === content.length - 1}
             />
           );
         }
@@ -1376,7 +1379,7 @@ const ParsedNote: Component<{
 
   const renderLongFormMention = (mention: PrimalArticle | undefined, index?: number) => {
 
-    if(!mention || props.veryShort) return <></>;
+    if (!mention || props.veryShort) return <></>;
 
     if (props.noLinks === 'links') {
       return <SimpleArticlePreview article={mention} noLink={true} />
@@ -1504,7 +1507,7 @@ const ParsedNote: Component<{
                     <EmbeddedNote
                       note={ment}
                       mentionedUsers={mentionedUsers || {}}
-                      isLast={index === content.length-1}
+                      isLast={index === content.length - 1}
                       alternativeBackground={props.altEmbeds}
                       footerSize={props.footerSize}
                       hideFooter={true}
@@ -1809,7 +1812,7 @@ const ParsedNote: Component<{
             id: mention.id,
             author: mention.pubkey,
             kind: mention.msg.kind,
-            relays: mention.msg.tags.reduce((acc, t) => t[0] === 'r' && (t[1].startsWith('wss://' ) || t[1].startsWith('ws://')) ? [...acc, t[1]] : acc, []).slice(0,3),
+            relays: mention.msg.tags.reduce((acc, t) => t[0] === 'r' && (t[1].startsWith('wss://') || t[1].startsWith('ws://')) ? [...acc, t[1]] : acc, []).slice(0, 3),
           };
 
           const noteId = `nostr:${nip19.neventEncode(eventPointer)}`;

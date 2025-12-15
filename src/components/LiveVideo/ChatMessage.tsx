@@ -6,6 +6,7 @@ import { nip19 } from '../../lib/nTools';
 import { truncateNpub, userName } from '../../stores/profile';
 import { PrimalArticle, PrimalUser } from '../../types/primal';
 import { useDMContext } from '../../contexts/DMContext';
+import { useSettingsContext } from '../../contexts/SettingsContext';
 import { A } from '@solidjs/router';
 import { useAppContext } from '../../contexts/AppContext';
 import { decodeIdentifier, hexToNpub } from '../../lib/keys';
@@ -36,6 +37,7 @@ const ChatMessage: Component<{
   const app = useAppContext();
   const media = useMediaContext();
   const dms = useDMContext();
+  const settings = useSettingsContext();
 
   // const [tokens, setTokens] = createStore<string[]>([]);
   const [content, setContent] = createStore<NoteContent[]>([]);
@@ -52,13 +54,13 @@ const ChatMessage: Component<{
 
   const updateContent = (contentArray: NoteContent[], type: string, token: string, meta?: Record<string, any>) => {
     const len = contentArray.length;
-    const index = contentArray.length -1
+    const index = contentArray.length - 1
 
-    if (len > 0 && contentArray[len -1].type === type) {
+    if (len > 0 && contentArray[len - 1].type === type) {
 
-      setContent(index, 'tokens' , (els) => [...els, token]);
+      setContent(index, 'tokens', (els) => [...els, token]);
 
-      meta && setContent(index, 'meta' , () => ({ ...meta }));
+      meta && setContent(index, 'meta', () => ({ ...meta }));
 
       return;
     }
@@ -70,7 +72,7 @@ const ChatMessage: Component<{
 
     const tokens = parseContent();
 
-    for (let i=0; i<tokens.length; i++) {
+    for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i];
 
       parseToken(token);
@@ -98,6 +100,15 @@ const ChatMessage: Component<{
 
   const parseToken = (token: string) => {
     if (token === '__LB__') {
+      if (settings?.theme === 'bee_honey') {
+        if (isAfterEmbed) {
+          return;
+        }
+
+        updateContent(content, 'linebreak', token);
+        lastSignificantContent = 'LB';
+        return;
+      }
       if (isAfterEmbed) {
         return;
       }
@@ -157,7 +168,7 @@ const ChatMessage: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/mp4'});
+          updateContent(content, 'video', token, { videoType: 'video/mp4' });
           return;
         }
 
@@ -165,7 +176,7 @@ const ChatMessage: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/ogg'});
+          updateContent(content, 'video', token, { videoType: 'video/ogg' });
           return;
         }
 
@@ -173,7 +184,7 @@ const ChatMessage: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/webm'});
+          updateContent(content, 'video', token, { videoType: 'video/webm' });
           return;
         }
 
@@ -181,7 +192,7 @@ const ChatMessage: Component<{
           removeLinebreaks('video');
           isAfterEmbed = true;
           lastSignificantContent = 'video';
-          updateContent(content, 'video', token, { videoType: 'video/3gpp'});
+          updateContent(content, 'video', token, { videoType: 'video/3gpp' });
           return;
         }
 
@@ -254,7 +265,7 @@ const ChatMessage: Component<{
         preview &&
         preview.url &&
         ((!!preview.description && preview.description.length > 0) ||
-          !preview.images?.some((x:any) => x === '') ||
+          !preview.images?.some((x: any) => x === '') ||
           !!preview.title
         );
 
@@ -367,15 +378,15 @@ const ChatMessage: Component<{
     // Allow max consecutive linebreak
     const len = Math.min(2, tokens.length);
 
-    const lineBreaks = Array(len).fill(<br/>)
+    const lineBreaks = Array(len).fill(<br />)
 
-    return <For each={lineBreaks}>{_ => <br/>}</For>
+    return <For each={lineBreaks}>{_ => <br />}</For>
   };
 
   const renderText = (item: NoteContent) => {
     let tokens = [];
 
-    for (let i=0;i<item.tokens.length;i++) {
+    for (let i = 0; i < item.tokens.length; i++) {
       const token = item.tokens[i];
       tokens.push(token)
     }
@@ -391,7 +402,7 @@ const ChatMessage: Component<{
     const imageGroup = generatePrivateKey();
 
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     if (groupCount === 1) {
@@ -432,7 +443,7 @@ const ChatMessage: Component<{
             token;
 
           return <NoteImage
-            class={`noteimage_gallery cell_${index()+1}`}
+            class={`noteimage_gallery cell_${index() + 1}`}
             src={url}
             isDev={isDev()}
             media={image}
@@ -450,7 +461,7 @@ const ChatMessage: Component<{
 
   const renderVideo = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>{
@@ -464,8 +475,8 @@ const ChatMessage: Component<{
         if (mVideo) {
           const margins = 20;
           const ratio = mVideo.w / mVideo.h;
-          h = ((noteWidth() - 2*margins) / ratio);
-          w = h > 680 ? 680 * ratio : noteWidth() - 2*margins;
+          h = ((noteWidth() - 2 * margins) / ratio);
+          w = h > 680 ? 680 * ratio : noteWidth() - 2 * margins;
           h = h > 680 ? 680 : h;
         }
 
@@ -495,7 +506,7 @@ const ChatMessage: Component<{
 
   const renderYouTube = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -518,7 +529,7 @@ const ChatMessage: Component<{
 
   const renderSpotify = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -543,7 +554,7 @@ const ChatMessage: Component<{
 
   const renderTwitch = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -566,7 +577,7 @@ const ChatMessage: Component<{
 
   const renderMixCloud = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -590,7 +601,7 @@ const ChatMessage: Component<{
 
   const renderSoundCloud = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -611,7 +622,7 @@ const ChatMessage: Component<{
 
   const renderAppleMusic = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -636,7 +647,7 @@ const ChatMessage: Component<{
 
   const renderWavelake = (item: NoteContent, index?: number) => {
     // Remove bottom margin if media is the last thing in the note
-    const lastClass = index === content.length-1 ?
+    const lastClass = index === content.length - 1 ?
       'noBottomMargin' : '';
 
     return <For each={item.tokens}>
@@ -777,7 +788,7 @@ const ChatMessage: Component<{
 
   const renderLongFormMention = (mention: PrimalArticle | undefined, index?: number) => {
 
-    if(!mention) return <></>;
+    if (!mention) return <></>;
 
     return (
       <div class={styles.articlePreview}>
@@ -830,9 +841,9 @@ const ChatMessage: Component<{
             const noteAuthor = props.mentionedUsers.find(u => u.pubkey === pubkey);
 
             const short = nip19.neventEncode({
-                id: decoded.data.id,
-                author: decoded.data.author,
-                kind: decoded.data.kind,
+              id: decoded.data.id,
+              author: decoded.data.author,
+              kind: decoded.data.kind,
             })
 
             return <a
@@ -855,7 +866,7 @@ const ChatMessage: Component<{
             Note
           </a>;
         }
-       }}
+      }}
     </For>
   };
 

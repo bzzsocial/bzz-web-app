@@ -8,7 +8,7 @@ import { A } from '@solidjs/router';
 import { useSettingsContext } from '../../contexts/SettingsContext';
 import PageTitle from '../../components/PageTitle/PageTitle';
 
-import logo from "../../assets/icons/logo.svg";
+import logo from "../../assets/icons/logo.png";
 import ButtonPrimary from '../../components/Buttons/ButtonPrimary';
 import ButtonLink from '../../components/Buttons/ButtonLink';
 import { WalletStatus } from '../../pages/Settings/NostrWalletConnect';
@@ -25,50 +25,50 @@ const NWCItem: Component<{
 
   return (
     <div class={styles.nwcWallet} data-status={props.status}>
-        <img src={props.logo} class={styles.logo} />
-        <div class={styles.walletInfos}>
-          <div class={styles.walletInfo}>
-            <div class={styles.walletName}>
-              {props.name}
-            </div>
-            <div class={styles.walletDesc}>
-              {props.desc}
-            </div>
+      <img src={props.logo} class={styles.logo} />
+      <div class={styles.walletInfos}>
+        <div class={styles.walletInfo}>
+          <div class={styles.walletName}>
+            {props.name}
           </div>
-
-          <div class={styles.walletRemove}>
-            <Switch>
-              <Match when={props.onRemove && props.status !== 'connected'}>
-                <ButtonLink onClick={() => props.onRemove && props.onRemove()}>
-                  remove
-                </ButtonLink>
-              </Match>
-              <Match when={props.onDisconnect && props.status === 'connected'}>
-                <ButtonLink onClick={() => props.onDisconnect && props.onDisconnect()}>
-                  disconnect
-                </ButtonLink>
-              </Match>
-            </Switch>
+          <div class={styles.walletDesc}>
+            {props.desc}
           </div>
         </div>
-        <div class={styles.walletAction}>
-          <Switch fallback={
-            <div></div>
-          }>
-            <Match when={props.status === 'connected'}>
-              <div class={styles.walletActive}>
-                <div class={styles.checkCircleIcon}></div>
-                <div>Active</div>
-              </div>
+
+        <div class={styles.walletRemove}>
+          <Switch>
+            <Match when={props.onRemove && props.status !== 'connected'}>
+              <ButtonLink onClick={() => props.onRemove && props.onRemove()}>
+                remove
+              </ButtonLink>
             </Match>
-            <Match when={props.status === 'active' || props.status === 'none'}>
-              <ButtonPrimary onClick={props.onConnect}>
-                Connect
-              </ButtonPrimary>
+            <Match when={props.onDisconnect && props.status === 'connected'}>
+              <ButtonLink onClick={() => props.onDisconnect && props.onDisconnect()}>
+                disconnect
+              </ButtonLink>
             </Match>
           </Switch>
         </div>
       </div>
+      <div class={styles.walletAction}>
+        <Switch fallback={
+          <div></div>
+        }>
+          <Match when={props.status === 'connected'}>
+            <div class={styles.walletActive}>
+              <div class={styles.checkCircleIcon}></div>
+              <div>Active</div>
+            </div>
+          </Match>
+          <Match when={props.status === 'active' || props.status === 'none'}>
+            <ButtonPrimary onClick={props.onConnect}>
+              Connect
+            </ButtonPrimary>
+          </Match>
+        </Switch>
+      </div>
+    </div>
   )
 }
 

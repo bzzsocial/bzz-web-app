@@ -51,13 +51,13 @@ export const account = {
   },
   createNewDescription: {
     id: 'account.createNewDescription',
-    defaultMessage: 'It will only take a minute to login to primal.net securely.',
+    defaultMessage: 'It will only take a minute to login to bzz.social securely.',
     description: 'Label inviting users to join Nostr',
   },
   getStartedSteps: {
     step_one: {
       id: 'settings.account.getStartedSteps.step_one',
-      defaultMessage: 'Install the Primal mobile app',
+      defaultMessage: 'Install the Bzz mobile app',
       description: 'First step in getting started',
     },
     step_two: {
@@ -100,7 +100,7 @@ export const account = {
 export const login = {
   title: {
     id: 'login.title',
-    defaultMessage: 'Login to Primal.net',
+    defaultMessage: 'Login to Bzz.social',
     description: 'Login ',
   },
   tabs: {
@@ -145,7 +145,7 @@ export const pin = {
   },
   description: {
     id: 'pin.description',
-    defaultMessage: 'Create a PIN to secure your account. You will need to enter this PIN every time you login to the Primal web app:',
+    defaultMessage: 'Create a PIN to secure your account. You will need to enter this PIN every time you login to the Bzz web app:',
     description: 'Label describing what the pin is used for',
   },
   enter: {
@@ -233,7 +233,7 @@ export const actions = {
   },
   getStartedTitle: {
     id: 'actions.getStartedTitle',
-    defaultMessage: 'Get Started - Download the Primal Mobile App',
+    defaultMessage: 'Get Started - Download the Bzz Mobile App',
     description: 'Get Started action title',
   },
   forgotPin: {
@@ -288,8 +288,8 @@ export const actions = {
   },
   noteCopyPrimalLink: {
     id: 'actions.noteCopyPrimalLink',
-    defaultMessage: 'Copy Primal link',
-    description: 'Label for the copy Primal note link context menu item',
+    defaultMessage: 'Copy Bzz link',
+    description: 'Label for the copy Bzz note link context menu item',
   },
   notePostNew: {
     id: 'actions.notePostNew',
@@ -650,104 +650,12 @@ export const actions = {
 
 export const branding = {
   id: 'branding',
-  defaultMessage: 'Primal',
+  defaultMessage: 'Bzz',
   description: 'Brand name',
+  title: 'Bzz',
 };
 
-export const downloads = {
-  title: {
-    id: 'downloads.title',
-    defaultMessage: 'Downloads',
-    description: 'Title of the downloads page',
-  },
-  build: {
-    id: 'downloads.build',
-    defaultMessage: 'Build',
-    description: 'Build label',
-  },
-  released: {
-    id: 'downloads.released',
-    defaultMessage: 'released',
-    description: 'Released label',
-  },
-  getApk: {
-    id: 'downloads.getApk',
-    defaultMessage: 'Get APK instead',
-    description: 'APK download label',
-  },
-  callToActionIOSTitle: {
-    id: 'downloads.ctaIOSTitle',
-    defaultMessage: 'Primal iOS',
-    description: 'Title for the iOS downloads\' page call-to-action',
-  },
-  callToActionIOSDescription: {
-    id: 'downloads.ctaAndroidDescription',
-    defaultMessage: 'The app features easy onboarding, fast & snappy UI, ability to explore Nostr, and create & manage custom feeds',
-    description: 'Description for the iOS downloads\' page call-to-action',
-  },
-  callToActionAndroidTitle: {
-    id: 'downloads.ctaAndroidTitle',
-    defaultMessage: 'Primal Android',
-    description: 'Title for the Android downloads\' page call-to-action',
-  },
-  callToActionAndroidDescription: {
-    id: 'downloads.ctaAndroidDescription',
-    defaultMessage: 'The app features easy onboarding, fast & snappy UI, ability to explore Nostr, and create & manage custom feeds',
-    description: 'Description for the Android downloads\' page call-to-action',
-  },
-  callToActionQRTitle: {
-    id: 'downloads.ctaQRTitle',
-    defaultMessage: 'Scan to install app',
-    description: 'Title for the QR code downloads\' page call-to-action',
-  },
-  appStoreCaption: {
-    id: 'downloads.appStoreCaption',
-    defaultMessage: 'TestFlight Available Now',
-    description: 'AppStore promo caption',
-  },
-  playStoreCaption: {
-    id: 'downloads.playStoreCaption',
-    defaultMessage: 'Coming soon to Android',
-    description: 'PlayStore promo caption',
-  },
-  apkDownload: {
-    id: 'downloads.apkDownload',
-    defaultMessage: 'Alpha Build Available Now',
-    description: 'APK download caption',
-  },
-  links: {
-    title: {
-      id: 'downloads.sidebarTitle',
-      defaultMessage: 'Source code',
-      description: 'Daownload sidebar links title',
-    },
-    webApp: {
-      id: 'downloads.webAppLink',
-      defaultMessage: 'Primal Web App',
-      description: 'Label for the link to the web app',
-    },
-    iosApp: {
-      id: 'downloads.iosAppLink',
-      defaultMessage: 'Primal iOS App',
-      description: 'Label for the link to the iOS app',
-    },
-    andApp: {
-      id: 'downloads.andAppLink',
-      defaultMessage: 'Primal Android App',
-      description: 'Label for the link to the Android app',
-    },
-    cachingService: {
-      id: 'downloads.cachingService',
-      defaultMessage: 'Primal Caching Service',
-      description: 'Label for the link to the caching service',
-    },
-    primalServer: {
-      id: 'downloads.primalServer',
-      defaultMessage: 'Primal Server',
-      description: 'Label for the link to the primal server',
-    },
-  },
-};
+
 
 export const confirmDefaults = {
   title: {
@@ -797,7 +705,7 @@ export const explore = {
   statDisplay: {
     users: {
       id: 'explore.stats.users',
-      defaultMessage:'Users',
+      defaultMessage: 'Users',
       description: 'Label for number of users stats',
     },
     pubkeys: {
@@ -950,16 +858,7 @@ export const navBar = {
     defaultMessage: 'Notifications',
     description: 'Label for the nav bar item link to Notifications page',
   },
-  downloads: {
-    id: 'navbar.downloads',
-    defaultMessage: 'Downloads',
-    description: 'Label for the nav bar item link to Downloads page',
-  },
-  premium: {
-    id: 'navbar.premium',
-    defaultMessage: 'Premium',
-    description: 'Label for the nav bar item link to Premium page',
-  },
+
   settings: {
     id: 'navbar.settings',
     defaultMessage: 'Settings',
@@ -1817,10 +1716,10 @@ export const settings = {
       description: 'Title of the media server',
     },
     mediaMirrors: {
-        id: 'settings.blossom.mediaMirrors',
-        defaultMessage: 'Media Mirrors',
-        description: 'Title of the media mirrors',
-      },
+      id: 'settings.blossom.mediaMirrors',
+      defaultMessage: 'Media Mirrors',
+      description: 'Title of the media mirrors',
+    },
     mediaMirrorsDescription: {
       id: 'settings.blossom.mediaMirrorsDescription',
       defaultMessage: 'You can enable one or more media mirror servers. When enabled, your uploads to the primary media server will be automatically copied to the mirror(s).',
@@ -2033,7 +1932,7 @@ export const settings = {
         defaultMessage: 'Pick a longer display name (e. g. “Satoshi Nakamoto”)',
         description: 'Help for displayName input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.displayName.placeholder',
         defaultMessage: 'Enter display name',
         description: 'Placeholder for display name input on edit profile page',
@@ -2055,7 +1954,7 @@ export const settings = {
         defaultMessage: 'Pick a short user handle (e. g. “satoshi”)',
         description: 'Help for name input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.name.placeholder',
         defaultMessage: 'Enter username',
         description: 'Placeholder for name input on edit profile page',
@@ -2077,7 +1976,7 @@ export const settings = {
         defaultMessage: 'Website',
         description: 'Label for website input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.website.placeholder',
         defaultMessage: 'https://www.mysite.com',
         description: 'Placeholder for website input on edit profile page',
@@ -2089,7 +1988,7 @@ export const settings = {
         defaultMessage: 'About Me',
         description: 'Label for about input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.about.placeholder',
         defaultMessage: 'Say something about yourself',
         description: 'Placeholder for about input on edit profile page',
@@ -2101,7 +2000,7 @@ export const settings = {
         defaultMessage: 'Bitcoin Lightning Address',
         description: 'Label for lud16 input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.lud16.placeholder',
         defaultMessage: 'Enter your LN address',
         description: 'Placeholder for lud16 input on edit profile page',
@@ -2113,7 +2012,7 @@ export const settings = {
         defaultMessage: 'Verified Nostr Address (NIP-05)',
         description: 'Label for nip-05 input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.nip05.placeholder',
         defaultMessage: 'Enter your NIP-05 Verified Nostr ID',
         description: 'Placeholder for nip-05 input on edit profile page',
@@ -2125,7 +2024,7 @@ export const settings = {
         defaultMessage: 'Avatar Image Url',
         description: 'Label for avatar input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.picture.placeholder',
         defaultMessage: 'Enter your avatar url',
         description: 'Placeholder for avatar input on edit profile page',
@@ -2137,7 +2036,7 @@ export const settings = {
         defaultMessage: 'Banner Image Url',
         description: 'Label for banner input on edit profile page',
       },
-      placeholder : {
+      placeholder: {
         id: 'pages.settings.profile.banner.placeholder',
         defaultMessage: 'Enter your banner url',
         description: 'Placeholder for banner input on edit profile page',
@@ -2443,10 +2342,10 @@ export const errors = {
     description: 'Error text for invalid url',
   },
   invalidServerUrl: {
-      id: 'placeholders.invalidServerUrl',
-      defaultMessage: 'Invalid url',
-      description: 'Error text for invalid url',
-    },
+    id: 'placeholders.invalidServerUrl',
+    defaultMessage: 'Invalid url',
+    description: 'Error text for invalid url',
+  },
 };
 
 export const unknown = {
@@ -2735,386 +2634,7 @@ export const reactionsModal = {
   },
 };
 
-export const premium = {
-  labels: {
-    foreverPremium: {
-      id: 'pages.premium.labes.foreverPremium',
-      defaultMessage: 'Forever Premium',
-      description: 'Forever Premium perk title',
-    },
-    foreverPremiumDescription: {
-      id: 'pages.premium.labes.foreverPremiumDescription',
-      defaultMessage: 'Premium subscription never expires for legends.',
-      description: 'Forever Premium perk description',
-    },
-    privateBetaBuilds: {
-      id: 'pages.premium.labes.privateBetaBuilds',
-      defaultMessage: 'Private Beta Builds',
-      description: 'Private Beta Builds perk title',
-    },
-    privateBetaBuildsDescription: {
-      id: 'pages.premium.labes.privateBetaBuildsDescription',
-      defaultMessage: 'Get access to new features before they are public.',
-      description: 'Private Beta perk description',
-    },
-    moreMediaSpace: {
-      id: 'pages.premium.labes.moreMediaSpace',
-      defaultMessage: 'Way More Storage',
-      description: 'More Media perk title',
-    },
-    moreMediaSpaceDescription: {
-      id: 'pages.premium.labes.moreMediaSpaceDescription',
-      defaultMessage: 'Get 100GB of Primal Premium media storage.',
-      description: 'More Media perk description',
-    },
-    customLegendProfile: {
-      id: 'pages.premium.labes.customLegendProfile',
-      defaultMessage: 'Legendary Custom Profile',
-      description: 'Legendary Custom Profile perk title',
-    },
-    customLegendDescription: {
-      id: 'pages.premium.labes.customLegendDescription',
-      defaultMessage: 'Option to pick the color of your verified badge and set the glow around your avatar',
-      description: 'Legendary Custom Profile perk description',
-    },
-    legendPageCaption: {
-      id: 'pages.premium.labes.legendPageCaption',
-      defaultMessage: 'Donate $1000 or more to gain:',
-      description: 'Legend page caption',
-    },
-    legendPageExplanation: {
-      id: 'pages.premium.labes.legendPageExplanation',
-      defaultMessage: 'The Legend tier was created to recognize users who have made a significant contribution to Primal.',
-      description: 'Legend page explanation',
-    },
-    supportFirstLine: {
-      id: 'pages.premium.labes.supportFirstLine',
-      defaultMessage: 'Want to get more out of Primal?',
-      description: 'Support label first line',
-    },
-    supportSecondLine: {
-      id: 'pages.premium.labes.supportSecondLine',
-      defaultMessage: 'Check out ',
-      description: 'Support label second line',
-    },
-    supportCaption: {
-      id: 'pages.premium.labes.supportCaption',
-      defaultMessage: 'Be a part of the Nostr revolution and help us continue building for this ecosystem.',
-      description: 'Support page caption',
-    },
-    leaveStars: {
-      id: 'pages.premium.labes.leaveStars',
-      defaultMessage: 'Leave a 5 Star Review',
-      description: 'Support page 5 star review caption',
-    },
-    leaveStarsDescription: {
-      id: 'pages.premium.labes.leaveStarsDescription',
-      defaultMessage: 'App Store reviews really help improve the visibility of Nostr apps at this early stage.',
-      description: 'Support page 5 star review description',
-    },
-    extendSubscription: {
-      id: 'pages.premium.labes.extendSubscription',
-      defaultMessage: 'Extend Subscription',
-      description: 'Support page extend subscription caption',
-    },
-    extendSubscriptionDescription: {
-      id: 'pages.premium.labes.extendSubscriptionDescription',
-      defaultMessage: 'Extend your existing subscription to gain peace of mind and help fund Primal.',
-      description: 'Support page extend subscription description',
-    },
-    becomeLegend: {
-      id: 'pages.premium.labes.becomeLegend',
-      defaultMessage: 'Become a Legend',
-      description: 'Support page become legend caption',
-    },
-    becomeLegendDescription: {
-      id: 'pages.premium.labes.becomeLegendDescription',
-      defaultMessage: 'Donate $1000 or more to gain permanent membership and exclusive perks!',
-      description: 'Support page become legend description',
-    },
-  },
-  actions: {
-    payNow: {
-      id: 'pages.premium.actions.payNow',
-      defaultMessage: 'Pay Now',
-      description: 'Action to pay now',
-    },
-    becomeLegend: {
-      id: 'pages.premium.actions.becomeLegend',
-      defaultMessage: 'Become a Legend Now',
-      description: 'Action that takes user to the Become a Legend page',
-    },
-    getIOS: {
-      id: 'pages.premium.actions.getIOS',
-      defaultMessage: 'Go to iOS App',
-      description: 'Action that takes user to the iOS APP page',
-    },
-    getAndroid: {
-      id: 'pages.premium.actions.getAndroid',
-      defaultMessage: 'Go to Android App',
-      description: 'Action that takes user to the Android App page',
-    },
-    support: {
-      id: 'pages.premium.actions.support',
-      defaultMessage: 'support us',
-      description: 'Action that takes user to the support page',
-    },
-    primalPro: {
-      id: 'pages.premium.actions.primalPro',
-      defaultMessage: 'Primal Pro',
-      description: 'Action that takes user to the Primal Pro dialog',
-    },
-    start: {
-      id: 'pages.premium.actions.start',
-      defaultMessage: 'Find Primal Name',
-      description: 'Find primal name action on the premium page',
-    },
-    back: {
-      id: 'pages.premium.actions.back',
-      defaultMessage: 'Back',
-      description: 'To the previous step on the premium page',
-    },
-    next: {
-      id: 'pages.premium.actions.next',
-      defaultMessage: 'Next',
-      description: 'To the next step on the premium page',
-    },
-    subscribe: {
-      id: 'pages.premium.actions.subscribe',
-      defaultMessage: 'Continue to Payment',
-      description: 'Subscribe action on the premium page',
-    },
-    done: {
-      id: 'pages.premium.actions.done',
-      defaultMessage: 'Done',
-      description: 'Done action on the premium page',
-    },
-    tryAgain: {
-      id: 'pages.premium.actions.tryAgain',
-      defaultMessage: 'Try Again',
-      description: 'Try again action on the premium page',
-    },
-    rename: {
-      id: 'pages.premium.actions.rename',
-      defaultMessage: 'Rename',
-      description: 'To the rename step on the premium page',
-    },
-    changeName: {
-      id: 'pages.premium.actions.changeName',
-      defaultMessage: 'Change Your Primal Name',
-      description: 'Change Primal name action on the premium page',
-    },
-    extendPlan: {
-      id: 'pages.premium.actions.extendPlan',
-      defaultMessage: 'Extend Your Subscription',
-      description: 'Extend your subscription action on the premium page',
-    },
-    renewPlan: {
-      id: 'pages.premium.actions.renewPlan',
-      defaultMessage: 'Renew Your Subscription',
-      description: 'Extend your subscription action on the premium page',
-    },
-    managePremium: {
-      id: 'pages.premium.actions.managePremium',
-      defaultMessage: 'Manage Premium',
-      description: 'Manage your Premium Account',
-    },
-  },
-  title: {
-    general: {
-      id: 'pages.premium.title',
-      defaultMessage: 'Primal {productGroup}',
-      description: 'Title of the premium page',
-    },
-    name: {
-      id: 'pages.premium.name',
-      defaultMessage: 'Choose a primal name',
-      description: 'Title of the premium find name page',
-    },
-    subscription: {
-      id: 'pages.premium.subscription',
-      defaultMessage: 'Congrats!',
-      description: 'Title of the premium subscription page',
-    },
-    subscriptionSubtitle: {
-      id: 'pages.premium.subscriptionSubtitle',
-      defaultMessage: 'Your Primal Name is available',
-      description: 'Subtitle of the premium subscription page',
-    },
-    rename: {
-      id: 'pages.premium.rename',
-      defaultMessage: 'Change your primal name',
-      description: 'Title of the premium rename page',
-    },
-    support: {
-      id: 'pages.premium.support',
-      defaultMessage: 'Support Primal',
-      description: 'Title of the premium support page',
-    },
-    premiums: {
-      id: 'pages.premium.premiums',
-      defaultMessage: 'Premium Users',
-      description: 'Title of the premium leaderboards page',
-    },
-    legends: {
-      id: 'pages.premium.legends',
-      defaultMessage: 'Primal Legends',
-      description: 'Title of the legends leaderboards page',
-    },
-    legend: {
-      id: 'pages.premium.legend',
-      defaultMessage: 'Become a Primal Legend',
-      description: 'Title of the premium legend page',
-    },
-    legendShort: {
-      id: 'pages.premium.legendShort',
-      defaultMessage: 'Primal Legend',
-      description: 'Short title of the premium legend page',
-    },
-    relay: {
-      id: 'pages.premium.relay',
-      defaultMessage: 'Primal Relay',
-      description: 'Title of the premium relay page',
-    },
-    media: {
-      id: 'pages.premium.media',
-      defaultMessage: 'Media Managment',
-      description: 'Title of the premium media managment page',
-    },
-    contacts: {
-      id: 'pages.premium.contacts',
-      defaultMessage: 'Recover Follow List',
-      description: 'Title of the premium recover contacts page',
-    },
-    content: {
-      id: 'pages.premium.content',
-      defaultMessage: 'Content Backup',
-      description: 'Title of the premium content backup page',
-    },
-    og: {
-      id: 'pages.premium.og',
-      defaultMessage: 'Primal OG',
-      description: 'Title of the Primal OG page',
-    },
-    ogLegend: {
-      id: 'pages.premium.ogLegend',
-      defaultMessage: 'Primal Legend',
-      description: 'Title of the Primal Legend page',
-    },
-  },
-  subOptions: {
-    prices: {
-      m7: {
-        id: 'pages.premium.subOption.m7',
-        defaultMessage: '$7/month',
-        description: '$7 per month',
-      },
-      m6: {
-        id: 'pages.premium.subOption.m6',
-        defaultMessage: '$6/month',
-        description: '$6 per month',
-      },
-      m70: {
-        id: 'pages.premium.subOption.m70',
-        defaultMessage: '$69.99/month',
-        description: '$69.99 per month',
-      },
-      y750: {
-        id: 'pages.premium.subOption.y750',
-        defaultMessage: '$750/year',
-        description: '$750 per year',
-      },
-    },
-    durations: {
-      m3: {
-        id: 'pages.premium.duration.m3',
-        defaultMessage: '3 months',
-        description: '3 month duration',
-      },
-      m12: {
-        id: 'pages.premium.duration.m12',
-        defaultMessage: '12 months',
-        description: '12 month duration',
-      },
-      m1: {
-        id: 'pages.premium.duration.m1',
-        defaultMessage: 'monthly',
-        description: 'monthly payments',
-      },
-      y1: {
-        id: 'pages.premium.duration.y1',
-        defaultMessage: 'annually',
-        description: 'annual payments',
-      },
-    },
-    success: {
-      caption: {
-        id: 'pages.premium.success.caption',
-        defaultMessage: 'Success!',
-        description: 'Payment success caption',
-      },
-      m3: {
-        id: 'pages.premium.success.m3',
-        defaultMessage: 'You subscribed to Primal Premium for 3 months.',
-        description: 'Payment success description for 3 month plan',
-      },
-      m12: {
-        id: 'pages.premium.success.m12',
-        defaultMessage: 'You subscribed to Primal Premium for 12 months.',
-        description: 'Payment success description for 12 month plan',
-      },
-      m70: {
-        id: 'pages.premium.success.m70',
-        defaultMessage: 'You subscribed to Primal Pro for 1 month.',
-        description: 'Payment success description for 1 month pro plan',
-      },
-      y750: {
-        id: 'pages.premium.success.y750',
-        defaultMessage: 'You subscribed to Primal Pro for 12 months.',
-        description: 'Payment success description for 12 month pro plan',
-      },
-      legend: {
-        id: 'pages.premium.success.legend',
-        defaultMessage: 'You are now a Primal Legend.',
-        description: 'Payment success description for legends',
-      },
-      donation: {
-        id: 'pages.premium.success.donation',
-        defaultMessage: 'Thank you, Legend!',
-        description: 'Payment success description for additional donations by legends',
-      },
-    },
-    fail: {
-      caption: {
-        id: 'pages.premium.fail.caption',
-        defaultMessage: 'Payment failed!',
-        description: 'Payment failure caption',
-      },
-      description: {
-        id: 'pages.premium.success.description',
-        defaultMessage: 'There was a problem procesing your payment',
-        description: 'Payment failure description',
-      },
-    }
-  },
-  errors: {
-    nameTooShort: {
-      id: 'pages.premium.error.nameTooShort',
-      defaultMessage: 'Name needs to be at least 3 characters long',
-      description: 'Name is too short error',
-    },
-    nameUnavailable: {
-      id: 'pages.premium.error.nameUnavailable',
-      defaultMessage: 'Sorry, that name is currently unavailable',
-      description: 'Name is unavailable error',
-    },
-    nameNotChanged: {
-      id: 'pages.premium.error.nameNotChanged',
-      defaultMessage: 'Failed to change name',
-      description: 'Name is unavailable error',
-    },
-  }
-};
+
 
 export const readsMy = {
   pageCaption: {
