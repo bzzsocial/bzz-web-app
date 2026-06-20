@@ -376,18 +376,6 @@
 //     // getUserProfiles([pubkey], subId);
 //   };
 
-//   const openMembershipSocket = (onOpen: () => void) => {
-//     membershipSocket = new WebSocket('wss://wallet.primal.net/v1');
-
-//     membershipSocket.addEventListener('close', () => {
-//       logInfo('MEMBERSHIP SOCKET CLOSED');
-//     });
-
-//     membershipSocket.addEventListener('open', () => {
-//       logInfo('MEMBERSHIP SOCKET OPENED');
-//       onOpen();
-//     });
-//   }
 
 //   const checkMembershipStatus = () => {
 //     openMembershipSocket(() => {

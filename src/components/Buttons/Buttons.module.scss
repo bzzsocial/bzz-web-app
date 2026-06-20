@@ -330,28 +330,6 @@
   }
 }
 
-.premium {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 99999px;
-  margin: 0px;
-  padding-inline: 18px;
-  padding-block: 10px;
-  font-size: 16px;
-  line-height: 16px;
-  font-weight: 600;
-  background: var(--accent);
-  color: var(--text-primary-button);
-  width: 100%;
-  min-height: 36px;
-
-  &.proVersion {
-    background-color: var(--accent-pro);
-  }
-}
-
 .green {
   display: flex;
   justify-content: center;

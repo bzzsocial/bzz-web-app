@@ -97,8 +97,6 @@ export enum Kind {
   LiveChatMessage = 1_311,
   ReportContent = 1_984,
 
-  Subscribe = 7_001,
-  Unsubscribe = 7_002,
   Highlight = 9_802,
   Zap = 9_735,
 
@@ -106,7 +104,6 @@ export enum Kind {
   RelayList = 10_002,
   Bookmarks = 10_003,
   Blossom = 10_063,
-  TierList = 17_000,
   StreamMuteList = 10_555,
 
   WalletInfo = 13_194,
@@ -120,7 +117,6 @@ export enum Kind {
 
   Draft = 31_234,
   DVM = 31_990,
-  Tier = 37_001,
 
   ACK = 10_000_098,
   NoteStats = 10_000_100,
@@ -165,13 +161,6 @@ export enum Kind {
 
   ArticlesStats = 10_000_174,
   LiveEventStats = 10_000_176,
-
-  WALLET_OPERATION = 10_000_300,
-  WALLET_NWC_ACTIVE = 10_000_802,
-  WALLET_NWC_CONNECTION = 10_000_803,
-  ExchangeRate = 10_000_305,
-
-  OrderHistory = 10_000_605,
 
   LongFormShell = 10_030_023,
 

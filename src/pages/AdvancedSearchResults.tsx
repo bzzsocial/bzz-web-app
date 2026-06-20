@@ -1,4 +1,4 @@
-import { A, useNavigate, useParams } from '@solidjs/router';
+import { useNavigate, useParams } from '@solidjs/router';
 import { Component, createEffect, createSignal, For, Match, on, onMount, Show, Switch } from 'solid-js';
 import Loader from '../components/Loader/Loader';
 import Note from '../components/Note/Note';
@@ -14,7 +14,6 @@ import SaveFeedDialog from '../components/SaveFeedDialog/SaveFeedDialog';
 import { setAdvSearchState } from './AdvancedSearch';
 import AdvancedSearchCommadTextField from '../components/AdvancedSearch/AdvancedSearchCommadTextField';
 import { isPhone } from '../utils';
-import { accountStore } from '../stores/accountStore';
 
 
 const AdvancedSearchResults: Component = () => {
@@ -25,8 +24,6 @@ const AdvancedSearchResults: Component = () => {
   const [openAddFeedDialog, setAddFeedDialog] = createSignal<boolean>(false);
   const [allowCommandChange, setAllowCommandChange] = createSignal(false);
   const [queryString, setQueryString] = createSignal('');
-
-  const isPremium = () => ['premium', 'premium-legend'].includes(accountStore.membershipStatus.tier || '');
 
   createEffect(on(() => params.query, (v, p) => {
     if (!v || v === p) return;
@@ -141,20 +138,7 @@ const AdvancedSearchResults: Component = () => {
 
         <Show when={search?.isFetchingContent}><Loader /></Show>
 
-        <Show when={!isPremium()}>
-          <div class={styles.moreSearchInfo}>
-            <div>
-              <div class={styles.moreSearchCaption}>
-                This is a Primal Premium feed.
-              </div>
-              <div class={styles.moreSearchDescription}>
-                Buy a Subscription to become a Nostr power user and support our work:
-              </div>
-            </div>
 
-            <A href='/premium' class={styles.premiumLink}>Get Primal Premium</A>
-          </div>
-        </Show>
       </div>
 
       <Paginator loadNextPage={() => search?.actions.fetchContentNextPage(queryString())} />

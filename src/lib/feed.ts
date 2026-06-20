@@ -470,30 +470,6 @@ export const getReadsTopics = (
 };
 
 
-export const getFeaturedAuthors = (
-  subid: string,
-) => {
-  sendMessage(JSON.stringify([
-    "REQ",
-    subid,
-    {cache: ["get_featured_authors"]},
-  ]));
-};
-
-export const getAuthorSubscriptionTiers = (
-  pubkey: string | undefined,
-  subid: string,
-) => {
-  if (!pubkey) return;
-
-  sendMessage(JSON.stringify([
-    "REQ",
-    subid,
-    {cache: ["creator_paid_tiers", { pubkey }]},
-  ]));
-};
-
-
 export const fetchDefaultArticleFeeds = (subid: string) => {
   sendMessage(JSON.stringify([
     "REQ",

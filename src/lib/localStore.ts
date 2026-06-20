@@ -1,7 +1,6 @@
 import { TopicStat } from "../megaFeeds";
 import { convertToUser, userName } from "../stores/profile";
-import { EmojiOption, MembershipStatus, NostrRelays, NostrRelaySignedEvent, NostrStats, PrimalArticleFeed, PrimalDVM, PrimalFeed, PrimalUser, SelectionOption, SenderMessageCount, UserRelation, UserStats } from "../types/primal";
-import { LegendCustomizationConfig } from "./premium";
+import { EmojiOption, NostrRelays, NostrRelaySignedEvent, NostrStats, PrimalArticleFeed, PrimalDVM, PrimalFeed, PrimalUser, SelectionOption, SenderMessageCount, UserRelation, UserStats } from "../types/primal";
 import { StreamingData } from "./streaming";
 
 export type LocalStore = {
@@ -45,7 +44,6 @@ export type LocalStore = {
   animated: boolean,
   dmLastConversation: string | undefined,
   dmLastRelation: UserRelation | undefined,
-  premiumReminder: number,
   dvms: PrimalDVM[] | undefined,
   usePrimalRelay: boolean | undefined,
   nwc: string[][] | undefined,
@@ -53,8 +51,6 @@ export type LocalStore = {
   useSystemDarkMode: boolean | undefined,
   liveStreams: StreamingData[] | undefined,
   liveAuthors: PrimalUser[] | undefined,
-  legendCustomization: LegendCustomizationConfig | undefined,
-  membershipStatus: MembershipStatus | undefined,
   eventQueue: NostrRelaySignedEvent[] | undefined,
 };
 
@@ -106,7 +102,6 @@ export const emptyStorage: LocalStore = {
   selectedBookmarksFeed: undefined,
   dmLastConversation: undefined,
   dmLastRelation: undefined,
-  premiumReminder: 0,
   dvms: undefined,
   usePrimalRelay: false,
   nwc: [],
@@ -114,8 +109,6 @@ export const emptyStorage: LocalStore = {
   useSystemDarkMode: false,
   liveStreams: undefined,
   liveAuthors: undefined,
-  legendCustomization: undefined,
-  membershipStatus: undefined,
   eventQueue: undefined,
 }
 
@@ -521,27 +514,6 @@ export const readHomeSidebarSelection = (pubkey: string | undefined) => {
   return selection ? selection as SelectionOption : undefined;
 };
 
-export const savePremiumReminder = (pubkey: string | undefined, timestamp: number) => {
-  if (!pubkey) {
-    return;
-  }
-
-  const store = getStorage(pubkey);
-
-  store.premiumReminder = timestamp;
-
-  setStorage(pubkey, store);
-}
-
-export const readPremiumReminder = (pubkey: string | undefined) => {
-  if (!pubkey) {
-    return undefined;
-  }
-  const store = getStorage(pubkey)
-
-  return store.premiumReminder;
-};
-
 export const readSecFromStorage = () => {
   return localStorage.getItem('primalSec') || undefined;
 };
@@ -859,52 +831,6 @@ export const loadLiveAuthors = (pubkey: string | undefined) => {
   const store = getStorage(pubkey);
 
   return store.liveAuthors || [];
-};
-
-
-export const saveLegendCustomization = (pubkey: string | undefined, config: LegendCustomizationConfig) => {
-  if (!pubkey) {
-    return;
-  }
-
-  const store = getStorage(pubkey);
-
-  store.legendCustomization = { ...config };
-
-  setStorage(pubkey, store);
-}
-
-
-export const loadLegendCustomization = (pubkey: string | undefined) => {
-  if (!pubkey) {
-    return;
-  }
-  const store = getStorage(pubkey);
-
-  return store.legendCustomization;
-};
-
-
-export const saveMembershipStatus = (pubkey: string | undefined, status: MembershipStatus) => {
-  if (!pubkey) {
-    return;
-  }
-
-  const store = getStorage(pubkey);
-
-  store.membershipStatus = { ...status };
-
-  setStorage(pubkey, store);
-}
-
-
-export const loadMembershipStatus = (pubkey: string | undefined) => {
-  if (!pubkey) {
-    return;
-  }
-  const store = getStorage(pubkey);
-
-  return store.membershipStatus;
 };
 
 

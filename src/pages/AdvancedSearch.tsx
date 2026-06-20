@@ -22,7 +22,6 @@ import { wordsPerMinute } from '../constants';
 import { useSearchContext } from '../contexts/SearchContext';
 import AdvancedSearchCommadTextField from '../components/AdvancedSearch/AdvancedSearchCommadTextField';
 import { isPhone } from '../utils';
-import { accountStore } from '../stores/accountStore';
 
 export type SearchState = {
   includes: string,
@@ -527,8 +526,6 @@ const AdvancedSearch: Component = () => {
 
     return label;
   }
-
-  const isPremium = () => ['premium', 'premium-legend'].includes(accountStore.membershipStatus.tier || '');
 
   const submitSearch = () => {
     let cmd = advSearchState.command;

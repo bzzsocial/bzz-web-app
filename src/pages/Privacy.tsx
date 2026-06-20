@@ -18,7 +18,7 @@ const Privacy: Component = () => {
         Last updated: February 21, 2024
       </p>
       <p>
-        This Privacy Policy explains how Primal Systems Inc. and its affiliates, (“Primal”, “we”, “us”, or “our”) process information about you. This Privacy Policy applies when you use any Primal products and services, including but not limited to the Bzz web app, Bzz iOS app, Bzz Android app, Bzz browser extension, Bzz Premium Service, or Bzz Hosted Wallet Service (collectively referred to as “Services”). It also applies when you contact our customer service team, engage with us on social media, or otherwise interact with us or our Services.
+        This Privacy Policy explains how Primal Systems Inc. and its affiliates, (“Primal”, “we”, “us”, or “our”) process information about you. This Privacy Policy applies when you use any Primal products and services, including but not limited to the Bzz web app, Bzz iOS app, Bzz Android app, and Bzz browser extension (collectively referred to as “Services”). It also applies when you contact our customer service team, engage with us on social media, or otherwise interact with us or our Services.
       </p>
 
       <section>
@@ -43,21 +43,11 @@ const Privacy: Component = () => {
 
         <section>
           <h3>2.2 Primal Mobile Apps.</h3>
-          Bzz does not collect any data via our mobile apps – Bzz for iOS and Bzz for Android – beyond the data you specifically submit for publishing on the public Nostr network and when activating the optional Hosted Wallet Service, as described in section 2.4. Privacy and data collection notices on the public Apple App Store and Google Play Store listings display data collection settings for our mobile apps.
+          Bzz does not collect any data via our mobile apps – Bzz for iOS and Bzz for Android – beyond the data you specifically submit for publishing on the public Nostr network. Privacy and data collection notices on the public Apple App Store and Google Play Store listings display data collection settings for our mobile apps.
         </section>
 
         <section>
-          <h3>2.3 Premium Service.</h3>
-          Primal Premium Service is an optional, subscription-based, paid tier offered to you, which includes Primal Orange Check as defined in our Terms of Service agreement, and certain premium features, as defined on Primal's Website. Our Premium Service is specifically designed for maximum protection of user privacy, and as such, does not require disclosing any personal information.
-        </section>
-
-        <section>
-          <h3>2.4 Hosted Wallet Service.</h3>
-          Primal Hosted Wallet Service is an optional service offered to you, which includes storing small amounts of bitcoin on your behalf, the ability to send and receive bitcoin transactions on your behalf, the display of your transaction history, and hosting a Bitcoin Lightning Address assigned to you. In order to activate the Hosted Wallet Service in a legally compliant manner, we collect the minimum amount of personal information required by law, as shown on the Wallet Activation screen.
-        </section>
-
-        <section>
-          <h3>2.5 Support Services.</h3>
+          <h3>2.3 Support Services.</h3>
           Primal provides support via email and over social media. The information you provide during the regular course of communication with us will be stored in our email systems and otherwise be recorded on the various social media systems we use to communicate with you.
         </section>
       </section>
@@ -81,9 +71,6 @@ const Privacy: Component = () => {
           Bzz will not share your information with third parties, except when required by law. We may share your personal data with law enforcement, data protection authorities, government officials and other authorities when: (i) compelled by subpoena, court order or other legal procedure; (ii) we believe that disclosure is necessary to prevent damage or financial loss; (iii) disclosure is necessary to report suspected illegal activity; or (iv) disclosure is necessary to investigate violations of our Terms of Service or Privacy Policy.
         </p>
 
-        <p>
-          Bzz’s Hosted Wallet Service is offered in partnership with our affiliate Zap Solutions, Inc. ("Strike"). In order to provide a legally compliant service, we are required to share your information related to the Hosted Wallet Service with Strike.
-        </p>
       </section>
 
       <section>

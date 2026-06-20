@@ -790,11 +790,8 @@ const ReadsEditorEditor: Component<{
                     resetUpload(uploadId);
                   }}
                   onRefuse={(reason: string, uploadId?: string) => {
-                    if (reason === 'file_too_big_100') {
+                    if (reason === 'file_too_big_100' || reason === 'file_too_big_1024') {
                       toast?.sendWarning(intl.formatMessage(tUpload.fileTooBigRegular));
-                    }
-                    if (reason === 'file_too_big_1024') {
-                      toast?.sendWarning(intl.formatMessage(tUpload.fileTooBigPremium));
                     }
                     resetUpload(uploadId);
                   }}

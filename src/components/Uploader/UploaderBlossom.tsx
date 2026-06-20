@@ -125,12 +125,10 @@ const UploaderBlossom: Component<{
     setUploadState('xhr', () => undefined);
   }
 
-  const calcUploadLimit = (membershipTier: string | undefined, size: number) => {
-    let limit = uploadLimit.regular;
+  const calcUploadLimit = (size: number) => {
+    setUploadState('uploadLimit', () => uploadLimit.regular);
 
-    setUploadState('uploadLimit', () => limit);
-
-    return size <= MB * limit;
+    return size <= MB * uploadLimit.regular;
   };
 
   const uploadFile = async (file: File) => {
@@ -147,7 +145,7 @@ const UploaderBlossom: Component<{
     let allow = true;
 
     if (url === primalBlossom) {
-      allow = calcUploadLimit(undefined, file.size);
+      allow = calcUploadLimit(file.size);
     }
 
     if (!allow) {

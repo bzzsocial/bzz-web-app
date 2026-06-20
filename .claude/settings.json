@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn tsc *)",
+      "Bash(git stash *)",
+      "Bash(grep -v \"^Done\\\\|^yarn\\\\|^info\\\\|^error Command\\\\|^\\\\\\\\$\")",
+      "Bash(grep -v \"^\\\\-\\\\-$\\\\|<h2>\")",
+      "Bash(python3 -c \"import json,sys; p=json.load\\(sys.stdin\\); print\\('Stack:', list\\(p.get\\('dependencies',{}\\).keys\\(\\)\\)[:20]\\)\")",
+      "Bash(python3 -c \"import json,sys; p=json.load\\(sys.stdin\\); deps=list\\(p.get\\('dependencies',{}\\).keys\\(\\)\\); print\\('\\\\n'.join\\(deps[20:]\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; p=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:p[k] for k in ['name','version','scripts','devDependencies'] if k in p}, indent=2\\)\\)\")"
+    ]
+  }
+}

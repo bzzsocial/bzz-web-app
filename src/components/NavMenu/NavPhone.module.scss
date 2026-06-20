@@ -99,9 +99,6 @@
 .downloadIcon {
   @include iconNav(url(../../assets/icons/nav/downloads.svg), var(--text-secondary));
 }
-.premiumIcon {
-  @include iconNav(url(../../assets/icons/nav/premium.svg), var(--text-secondary));
-}
 .settingsIcon {
   @include iconNav(url(../../assets/icons/nav/settings.svg), var(--text-secondary));
 }

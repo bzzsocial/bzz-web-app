@@ -1,7 +1,7 @@
 import { bech32 } from "@scure/base";
 import { nip04, nip47, nip57, utils } from "../lib/nTools";
 import { Kind } from "../constants";
-import { NostrRelaySignedEvent, NostrUserZaps, PrimalArticle, PrimalDVM, PrimalNote, PrimalUser, PrimalZap, } from "../types/primal";
+import { NostrUserZaps, PrimalArticle, PrimalDVM, PrimalNote, PrimalUser, PrimalZap, } from "../types/primal";
 import { logError } from "./logger";
 import { decrypt, enableWebLn, sendPayment, signEvent } from "./nostrAPI";
 import { decodeNWCUri } from "./wallet";
@@ -197,78 +197,6 @@ export const zapProfile = async (
     // @ts-ignore
     payload.comment = comment;
   }
-  const zapReq = nip57.makeZapRequest(payload);
-
-  try {
-    const signedEvent = await signEvent(zapReq);
-
-    const event = encodeURIComponent(JSON.stringify(signedEvent));
-
-    const r2 = await (await fetch(`${callback}?amount=${sats}&nostr=${event}`)).json();
-    const pr = r2.pr;
-
-    if (nwc && nwc[1] && nwc[1].length > 0) {
-      return await zapOverNWC(sender, nwc[1], pr);
-    }
-
-    await enableWebLn();
-    await sendPayment(pr);
-
-    return true;
-  } catch (reason) {
-    console.error('Failed to zap: ', reason);
-    return false;
-  }
-}
-
-export const zapSubscription = async (
-  subEvent: NostrRelaySignedEvent,
-  recipient: PrimalUser,
-  sender: string | undefined,
-  relays: string[],
-  exchangeRate?: Record<string, Record<string, number>>,
-  nwc?: string[],
-) => {
-  if (!sender || !recipient) {
-    return false;
-  }
-
-  const callback = await getZapEndpoint(recipient);
-
-  if (!callback) {
-    return false;
-  }
-
-  const costTag = subEvent.tags.find(t => t [0] === 'amount');
-  if (!costTag) return false;
-
-  let sats = 0;
-
-  if (costTag[2] === 'sats') {
-    sats = parseInt(costTag[1]) * 1_000;
-  }
-
-  if (costTag[2] === 'msat') {
-    sats = parseInt(costTag[1]);
-  }
-
-  if (costTag[2] === 'USD' && exchangeRate && exchangeRate['USD']) {
-    let usd = parseFloat(costTag[1]);
-    sats = Math.ceil(exchangeRate['USD'].sats * usd * 1_000);
-  }
-
-  let payload = {
-    pubkey: recipient.pubkey,
-    event: subEvent,
-    amount: sats,
-    relays,
-  };
-
-  if (subEvent.content.length > 0) {
-    // @ts-ignore
-    payload.comment = comment;
-  }
-
   const zapReq = nip57.makeZapRequest(payload);
 
   try {

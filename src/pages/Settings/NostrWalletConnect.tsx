@@ -1,4 +1,4 @@
-import { Component, For, createEffect, createSignal, onMount } from 'solid-js';
+import { Component, For, createEffect, createSignal } from 'solid-js';
 import styles from './Settings.module.scss';
 
 import { useIntl } from '@cookbook/solid-intl';
@@ -7,15 +7,13 @@ import PageCaption from '../../components/PageCaption/PageCaption';
 import { A } from '@solidjs/router';
 import PageTitle from '../../components/PageTitle/PageTitle';
 
-import logo from "../../assets/icons/logo.png";
 import nwc from "../../assets/icons/nwc.svg";
 import NWCItem from '../../components/NWCItem/NWCItem';
 import AdvancedSearchDialog from '../../components/AdvancedSearch/AdvancedSearchDialog';
 import { TextField } from '@kobalte/core/text-field';
 import ButtonSecondary from '../../components/Buttons/ButtonSecondary';
 import ButtonPrimary from '../../components/Buttons/ButtonPrimary';
-import { logInfo } from '../../lib/logger';
-import { checkPrimalWalletActive, connectPrimalWalletActive, decodeNWCUri, sendNWCInfoEvent } from '../../lib/wallet';
+import { decodeNWCUri, sendNWCInfoEvent } from '../../lib/wallet';
 import { createStore } from 'solid-js/store';
 import { encrypt, decrypt } from '../../lib/nostrAPI';
 import { loadNWC, loadNWCActive, saveNWC, saveNWCActive } from '../../lib/localStore';
@@ -24,7 +22,7 @@ import { APP_ID } from '../../App';
 import { subsTo } from '../../sockets';
 import { accountStore, insertIntoNWCList, setActiveNWC, updateNWCList } from '../../stores/accountStore';
 
-export type WalletStatus = 'inactive' | 'active' | 'connected';
+export type WalletStatus = 'active' | 'connected';
 
 const NostrWalletConnect: Component = () => {
 
@@ -34,9 +32,7 @@ const NostrWalletConnect: Component = () => {
   const [newNWC, setNewNWC] = createSignal('');
   const [newNWCLabel, setNewNWCLabel] = createSignal('');
 
-  const [walletStatus, setWalletStatus] = createStore<Record<string, WalletStatus>>({
-    'primal': 'inactive',
-  });
+  const [walletStatus, setWalletStatus] = createStore<Record<string, WalletStatus>>({});
 
   createEffect(() => {
     if (!accountStore.publicKey) return;
@@ -49,12 +45,6 @@ const NostrWalletConnect: Component = () => {
       applyActiveWallet(active);
     }
   });
-
-  createEffect(() => {
-    if (accountStore.publicKey) {
-      checkActiveWallet(accountStore.publicKey);
-    }
-  })
 
   const applyActiveWallet = (wallet: string[]) => {
     const pubkey = accountStore.publicKey;
@@ -71,49 +61,6 @@ const NostrWalletConnect: Component = () => {
 
     setWalletStatus(walletName, () => 'connected');
   }
-
-  const checkActiveWallet = (pubkey: string) => {
-    const walletSocket = new WebSocket('wss://wallet.primal.net/v1');
-
-    walletSocket.addEventListener('open', async () => {
-      logInfo('WALLET SOCKET OPENED');
-      const isActive = await checkPrimalWalletActive(pubkey, walletSocket);
-
-      if (walletStatus['primal'] === 'connected') {
-        return;
-      }
-
-      if (isActive) {
-        setWalletStatus('primal', () => 'active');
-      } else {
-        setWalletStatus('primal', () => 'inactive')
-      }
-
-    });
-    walletSocket.addEventListener('close', () => {
-      logInfo('WALLET SOCKET CLOSED');
-    });
-  }
-
-  const connectToPrimalWallet = () => {
-    if (!accountStore.publicKey) return;
-
-    const walletSocket = new WebSocket('wss://wallet.primal.net/v1');
-
-    walletSocket.addEventListener('open', async () => {
-      logInfo('WALLET SOCKET OPENED');
-      const uri = await connectPrimalWalletActive('Primal Web App', walletSocket);
-
-      if (uri.length === 0) {
-        return;
-      }
-
-      connectToNWCWallet('primal', uri);
-    });
-    walletSocket.addEventListener('close', () => {
-      logInfo('WALLET SOCKET CLOSED');
-    });
-  };
 
   const connectToNWCWallet = async (walletName: string, url: string) => {
     const pubkey = accountStore.publicKey;
@@ -215,17 +162,6 @@ const NostrWalletConnect: Component = () => {
     });
   }
 
-  const primalWalletDesc = () => {
-    switch (walletStatus['primal']) {
-      case 'connected':
-        return "Your Primal Wallet is connected";
-      case 'active':
-        return "Your Primal Wallet is ready to be connected";
-      default:
-        return "Your Primal Wallet is not yet active";
-    }
-  }
-
   return (
     <div>
       <PageTitle title={`${intl.formatMessage(t.nwcSettings.title)} ${intl.formatMessage(t.title)}`} />
@@ -243,14 +179,6 @@ const NostrWalletConnect: Component = () => {
 
       <div class={styles.settingsContentFullBorderless}>
         <div class={styles.walletList}>
-          <NWCItem
-            logo={logo}
-            name="Primal"
-            desc={primalWalletDesc()}
-            status={walletStatus['primal']}
-            onConnect={() => connectToPrimalWallet()}
-            onDisconnect={() => disconnectNWC('primal')}
-          />
           <For each={accountStore.nwcList}>
             {([name, uri]) => (
               <NWCItem

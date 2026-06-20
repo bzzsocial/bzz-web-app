@@ -2378,11 +2378,7 @@ export const upload = {
     defaultMessage: 'File too big. Upload limit is 100MB.',
     description: 'Error feedback when file is too big for regular users',
   },
-  fileTooBigPremium: {
-    id: 'upload.fileTooBigPremium',
-    defaultMessage: 'File too big. Upload limit is 1GB.',
-    description: 'Error feedback when file is too big for premiumUsers',
-  },
+
 };
 
 export const landing = {

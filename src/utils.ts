@@ -411,11 +411,6 @@ export const calculateLeaderboardOffset = (leaders: LeaderboardInfo[], paging: P
       leader.last_donation !== paging.since
     ) break;
 
-    if (
-      paging.sortBy === 'premium_since' &&
-      leader.premium_since !== paging.since
-    ) break;
-
     offset++;
   }
 

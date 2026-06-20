@@ -171,11 +171,6 @@ const ArticleDraftContextMenu: Component<{
     }
   });
 
-  const isVerifiedByPrimal = () => {
-    return props.data && !!note().user.nip05 &&
-      note().user.nip05.endsWith('primal.net');
-  }
-
   const noteContextForEveryone: MenuItem[] = [
     {
       label: intl.formatMessage(tActions.articleOverviewContext.edit),

@@ -18,10 +18,10 @@ const Terms: Component = () => {
         Last updated: February 19, 2024
       </p>
       <p>
-        This Agreement is between you and Primal Systems Inc., an Ontario corporation (“Bzz”, “we”, “us”, or “our”), pertaining to your use of Bzz’s applications and services, including but not limited to the Bzz web app, Bzz iOS app, Bzz Android app, Bzz browser extension, Bzz Premium Service, or Bzz Hosted Wallet Service (collectively referred to as “Services”). This Agreement constitutes a binding obligation between you and Bzz. Services are provided by Bzz, including our affiliates, as applicable. By using our Services, you agree to be bound by this Agreement, the Acceptable Use Policy, and any additional provisions and conditions provided to you for your use of Services (collectively, the “Policies”), which may include terms and conditions from third parties. If you don’t agree to all the stated terms, you may not use our Services.
+        This Agreement is between you and Primal Systems Inc., an Ontario corporation (“Bzz”, “we”, “us”, or “our”), pertaining to your use of Bzz’s applications and services, including but not limited to the Bzz web app, Bzz iOS app, Bzz Android app, and Bzz browser extension (collectively referred to as “Services”). This Agreement constitutes a binding obligation between you and Bzz. Services are provided by Bzz, including our affiliates, as applicable. By using our Services, you agree to be bound by this Agreement, the Acceptable Use Policy, and any additional provisions and conditions provided to you for your use of Services (collectively, the “Policies”), which may include terms and conditions from third parties. If you don’t agree to all the stated terms, you may not use our Services.
       </p>
       <p>
-        We will periodically revise and update this Agreement and post the updated version to Bzz’s Website, as further described in Section 9 (Changes to Agreement or Services).
+        We will periodically revise and update this Agreement and post the updated version to Bzz’s Website, as further described in Section 7 (Changes to Agreement or Services).
       </p>
 
       <section>
@@ -72,100 +72,23 @@ const Terms: Component = () => {
 
       <section>
         <h2>
-          3. Premium Service
+          3. Cancellation, Suspension, or Termination of Services
         </h2>
 
         <section>
-          <h3>3.1 Premium Service Definition.</h3>
-          Bzz Premium Service is an optional, subscription-based, paid tier offered to you, which includes Bzz Orange Check as defined in section 3.2 of this Agreement, increased media storage, and certain premium features, as defined on Bzz's Website.
-        </section>
-
-        <section>
-          <h3>3.2 Primal Orange Check.</h3>
-          Bzz Orange Check is a service that provides a personalized username at bzz.social (“Bzz Name”) to all Bzz Premium Service users. Bzz Orange Check includes a verified Nostr Address at bzz.social, Bitcoin Lightning Address at bzz.social, and a VIP profile address at bzz.social. By way of example, a user who selected "preston" as their Bzz Name would have "preston@bzz.social" as their verified Nostr Address, "preston@bzz.social" as their Bitcoin Lightning Address, and "bzz.social/preston" as their VIP profile address.
-        </section>
-
-        <section>
-          <h3>3.3 Primal Name Ownership.</h3>
-          Bzz remains the exclusive owner of all Bzz Names. Bzz Name is rented, not sold, to you for the duration of your subscription, as defined in section 3.4 of this Agreement. Bzz reserves the right to revoke any Bzz Name at any time, without prior notice, if we determine that the name is trademarked by somebody else, that there is a possible case of impersonation, or for any other reason at our sole discretion. Purchasing a Bzz Premium Service subscription grants you the right to use a Bzz Name for the duration of the subscription, but Bzz makes no guarantees that your selected name will remain available to you for the duration of your subscription. Should the name you have selected be revoked by Bzz during your subscription term, you have the right to select another name, provided that this new name is available and acceptable to Bzz.
-        </section>
-
-        <section>
-          <h3>3.4 Premium Service Duration.</h3>
-          Bzz Premium Service will be offered for the duration specified during the purchase process. Bzz will clearly display the expiration date of your subscription in your Premium Profile Settings. You are allowed to renew and extend your subscription at any time. Bzz reserves the right to terminate your subscription for a cause, as described in Section 5 of this Agreement (Cancellation, Suspension, or Termination of Services).
-        </section>
-
-        <section>
-          <h3>3.5 Expired Premium Subscription.</h3>
-          If you allow your Premium Service subscription to expire, you will lose all Premium Service benefits. Upon expiration, Bzz will offer a Grace Period of seven days, during which your Premium Service benefits will continue to be available to you at no charge. After the expiration of the Grace Period, your Bzz Name will no longer be associated with your Nostr account and will become available to another user to reserve. Your media storage in excess of the allotment offered to Free Tier users will be deleted from Bzz's servers.
-        </section>
-      </section>
-
-      <section>
-        <h2>
-          4. Hosted Wallet Service
-        </h2>
-
-        <section>
-          <h3>4.1 Premium Service Definition.</h3>
-          Bzz Hosted Wallet Service is an optional service offered to you, which includes storing small amounts of bitcoin on your behalf, as defined in Section 4.3 Maximum Wallet Balance, the ability to send and receive bitcoin transactions on your behalf, the display of your transaction history, and hosting a Bitcoin Lightning Address assigned to you.
-        </section>
-
-        <section>
-          <h3>4.2 Bzz Orange Check.</h3>
-          Bitcoin custody, send, and receive operations are performed by Bzz's affiliate Zap Solutions, Inc. ("Strike"). By using our Hosted Wallet Service, you agree to be bound by this Agreement, as well as Strike's Terms of Service, as defined at https://strike.me/legal/tos/. Bzz reserves the right to change the Wallet Third Party Service provider without prior notice, or to bring some or all of these services in-house. All such changes will be reflected in an update to this Agreement, as further described in Section 9 (Changes to Agreement or Services).
-        </section>
-
-        <section>
-          <h3>4.3 Maximum Wallet Balance.</h3>
-          The purpose of our Hosted Wallet Service is to provide an easy-to-use spending bitcoin wallet with minimal setup effort. You should not use the Bzz Hosted Wallet Service to store amounts that exceed the value you would carry in a physical spending wallet. For larger amounts, Bzz recommends self-custody, preferably in a bitcoin-specialized hardware wallet. Bzz is enforcing a Maximum Wallet Balance to ensure that all users are using our Hosted Wallet Service for the purpose it was designed for. Your Maximum Wallet Balance is displayed in your Wallet Settings. If you attempt to credit your wallet with an amount that would exceed your Maximum Wallet Balance, you may need to contact Bzz Support at support@bzz.social to get a refund.
-        </section>
-
-        <section>
-          <h3>4.4 Wallet Activation and Control.</h3>
-          When you activate your Bzz Wallet and register for the Hosted Wallet Service, you agree to provide accurate, current, and complete information as prompted by the registration form. Your wallet is controlled by your Nostr private key (starting with "nsec") and the verified email address you provided during registration. It is your responsibility to keep your Nostr private key secret and safely stored, as well as to ensure that nobody else has access to the email account you used to register for our Hosted Wallet Service. If either your Nostr private key or your email account get compromised, this may result in loss of funds in your Bzz Wallet. Bzz assumes no responsibility nor liability for loss of funds resulting from a compromised private key and/or email account.
-        </section>
-
-        <section>
-          <h3>4.5 Transaction Fees.</h3>
-          Transaction fees for incoming and outgoing payments within your Bzz Wallet are a combination of bitcoin network fees, fees charged by Bzz's affiliates (if any), and fees charged by Bzz (if any). Transaction fee policy is subject to change without notice. Bzz Wallet will clearly display the fees charged for each transaction on the Transaction Details screen.
-        </section>
-
-        <section>
-          <h3>4.6 In-app Purchase Fees.</h3>
-          Bzz Wallet offers the ability to purchase small amounts of bitcoin, typically in USD $5 increments, via the Apple/Google in-app purchase. Apple and Google charge a considerable fee for these transactions. Prior to your purchase, Bzz will clearly display the exact amount of bitcoin (expressed in satoshis) that you will receive for the specific fiat amount you will be paying. Bzz makes no revenue from in-app purchases. All in-app purchases are final, Bzz offers no refunds.
-        </section>
-
-        <section>
-          <h3>4.7 Mistaken and Unauthorized Transactions.</h3>
-          All payments made via the Bzz Hosted Wallet Service are final. If a mistaken or unauthorized transaction occurs, you will need to contact the payee directly to recover the funds. Bzz accepts no liability for mistaken or unauthorized transactions.
-        </section>
-
-        <section>
-          <h3>4.8 Taxes.</h3>
-          It is your responsibility to determine what, if any, taxes you owe in relation to bitcoin transactions, including spending, buying, and selling bitcoin. It is your responsibility to report and remit any such tax to the appropriate tax authority. You agree that Bzz is not responsible for determining whether taxes apply to your use of the Services, including your transactions, or for collecting, reporting, withholding, or remitting any taxes arising from your use of the Services.
-        </section>
-      </section>
-
-      <section>
-        <h2>
-          5. Cancellation, Suspension, or Termination of Services
-        </h2>
-
-        <section>
-          <h3>5.1 Account Cancellation.</h3>
+          <h3>3.1 Account Cancellation.</h3>
           We may, in our sole discretion and without any cost or liability to you, with or without prior notice and at any time, suspend, modify, or terminate, temporarily or permanently, all or any portion of our Services, establish certain transaction limits or trading limits, or terminate your Account, with or without reason, including, if we reasonably believe: (i) you create risk or possible legal exposure for us; (ii) our provision of the Services to you is no longer commercially viable; or (iii) you breached any terms of this Agreement.
         </section>
 
         <section>
-          <h3>5.2 Account Suspension.</h3>
+          <h3>3.2 Account Suspension.</h3>
           We have the right to immediately cause your Account to be suspended, and the funds and assets in your Account may be frozen if: (i) we suspect, in our sole discretion, your Account to be in violation of this Agreement or our Anti-Money Laundering program; (ii) we are required to do so by a government or regulatory authority, applicable law, court order, or a facially valid subpoena; (iii) your Account has a negative balance; (iv) a transfer to your Account was returned to your Bank Account; (v) we believe there is unusual activity in your Account or that you are using your Credentials or your Account in an unauthorized or inappropriate manner; or (vi) if you have not accessed your Account in more than two years. Your Account will remain suspended and funds and assets in your Account will remain frozen until a determination is made in the investigation by Bzz, at which point Bzz may determine to terminate your Account.
         </section>
       </section>
 
       <section>
         <h2>
-          6. Disclaimer of Warranty
+          4. Disclaimer of Warranty
         </h2>
 
         <p>
@@ -175,7 +98,7 @@ const Terms: Component = () => {
 
       <section>
         <h2>
-          7. Indemnity
+          5. Indemnity
         </h2>
 
         <p>
@@ -185,28 +108,28 @@ const Terms: Component = () => {
 
       <section>
         <h2>
-          8. Limitations of Liability
+          6. Limitations of Liability
         </h2>
 
         <section>
-          <h3>8.1 CONSEQUENTIAL DAMAGES WAIVER.</h3>
+          <h3>6.1 CONSEQUENTIAL DAMAGES WAIVER.</h3>
           NOTWITHSTANDING ANY OTHER SECTION OF THIS AGREEMENT, NEITHER BZZ, ITS AFFILIATES, THIRD-PARTY SERVICE PROVIDERS, NOR ANY OTHER PARTY INVOLVED IN CREATING, PRODUCING, OR DELIVERING THE SERVICES WILL BE LIABLE FOR ANY INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES, OR DAMAGES FOR LOST PROFITS, LOST REVENUES, TRADING LOSSES, LOST SAVINGS, LOST BUSINESS OPPORTUNITY, LOSS OF DATA OR GOODWILL, SERVICE INTERRUPTION, COMPUTER DAMAGE OR SYSTEM FAILURE OR THE COST OF SUBSTITUTE SERVICES OF ANY KIND ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT OR FROM THE USE OF OR INABILITY TO USE THE SERVICES, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), PRODUCT LIABILITY, OR ANY OTHER LEGAL THEORY, AND WHETHER OR NOT BZZ, ITS AFFILIATES, OR ANY OTHER PARTY HAS BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGE. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, SO THE ABOVE LIMITATION MAY NOT APPLY TO YOU.
         </section>
 
         <section>
-          <h3>8.2 LIABILITY CAP.</h3>
+          <h3>6.2 LIABILITY CAP.</h3>
           NOTWITHSTANDING ANY OTHER SECTION OF THIS AGREEMENT, IN NO EVENT WILL BZZ'S AND ITS AFFILIATES' TOTAL LIABILITY ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT OR FROM THE USE OF OR INABILITY TO USE THE SERVICES EXCEED ONE HUNDRED U.S. DOLLARS ($100).
         </section>
 
         <section>
-          <h3>8.3 BASIS OF BARGAIN AND FAILURE OF ESSENTIAL PURPOSE.</h3>
-          THE EXCLUSIONS AND LIMITATIONS OF DAMAGES SET FORTH ABOVE ARE FUNDAMENTAL ELEMENTS OF THE BASIS OF THE BARGAIN BETWEEN BZZ AND YOU. THE WAIVERS AND LIMITATIONS IN THIS SECTION 8 APPLY REGARDLESS OF THE FORM OF ACTION, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR ANY OTHER LEGAL THEORY, AND WILL SURVIVE AND APPLY EVEN IF ANY LIMITED REMEDY IN THESE TERMS FAILS OF ITS ESSENTIAL PURPOSE.
+          <h3>6.3 BASIS OF BARGAIN AND FAILURE OF ESSENTIAL PURPOSE.</h3>
+          THE EXCLUSIONS AND LIMITATIONS OF DAMAGES SET FORTH ABOVE ARE FUNDAMENTAL ELEMENTS OF THE BASIS OF THE BARGAIN BETWEEN BZZ AND YOU. THE WAIVERS AND LIMITATIONS IN THIS SECTION 6 APPLY REGARDLESS OF THE FORM OF ACTION, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR ANY OTHER LEGAL THEORY, AND WILL SURVIVE AND APPLY EVEN IF ANY LIMITED REMEDY IN THESE TERMS FAILS OF ITS ESSENTIAL PURPOSE.
         </section>
       </section>
 
       <section>
         <h2>
-          9. Changes to Agreement or Services
+          7. Changes to Agreement or Services
         </h2>
 
         <p>
@@ -216,7 +139,7 @@ const Terms: Component = () => {
 
       <section>
         <h2>
-          10. Governing Law
+          8. Governing Law
         </h2>
 
         <p>
@@ -226,7 +149,7 @@ const Terms: Component = () => {
 
       <section>
         <h2>
-          11. Acceptance of Terms
+          9. Acceptance of Terms
         </h2>
 
         <p>
@@ -236,7 +159,7 @@ const Terms: Component = () => {
 
       <section>
         <h2>
-          12. Contact Information
+          10. Contact Information
         </h2>
 
         <p>

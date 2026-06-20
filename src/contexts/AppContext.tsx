@@ -38,7 +38,6 @@ import {
   suspendRelays,
 } from "../stores/accountStore";
 import { CashuMint } from "@cashu/cashu-ts";
-import { Tier, TierCost } from "../components/SubscribeToAuthorModal/SubscribeToAuthorModal";
 import { nip19, nip46 } from "../lib/nTools";
 import { logInfo } from "../lib/logger";
 import { Kind } from "../constants";
@@ -87,16 +86,6 @@ export type InvoiceInfo = {
   onCancel?: () => void,
 };
 
-export type CohortInfo = {
-  cohort_1: string,
-  cohort_2: string,
-  tier: string,
-  expires_on: number,
-  edited_shoutout?: string,
-  legend_since?: number,
-  premium_since?: number,
-};
-
 export type LiveStreamContextMenuInfo = {
   stream: StreamingData,
   streamAuthor: PrimalUser,
@@ -135,8 +124,6 @@ export type AppContextStore = {
   showConfirmModal: boolean,
   confirmInfo: ConfirmInfo | undefined,
   cashuMints: Map<string, CashuMint>,
-  subscribeToAuthor: PrimalUser | undefined,
-  subscribeToTier: (tier: Tier) => void,
   verifiedUsers: Record<string, string>,
 
   showProfileQr: PrimalUser | undefined,
@@ -192,8 +179,6 @@ export type AppContextStore = {
     openConfirmModal: (confirmInfo: ConfirmInfo) => void,
     closeConfirmModal: () => void,
     getCashuMint: (url: string) => CashuMint | undefined,
-    openAuthorSubscribeModal: (author: PrimalUser | undefined, subscribeTo: (tier: Tier, cost: TierCost) => void) => void,
-    closeAuthorSubscribeModal: () => void,
     profileLink: (pubkey: string | undefined, noP?: boolean) => string,
 
     getUserBlossomUrls: (pubkey: string) => string[],
@@ -235,10 +220,8 @@ const initialData: Omit<AppContextStore, 'actions'> = {
   showConfirmModal: false,
   confirmInfo: undefined,
   cashuMints: new Map(),
-  subscribeToAuthor: undefined,
   verifiedUsers: {},
 
-  subscribeToTier: () => { },
   showProfileQr: undefined,
   reportContent: undefined,
   signer: undefined,
@@ -436,17 +419,6 @@ export const AppProvider = (props: { children: JSXElement }) => {
       store.cashuMints.set(formatted, mint);
     }
     return store.cashuMints.get(formatted);
-  };
-
-  const openAuthorSubscribeModal = (author: PrimalUser | undefined, subscribeTo: (tier: Tier, cost: TierCost) => void) => {
-    if (!author) return;
-
-    updateStore('subscribeToAuthor', () => ({ ...author }));
-    updateStore('subscribeToTier', () => subscribeTo);
-  };
-
-  const closeAuthorSubscribeModal = () => {
-    updateStore('subscribeToAuthor', () => undefined);
   };
 
   const profileLink = (pubkey: string | undefined, noP?: boolean) => {
@@ -660,8 +632,6 @@ export const AppProvider = (props: { children: JSXElement }) => {
       openCashuModal,
       closeCashuModal,
       getCashuMint,
-      openAuthorSubscribeModal,
-      closeAuthorSubscribeModal,
       profileLink,
 
       getUserBlossomUrls,

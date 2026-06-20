@@ -5,15 +5,13 @@ import { hookForDev } from '../../lib/devTools';
 import { useReadsContext } from '../../contexts/ReadsContext';
 import { APP_ID } from '../../App';
 import { subsTo } from '../../sockets';
-import { getFeaturedAuthors, getReadsTopics } from '../../lib/feed';
-import { fetchUserProfile } from '../../handleNotes';
+import { getReadsTopics } from '../../lib/feed';
 import ArticleShort from '../ArticlePreview/ArticleShort';
-import AuthorSubscribe from '../AuthorSubscribe/AuthorSubscribe';
 import { A } from '@solidjs/router';
 import ArticlePreviewSidebarSkeleton from '../Skeleton/ArticlePreviewSidebarSkeleton';
 import ReadsFeaturedTopicsSkeleton from '../Skeleton/ReadsFeaturedTopicsSkeleton';
 import { Transition } from 'solid-transition-group';
-import { minKnownProfiles } from '../../constants';
+
 import { accountStore } from '../../stores/accountStore';
 
 
@@ -21,13 +19,8 @@ const ReadsSidebar: Component< { id?: string } > = (props) => {
 
   const reads= useReadsContext();
 
-  const [featuredAuthor, setFeautredAuthor] = createSignal<string>();
-
-  const [isFetching, setIsFetching] = createSignal(false);
   const [isFetchingTopics, setIsFetchingTopics] = createSignal(false);
-  const [isFetchingAuthors, setIsFetchingAuthors] = createSignal(false);
 
-  const [got, setGot] = createSignal(false);
 
   const getTopics = () => {
     if (!reads) return;
@@ -51,42 +44,6 @@ const ReadsSidebar: Component< { id?: string } > = (props) => {
     getReadsTopics(subId);
   }
 
-  const getFeaturedAuthor = () => {
-    if (!reads) return;
-    if (reads.featuredAuthor) return;
-
-    const subId = `reads_fa_${APP_ID}`;
-
-    const unsub = subsTo(subId, {
-      onEvent: (_, content) => {
-        const authors = JSON.parse(content.content || '[]') as string[];
-
-        setFeautredAuthor(() => authors[Math.floor(Math.random() * authors.length)]);
-      },
-      onEose: () => {
-        setIsFetchingAuthors(() => false);
-        unsub();
-      }
-    })
-    setIsFetchingAuthors(() => true);
-    getFeaturedAuthors(subId);
-  }
-
-  const getAuthorData = async (pubkey: string) => {
-    const userNpub = accountStore.publicKey || minKnownProfiles.names['primal'];
-    if (!userNpub || !pubkey) return;
-
-    const subId = `reads_fpi_${APP_ID}`;
-
-    setIsFetching(() => true);
-
-    const profile = await fetchUserProfile(userNpub, pubkey, subId);
-
-    setIsFetching(() => false);
-
-    reads?.actions.setFeaturedAuthor(profile);
-  };
-
   onMount(() => {
     if (accountStore.isKeyLookupDone && reads?.recomendedReads.length === 0) {
       reads.actions.doSidebarSearch('');
@@ -94,29 +51,12 @@ const ReadsSidebar: Component< { id?: string } > = (props) => {
 
     if (accountStore.isKeyLookupDone) {
       getTopics();
-      getFeaturedAuthor();
     }
-  });
-
-  createEffect(() => {
-    if (!reads) return;
-    const pubkey = featuredAuthor();
-    if (!pubkey) return;
-
-    getAuthorData(pubkey);
   });
 
   return (
     <div id={props.id} class={styles.readsSidebar}>
       <Show when={accountStore.isKeyLookupDone}>
-        <div class={styles.headingPicks}>
-          Featured Author
-        </div>
-
-        <div class={styles.section}>
-          <AuthorSubscribe author={reads?.featuredAuthor} />
-        </div>
-
         <div class={styles.headingPicks}>
           Featured Reads
         </div>

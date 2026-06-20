@@ -113,7 +113,7 @@ const Uploader: Component<{
   });
 
   createEffect(() => {
-    calcUploadLimit(undefined);
+    calcUploadLimit();
   });
 
   onCleanup(() => {
@@ -127,7 +127,7 @@ const Uploader: Component<{
     }
   });
 
-  const calcUploadLimit = (membershipTier: string | undefined) => {
+  const calcUploadLimit = () => {
     setUploadState('uploadLimit', () => uploadLimit.regular);
   };
 

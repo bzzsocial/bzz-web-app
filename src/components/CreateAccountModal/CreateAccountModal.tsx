@@ -76,7 +76,9 @@ const CreateAccountModal: Component<{
         </div>
 
         <div class={styles.bellowInfo}>
-
+          <ButtonPrimary onClick={onCreateAccount}>
+            {intl.formatMessage(tActions.getStarted)}
+          </ButtonPrimary>
 
           <div class={styles.loginNow}>
             {intl.formatMessage(t.alreadyHaveAccount)}&nbsp;

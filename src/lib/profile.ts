@@ -172,14 +172,6 @@ export const trimVerification = (address: string | undefined) => {
 
 
 
-export const isVerifiedByPrimal = async (user: PrimalUser | undefined) => {
-  const nip05 = user?.nip05;
-
-  const isVerified = await checkVerification(user);
-
-  return isVerified && nip05 && nip05.endsWith && nip05.endsWith('primal.net');
-}
-
 export const checkVerification: (user: PrimalUser | undefined) => Promise<boolean> = async (user: PrimalUser | undefined) => {
   const nip05 = user?.nip05;
 

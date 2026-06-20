@@ -8,7 +8,7 @@ import { getHighlights, parseLinkPreviews, sendEvent } from "../lib/notes";
 import { subsTo } from "../sockets";
 
 import styles from './Longform.module.scss';
-import { FeedPage, NostrEventContent, NostrMentionContent, NostrNoteActionsContent, NostrNoteContent, NostrStatsContent, NostrTier, NostrUserContent, NoteActions, PrimalArticle, PrimalNote, PrimalUser, SendNoteResult, TopZap, ZapOption } from "../types/primal";
+import { FeedPage, NostrEventContent, NostrMentionContent, NostrNoteActionsContent, NostrNoteContent, NostrStatsContent, NostrUserContent, NoteActions, PrimalArticle, PrimalNote, PrimalUser, SendNoteResult, TopZap, ZapOption } from "../types/primal";
 import { getUserProfiles } from "../lib/profile";
 import { convertToUser, nip05Verification, userName } from "../stores/profile";
 import Avatar from "../components/Avatar/Avatar";
@@ -19,7 +19,6 @@ import PrimalMarkdown from "../components/PrimalMarkdown/PrimalMarkdown";
 import NoteTopZaps from "../components/Note/NoteTopZaps";
 import { isPhone, parseBolt11, uuidv4 } from "../utils";
 import Note, { NoteReactionsState } from "../components/Note/Note";
-import { getAuthorSubscriptionTiers } from "../lib/feed";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import NoteImage from "../components/NoteImage/NoteImage";
 import { nip19 } from "../lib/nTools";
@@ -34,8 +33,6 @@ import Search from "../components/Search/Search";
 import ArticleSidebar from "../components/HomeSidebar/ArticleSidebar";
 import ReplyToNote from "../components/ReplyToNote/ReplyToNote";
 import { fetchNotes } from "../handleNotes";
-import { Tier, TierCost } from "../components/SubscribeToAuthorModal/SubscribeToAuthorModal";
-import { zapSubscription } from "../lib/zap";
 import ArticleHighlightComments from "../components/ArticleHighlight/ArticleHighlightComments";
 import ReplyToHighlight from "../components/ReplyToNote/ReplyToHighlight";
 import PageCaption from "../components/PageCaption/PageCaption";
@@ -66,7 +63,6 @@ export type LongformThreadStore = {
   users: PrimalUser[],
   isFetching: boolean,
   lastReply: PrimalNote | undefined,
-  hasTiers: boolean,
   highlights: any[],
   selectedHighlight: any,
   heightlightReplies: PrimalNote[],
@@ -103,7 +99,6 @@ const emptyStore: LongformThreadStore = {
   users: [],
   isFetching: false,
   lastReply: undefined,
-  hasTiers: false,
   highlights: [],
   heighlightsPage: {
     messages: [],
@@ -227,92 +222,6 @@ const Longform: Component< { naddr: string } > = (props) => {
 
     return media?.actions.getMedia(store.article.image, 'm') || media?.actions.getMedia(store.article.image, 'o') || store.article.image;
   }
-
-  const getTiers = (author: PrimalUser) => {
-    if (!author) return;
-
-    const subId = `article_tiers_${APP_ID}`;
-
-    const unsub = subsTo(subId, {
-      onEvent: (_, content) => {
-        if (content.kind === Kind.TierList) {
-          return;
-        }
-
-        if (content.kind === Kind.Tier) {
-          updateStore('hasTiers', () => true);
-
-          return;
-        }
-      },
-      onEose: () => {
-        unsub();
-      },
-    })
-
-    getAuthorSubscriptionTiers(author.pubkey, subId)
-  }
-
-  const doSubscription = async (tier: Tier, cost: TierCost, exchangeRate?: Record<string, Record<string, number>>) => {
-    const a = store.article?.user;
-
-    if (!a || !cost) return;
-
-    const subEvent = {
-      kind: Kind.Subscribe,
-      content: '',
-      created_at: Math.floor((new Date()).getTime() / 1_000),
-      tags: [
-        ['p', a.pubkey],
-        ['e', tier.id],
-        ['amount', cost.amount, cost.unit, cost.cadence],
-        ['event', JSON.stringify(tier.event)],
-        // Copy any zap splits
-        ...(tier.event.tags?.filter(t => t[0] === 'zap') || []),
-      ],
-    }
-
-    const { success, note } = await sendEvent(subEvent);
-
-    if (success && note) {
-      const isZapped = await zapSubscription(
-        note,
-        a,
-        accountStore.publicKey,
-        accountStore.activeRelays,
-        exchangeRate,
-        accountStore.activeNWC,
-      );
-
-      if (!isZapped) {
-        unsubscribe(note.id);
-      }
-    }
-  }
-
-  const unsubscribe = async (eventId: string) => {
-    const a = store.article?.user;
-
-    if (!a) return;
-
-    const unsubEvent = {
-      kind: Kind.Unsubscribe,
-      content: '',
-      created_at: Math.floor((new Date()).getTime() / 1_000),
-
-      tags: [
-        ['p', a.pubkey],
-        ['e', eventId],
-      ],
-    };
-
-    await sendEvent(unsubEvent);
-
-  }
-
-  const openSubscribe = () => {
-    app?.actions.openAuthorSubscribeModal(store.article?.user, doSubscription);
-  };
 
   const onConfirmZap = (zapOption: ZapOption) => {
     app?.actions.closeCustomZapModal();
@@ -988,13 +897,6 @@ const Longform: Component< { naddr: string } > = (props) => {
                 </A>
               </Show>
 
-              {/* <Show when={store.hasTiers}>
-                <ButtonPrimary
-                  onClick={openSubscribe}
-                >
-                  subscribe
-                </ButtonPrimary>
-              </Show> */}
             </div>
 
             <div class={`${styles.topBar}`}>

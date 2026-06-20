@@ -15,7 +15,6 @@ import {
   NostrNoteContent,
   PrimalArticle,
   PrimalArticleFeed,
-  PrimalUser,
   SelectionOption,
 } from "../types/primal";
 import { calculateReadsOffset } from "../utils";
@@ -54,7 +53,6 @@ type ReadsContextStore = {
   articleHeights: Record<string, number>,
   topPicks: PrimalArticle[],
   topics: string[],
-  featuredAuthor: PrimalUser | undefined,
   actions: {
     clearNotes: () => void,
     fetchNotes: (topic: string, until?: number) => void,
@@ -69,7 +67,6 @@ type ReadsContextStore = {
     resetSelectedFeed: () => void,
     setArticleHeight: (id: string, height: number) => void,
     setTopics: (topicks: string[]) => void,
-    setFeaturedAuthor: (author: PrimalUser) => void,
     refetchSelectedFeed: () => void,
     removeEvent: (id: string) => void,
   }
@@ -134,7 +131,6 @@ const initialHomeData = {
   articleHeights: {},
   topPicks: [],
   topics: [],
-  featuredAuthor: undefined,
 };
 
 export const ReadsContext = createContext<ReadsContextStore>();
@@ -153,9 +149,6 @@ const removeEvent = (id: string) => {
     updateStore('topics', () => [ ...topics ]);
   };
 
-  const setFeaturedAuthor = (author: PrimalUser) => {
-    updateStore('featuredAuthor', () => ({ ...author }) );
-  };
 
   const updateSidebarQuery = (selection: SelectionOption) => {
     updateStore('sidebar', 'query', () => ({ ...selection }));
@@ -352,7 +345,6 @@ const removeEvent = (id: string) => {
       getFirstPage,
       setArticleHeight,
       setTopics,
-      setFeaturedAuthor,
       refetchSelectedFeed,
       removeEvent,
     },

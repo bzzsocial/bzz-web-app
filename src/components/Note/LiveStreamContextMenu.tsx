@@ -203,11 +203,6 @@ const LiveStreamContextMenu: Component<{
     }
   });
 
-  const isVerifiedByPrimal = () => {
-    return props.data && !!props.data?.streamAuthor.nip05 &&
-      props.data?.streamAuthor.nip05.endsWith('primal.net');
-  }
-
   const streamContextForEveryone: () => MenuItem[] = () => {
 
     return [

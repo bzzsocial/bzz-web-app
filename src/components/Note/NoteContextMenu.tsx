@@ -234,11 +234,6 @@ const NoteContextMenu: Component<{
     }
   });
 
-  const isVerifiedByPrimal = () => {
-    return props.data && !!note().user.nip05 &&
-      note().user.nip05.endsWith('primal.net');
-  }
-
   const noteContextForEveryone: () => MenuItem[] = () => {
 
     return [

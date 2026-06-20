@@ -3,8 +3,6 @@ import { Relay } from "../lib/nTools";
 import { JSX } from "solid-js";
 import { SetStoreFunction } from "solid-js/store";
 import { Kind } from "../constants";
-import { CohortInfo } from "../contexts/AppContext";
-
 import { LeaderboardInfo } from "../megaFeeds";
 import { StreamingData } from "../lib/streaming";
 
@@ -307,42 +305,6 @@ export type NostrWordCount = {
   id?: string,
 };
 
-export type NostrTierList = {
-  kind: Kind.TierList,
-  content: string,
-  created_at?: number,
-  tags?: string[][],
-  pubkey?: string,
-  id?: string,
-};
-
-export type NostrTier = {
-  kind: Kind.Tier,
-  content: string,
-  created_at?: number,
-  id: string,
-  pubkey?: string,
-  tags?: string[][],
-};
-
-export type NostrSubscribe = {
-  kind: Kind.Subscribe,
-  content: string,
-  created_at?: number,
-  id: string,
-  pubkey?: string,
-  tags?: string[][],
-};
-
-export type NostrUnsubscribe = {
-  kind: Kind.Unsubscribe,
-  content: string,
-  created_at?: number,
-  id: string,
-  pubkey?: string,
-  tags?: string[][],
-};
-
 export type NostrHighlight = {
   kind: Kind.Highlight,
   pubkey: string,
@@ -406,15 +368,6 @@ export type NostrPrimalVanityNames = {
   tags?: string[][],
 };
 
-export type NostrPrimalExchangeRate = {
-  kind: Kind.ExchangeRate,
-  content: string,
-  created_at?: number,
-  pubkey?: string,
-  id?: string,
-  tags?: string[][],
-};
-
 export type NostrPrimalMediaStats = {
   kind: Kind.MediaStats,
   content: string,
@@ -442,35 +395,8 @@ export type NostrContactList = {
   tags?: string[][],
 };
 
-export type NostrOrderHistory = {
-  kind: Kind.OrderHistory,
-  content: string,
-  created_at?: number,
-  pubkey?: string,
-  id?: string,
-  tags?: string[][],
-};
-
-export type NostrLegendCustomization = {
-  kind: Kind.LegendCustomization,
-  content: string,
-  created_at?: number,
-  pubkey?: string,
-  id?: string,
-  tags?: string[][],
-};
-
 export type NostrBroadcastStatus = {
   kind: Kind.BroadcastStatus,
-  content: string,
-  created_at?: number,
-  pubkey?: string,
-  id?: string,
-  tags?: string[][],
-};
-
-export type NostrMembershipCohortInfo = {
-  kind: Kind.MembershipCohortInfo,
   content: string,
   created_at?: number,
   pubkey?: string,
@@ -582,10 +508,6 @@ export type NostrEventContent =
   NostrRelayHint |
   NostrZapInfo |
   NostrQuoteStatsInfo |
-  NostrTierList |
-  NostrTier |
-  NostrSubscribe |
-  NostrUnsubscribe |
   NostrWordCount |
   NostrHighlight |
   NostrDVM |
@@ -593,14 +515,10 @@ export type NostrEventContent =
   NostrDVMFollowsActions |
   NostrUserFollowerIncrease |
   NostrPrimalVanityNames |
-  NostrPrimalExchangeRate |
   NostrPrimalMediaStats |
   NostrPrimalMediaList |
   NostrContactList |
-  NostrOrderHistory |
-  NostrLegendCustomization |
   NostrBroadcastStatus |
-  NostrMembershipCohortInfo |
   NostrBlossom |
   NostrRelayList |
   NostrImageContent |
@@ -717,7 +635,6 @@ export type MegaFeedPage = {
   wordCount: Record<string, number>,
   dmContacts: Record<string, SenderMessageCount>,
   encryptedMessages: NostrMessageEncryptedContent[],
-  memberCohortInfo: Record<string, CohortInfo>,
 
   leaderboard: LeaderboardInfo[],
 };

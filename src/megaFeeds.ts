@@ -98,8 +98,6 @@ export const emptyMegaFeedPage: () => MegaFeedPage = () => ({
   elements: [],
   dmContacts: {},
   encryptedMessages: [],
-  legendCustomization: {},
-  memberCohortInfo: {},
   leaderboard: [],
 });
 
@@ -116,8 +114,6 @@ export const emptyMegaFeedResults = () => ({
   paging: { ...emptyPaging() },
   page: { ...emptyMegaFeedPage() },
   encryptedMessages: [],
-  legendCustomization: {},
-  memberCohortInfo: {},
   leaderboard: [],
 });
 

@@ -44,10 +44,6 @@ import NoteImage from '../components/NoteImage/NoteImage';
 import ProfileQrCodeModal from '../components/ProfileQrCodeModal/ProfileQrCodeModal';
 import { CustomZapInfo, useAppContext } from '../contexts/AppContext';
 import ProfileAbout from '../components/ProfileAbout/ProfileAbout';
-import { Tier, TierCost } from '../components/SubscribeToAuthorModal/SubscribeToAuthorModal';
-import { Kind } from '../constants';
-import { getAuthorSubscriptionTiers } from '../lib/feed';
-import { zapSubscription } from '../lib/zap';
 import { subsTo } from '../sockets';
 import ProfileFollowModal from '../components/ProfileFollowModal/ProfileFollowModal';
 
@@ -75,7 +71,6 @@ const ProfileMobile: Component = () => {
 
   const [followsModal, setFollowsModal] = createSignal<'follows' | 'followers' | false>(false);
 
-  const [hasTiers, setHasTiers] = createSignal(false);
 
   const lightbox = new PhotoSwipeLightbox({
     gallery: '#central_header',
@@ -537,99 +532,6 @@ const ProfileMobile: Component = () => {
     },
   });
 
-  createEffect(() => {
-    if (profile?.userProfile) {
-      getTiers(profile.userProfile);
-    }
-  });
-
-  const getTiers = (author: PrimalUser) => {
-    if (!author) return;
-
-    const subId = `article_tiers_${APP_ID}`;
-
-    const unsub = subsTo(subId, {
-      onEvent: (_, content) => {
-        if (content.kind === Kind.TierList) {
-          return;
-        }
-
-        if (content.kind === Kind.Tier) {
-          setHasTiers(() => true);
-
-          return;
-        }
-      },
-      onEose: () => {
-        unsub();
-      },
-    })
-
-    getAuthorSubscriptionTiers(author.pubkey, subId);
-  }
-
-  const doSubscription = async (tier: Tier, cost: TierCost, exchangeRate?: Record<string, Record<string, number>>) => {
-    const a = profile?.userProfile;
-
-    if (!a || !cost) return;
-
-    const subEvent = {
-      kind: Kind.Subscribe,
-      content: '',
-      created_at: Math.floor((new Date()).getTime() / 1_000),
-      tags: [
-        ['p', a.pubkey],
-        ['e', tier.id],
-        ['amount', cost.amount, cost.unit, cost.cadence],
-        ['event', JSON.stringify(tier.event)],
-        // Copy any zap splits
-        ...(tier.event.tags?.filter(t => t[0] === 'zap') || []),
-      ],
-    }
-
-    const { success, note } = await sendEvent(subEvent);
-
-    if (success && note) {
-      const isZapped = await zapSubscription(
-        note,
-        a,
-        accountStore.publicKey,
-        accountStore.activeRelays,
-        exchangeRate,
-        accountStore.activeNWC,
-      );
-
-      if (!isZapped) {
-        unsubscribe(note.id);
-      }
-    }
-  }
-
-  const unsubscribe = async (eventId: string) => {
-    const a = profile?.userProfile;;
-
-    if (!a) return;
-
-    const unsubEvent = {
-      kind: Kind.Unsubscribe,
-      content: '',
-      created_at: Math.floor((new Date()).getTime() / 1_000),
-
-      tags: [
-        ['p', a.pubkey],
-        ['e', eventId],
-      ],
-    };
-
-    await sendEvent(unsubEvent);
-
-  }
-
-
-  const openSubscribe = () => {
-    app?.actions.openAuthorSubscribeModal(profile?.userProfile, doSubscription);
-  };
-
   const shortProfileAbout = (text: string | undefined) => {
     if (!profileAboutDiv || !text) return true;
 
@@ -749,14 +651,6 @@ const ProfileMobile: Component = () => {
             <Show when={!isCurrentUser() || !accountStore.following.includes(profile?.profileKey || '')}>
               <FollowButton person={profile?.userProfile} large={true} />
             </Show>
-
-            {/* <Show when={hasTiers()}>
-              <ButtonPrimary
-                onClick={openSubscribe}
-              >
-                subscribe
-              </ButtonPrimary>
-            </Show> */}
 
             <Show when={isCurrentUser()}>
               <div class={styles.editProfileButton}>

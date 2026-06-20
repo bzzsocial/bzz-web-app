@@ -179,8 +179,6 @@ export type AccountStore = {
 
 let relaysExplicitlyClosed: string[] = [];
 
-// let membershipSocket: WebSocket | undefined;
-
 export const initAccountStore: AccountStore = {
   loginType: 'none',
   likes: [],
@@ -448,8 +446,7 @@ export const updateAccountProfile = async (pubkey: string) => {
 
 
 export const showGetStarted = () => {
-  updateAccountStore('showLogin', () => true);
-  // updateAccountStore('showGettingStarted', () => true);
+  updateAccountStore('showGettingStarted', () => true);
 }
 
 export const logout = () => {
@@ -1891,8 +1888,8 @@ export const doAfterLogin = async (pubkey: string) => {
   updateAccountProfile(pubkey);
 
   // ===========================================
-  // checkMembershipStatus();
-  checkActiveNWC(); const bks = readBookmarks(pubkey);
+  checkActiveNWC();
+  const bks = readBookmarks(pubkey);
   updateAccountStore('bookmarks', () => [...bks]);
   fetchBookmarks();
 

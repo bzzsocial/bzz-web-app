@@ -15,7 +15,6 @@ import NoteContextMenu from '../Note/NoteContextMenu';
 import LnQrCodeModal from '../LnQrCodeModal/LnQrCodeModal';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import CashuQrCodeModal from '../CashuQrCodeModal/CashuQrCodeModal';
-import SubscribeToAuthorModal from '../SubscribeToAuthorModal/SubscribeToAuthorModal';
 import { useSettingsContext } from '../../contexts/SettingsContext';
 import EnterPinModal from '../EnterPinModal/EnterPinModal';
 import CreateAccountModal from '../CreateAccountModal/CreateAccountModal';
@@ -181,12 +180,6 @@ const Layout: Component<any> = (props) => {
           abortLabel={app?.confirmInfo?.abortLabel}
           onConfirm={app?.confirmInfo?.onConfirm}
           onAbort={app?.confirmInfo?.onAbort}
-        />
-
-        <SubscribeToAuthorModal
-          author={app?.subscribeToAuthor}
-          onClose={app?.actions.closeAuthorSubscribeModal}
-          onSubscribe={app?.subscribeToTier}
         />
 
         <EnterPinModal
