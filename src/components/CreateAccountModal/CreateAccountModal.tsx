@@ -10,7 +10,6 @@ import ButtonPrimary from '../Buttons/ButtonPrimary';
 import ButtonLink from '../Buttons/ButtonLink';
 import { useNavigate } from '@solidjs/router';
 import AdvancedSearchDialog from '../AdvancedSearch/AdvancedSearchDialog';
-import { loginUsingExtension, logUserIn, setLoginType } from '../../stores/accountStore';
 
 
 import bzzLogo from '../../assets/images/bzz_logo.png';
@@ -47,30 +46,6 @@ const CreateAccountModal: Component<{
           <div class={styles.loginSteps}>
             <div class={styles.loginExplain}>
               {intl.formatMessage(t.createNewDescription)}
-            </div>
-            <div class={styles.loginList}>
-              <div class={styles.loginListItem}>
-                <div class={styles.number}>1</div>
-                <div class={styles.itemLabel}>
-                  {intl.formatMessage(t.getStartedSteps.step_one)}
-                </div>
-              </div>
-
-              <div class={styles.loginListItem}>
-                <div class={styles.number}>2</div>
-                <div class={styles.itemLabel}>
-                  {intl.formatMessage(t.getStartedSteps.step_two)}
-                </div>
-              </div>
-
-              <div class={styles.loginListItem}>
-                <div class={styles.number}>3</div>
-                <div class={styles.itemLabel}>
-                  <span>Go to the </span>
-                  <button onClick={props.onLogin}>login page</button>
-                  <span> and scan the QR code</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>

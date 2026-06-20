@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import { andRD, andVersion, iosRD, iosVersion, Kind } from "../constants";
+import { Kind } from "../constants";
 import {
   createContext,
   createEffect,
@@ -24,22 +24,18 @@ import {
 import { APP_ID } from "../App";
 import { getLastSeen, subscribeToNotificationStats, unsubscribeToNotificationStats } from "../lib/notifications";
 import { timeNow } from "../utils";
-import { useSettingsContext } from "./SettingsContext";
 import { useAppContext } from "./AppContext";
 import { accountStore, hasPublicKey } from "../stores/accountStore";
 
 export type NotificationsContextStore = {
   notificationCount: number,
-  downloadsCount: number,
   actions: {
     resetNotificationCounter: () => void,
-    calculateDownloadCount: () => void,
   }
 }
 
 export const initialData = {
   notificationCount: 0,
-  downloadsCount: 0,
 };
 
 export let notifSince = timeNow();
@@ -51,10 +47,7 @@ export const setNotifSince = (val: number) => {
 export const NotificationsContext = createContext<NotificationsContextStore>();
 
 export const NotificationsProvider = (props: { children: ContextChildren }) => {
-  const settings = useSettingsContext();
   const app = useAppContext();
-
-  const today = () => (new Date()).getTime();
 
   let notifSubscribed = '|';
 
@@ -75,27 +68,6 @@ export const NotificationsProvider = (props: { children: ContextChildren }) => {
     subscribeToNotificationStats(accountStore.publicKey, notfiStatsSubId());
   }
 
-  const calculateDownloadCount = () => {
-    const iosDownload = localStorage.getItem('iosDownload');
-    const andDownload = localStorage.getItem('andDownload');
-
-    const ios = settings?.mobileReleases.ios || { date: iosRD, version: iosVersion};
-    const and = settings?.mobileReleases.android || { date: andRD, version: andVersion};
-
-    let count = 0;
-
-    if (iosDownload !== ios.version && today() > (new Date(ios.date)).getTime()) {
-      count++;
-    }
-
-    if (andDownload !== and.version && today() > (new Date(and.date)).getTime()) {
-      count++;
-    }
-
-    updateStore('downloadsCount', () => count);
-
-  };
-
   const resetNotificationCounter = () => updateStore('notificationCount', () => 0);
 
 // SOCKET HANDLERS ------------------------------
@@ -114,8 +86,6 @@ export const NotificationsProvider = (props: { children: ContextChildren }) => {
       if (sum !== store.notificationCount) {
         updateStore('notificationCount', () => sum)
       }
-
-      calculateDownloadCount();
 
     }
   }
@@ -216,7 +186,6 @@ export const NotificationsProvider = (props: { children: ContextChildren }) => {
     ...initialData,
     actions: {
       resetNotificationCounter,
-      calculateDownloadCount,
     },
   });
 

@@ -15,7 +15,6 @@ import NoteContextMenu from '../Note/NoteContextMenu';
 import LnQrCodeModal from '../LnQrCodeModal/LnQrCodeModal';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import CashuQrCodeModal from '../CashuQrCodeModal/CashuQrCodeModal';
-import { useSettingsContext } from '../../contexts/SettingsContext';
 import EnterPinModal from '../EnterPinModal/EnterPinModal';
 import CreateAccountModal from '../CreateAccountModal/CreateAccountModal';
 import LoginModal from '../LoginModal/LoginModal';
@@ -43,7 +42,6 @@ const Layout: Component<any> = (props) => {
   const location = useLocation();
   const params = useParams();
   const app = useAppContext();
-  const settings = useSettingsContext();
   const intl = useIntl();
 
   createEffect(on(() => location.pathname, (path, prev) => {
@@ -90,12 +88,6 @@ const Layout: Component<any> = (props) => {
       return;
     }
   }
-
-  createEffect(() => {
-    if (location.pathname) {
-      settings?.actions.refreshMobileReleases();
-    }
-  });
 
   // createEffect(() => {
   //   if (!accountStore.publicKey) {

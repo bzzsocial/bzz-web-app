@@ -411,16 +411,6 @@ export const emojiSearchLimit = 0;
 
 export const today = (new Date()).getTime();
 
-// Downloads page info --------------------
-// iOS
-export const iosRD = (new Date('12/19/2023')).getTime();
-export const iosVersion = '1.1.10';
-
-// Android
-export const andRD = (new Date('02/02/2024')).getTime();
-export const andVersion = '0.91.2';
-
-// ----------------------------------------
 
 export const defaultZap = { "amount": 42, "message": "Onward 🫡" };
 

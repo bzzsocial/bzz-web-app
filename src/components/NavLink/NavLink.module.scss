@@ -68,9 +68,6 @@
   .notificationsIcon {
     @include iconNav(url(../../assets/icons/nav/notifications.svg), var(--text-secondary));
   }
-  .downloadIcon {
-    @include iconNav(url(../../assets/icons/nav/downloads.svg), var(--text-secondary));
-  }
   .settingsIcon {
     @include iconNav(url(../../assets/icons/nav/settings.svg), var(--text-secondary));
   }
@@ -100,9 +97,6 @@
     }
     .notificationsIcon {
       @include iconNav(url(../../assets/icons/nav/notifications_selected.svg), var(--text-primary));
-    }
-    .downloadIcon {
-      @include iconNav(url(../../assets/icons/nav/downloads_selected.svg), var(--text-primary));
     }
     .settingsIcon {
       @include iconNav(url(../../assets/icons/nav/settings_selected.svg), var(--text-primary));

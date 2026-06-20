@@ -18,7 +18,7 @@ const Privacy: Component = () => {
         Last updated: February 21, 2024
       </p>
       <p>
-        This Privacy Policy explains how Primal Systems Inc. and its affiliates, (“Primal”, “we”, “us”, or “our”) process information about you. This Privacy Policy applies when you use any Primal products and services, including but not limited to the Bzz web app, Bzz iOS app, Bzz Android app, and Bzz browser extension (collectively referred to as “Services”). It also applies when you contact our customer service team, engage with us on social media, or otherwise interact with us or our Services.
+        This Privacy Policy explains how Primal Systems Inc. and its affiliates, (“Primal”, “we”, “us”, or “our”) process information about you. This Privacy Policy applies when you use any Primal products and services, including but not limited to the Bzz web app (collectively referred to as “Services”). It also applies when you contact our customer service team, engage with us on social media, or otherwise interact with us or our Services.
       </p>
 
       <section>
@@ -42,12 +42,7 @@ const Privacy: Component = () => {
         </section>
 
         <section>
-          <h3>2.2 Primal Mobile Apps.</h3>
-          Bzz does not collect any data via our mobile apps – Bzz for iOS and Bzz for Android – beyond the data you specifically submit for publishing on the public Nostr network. Privacy and data collection notices on the public Apple App Store and Google Play Store listings display data collection settings for our mobile apps.
-        </section>
-
-        <section>
-          <h3>2.3 Support Services.</h3>
+          <h3>2.2 Support Services.</h3>
           Primal provides support via email and over social media. The information you provide during the regular course of communication with us will be stored in our email systems and otherwise be recorded on the various social media systems we use to communicate with you.
         </section>
       </section>

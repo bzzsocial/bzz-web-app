@@ -1,14 +1,12 @@
-import { Component, createEffect, createSignal, JSXElement, onCleanup, onMount, Show } from 'solid-js';
+import { Component, createSignal, JSXElement, onCleanup, onMount, Show } from 'solid-js';
 
 import styles from './Layout.module.scss';
 
-import { useLocation, useSearchParams } from '@solidjs/router';
+import { useLocation } from '@solidjs/router';
 import NewNote from '../NewNote/NewNote';
 import { SendNoteResult } from '../../types/primal';
-import { useSettingsContext } from '../../contexts/SettingsContext';
 import NavPhone from '../NavMenu/NavPhone';
-import { isIOS } from '../../utils';
-import { accountStore, checkNostrKey } from '../../stores/accountStore';
+import { accountStore } from '../../stores/accountStore';
 
 export const [isHome, setIsHome] = createSignal(false);
 
@@ -18,15 +16,8 @@ const LayoutPhone: Component<{
 }> = (props) => {
 
   const location = useLocation();
-  const settings = useSettingsContext();
 
   let container: HTMLDivElement | undefined;
-
-  const [queryParams, setQueryParams] = useSearchParams();
-
-  const showBanner = () => {
-    return queryParams.mobilebanner !== 'false';
-  };
 
   const onResize = () => {
     container?.style.setProperty('height', `${window.innerHeight}px`);
@@ -40,29 +31,7 @@ const LayoutPhone: Component<{
     window.removeEventListener('resize', onResize);
   });
 
-  createEffect(() => {
-    if (location.pathname) {
-      settings?.actions.refreshMobileReleases();
-    }
-  });
-
-  // createEffect(() => {
-  //   if (location.pathname === '/') return;
-
-  //   if (!accountStore.publicKey) {
-  //     checkNostrKey();
-  //   }
-  // });
-
-  const containerClass = () => {
-    let k = styles.containerPhone;
-
-    if (isIOS() && showBanner()) {
-      k += ` ${styles.containerIOS}`;
-    }
-
-    return k;
-  }
+  const containerClass = () => styles.containerPhone;
 
   return (
     <Show

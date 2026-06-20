@@ -1,6 +1,6 @@
 import { createStore } from "solid-js/store";
 import { useToastContext } from "../components/Toaster/Toaster";
-import { NotificationType, andRD, andVersion, contentScope, defaultContentModeration, defaultFeeds, defaultNotificationAdditionalSettings, defaultNotificationSettings, defaultZap, defaultZapOptions, iosRD, iosVersion, nostrHighlights, themes, trendingScope } from "../constants";
+import { NotificationType, contentScope, defaultContentModeration, defaultFeeds, defaultNotificationAdditionalSettings, defaultNotificationSettings, defaultZap, defaultZapOptions, nostrHighlights, themes, trendingScope } from "../constants";
 import {
   createContext,
   createEffect,
@@ -35,17 +35,11 @@ import { getDefaultSettings, getHomeSettings, getNWCSettings, getReadsSettings, 
 import { APP_ID } from "../App";
 import { useIntl } from "@cookbook/solid-intl";
 import { feedProfile, feedProfileDesription, settings as t } from "../translations";
-import { getMobileReleases } from "../lib/releases";
 import { logError } from "../lib/logger";
 import { fetchDefaultArticleFeeds, fetchDefaultHomeFeeds } from "../lib/feed";
 import { getDefaultBlossomServers } from "../lib/relays";
 import { runColorMode } from "../utils";
 import { accountStore, hasPublicKey, setProxyThroughPrimal } from "../stores/accountStore";
-
-export type MobileReleases = {
-  ios: { date: string, version: string },
-  android: { date: string, version: string },
-}
 
 export type SettingsContextStore = {
   locale: string,
@@ -67,7 +61,6 @@ export type SettingsContextStore = {
   notificationAdditionalSettings: Record<string, boolean>,
   applyContentModeration: boolean,
   contentModeration: ContentModeration[],
-  mobileReleases: MobileReleases,
   recomendedBlossomServers: string[],
   actions: {
     setTheme: (theme: PrimalTheme | null) => void,
@@ -89,7 +82,6 @@ export type SettingsContextStore = {
     restoreDefaultFeeds: () => void,
     setApplyContentModeration: (flag: boolean) => void,
     modifyContentModeration: (name: string, content?: boolean, trending?: boolean) => void,
-    refreshMobileReleases: () => void,
     setProxyThroughPrimal: (shouldProxy: boolean, temp?: boolean) => void,
     getDefaultReadsFeeds: () => void,
     getDefaultHomeFeeds: () => void,
@@ -132,10 +124,6 @@ export const initialData = {
   notificationAdditionalSettings: { ...defaultNotificationAdditionalSettings },
   applyContentModeration: true,
   contentModeration: [...defaultContentModeration],
-  mobileReleases: {
-    ios: { date: `${iosRD}`, version: iosVersion },
-    android: { date: `${andRD}`, version: andVersion },
-  },
   recomendedBlossomServers: [],
 };
 
@@ -944,22 +932,6 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
     getRecomendedBlossomServers();
   }
 
-  const refreshMobileReleases = () => {
-    const subid = `mobile_releases_${APP_ID}`;
-
-    const unsub = subsTo(subid, {
-      onEvent: (_, content) => {
-        const releases = JSON.parse(content?.content || '{}') as MobileReleases;
-        updateStore('mobileReleases', () => ({ ...releases }));
-      },
-      onEose: () => {
-        unsub();
-      },
-    });
-
-    getMobileReleases(subid);
-  };
-
   const getDefaultReadsFeeds = () => {
     const subId = `article_feeds_${APP_ID}`;
 
@@ -1042,7 +1014,6 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
     const anim = storedAnimated === 'true' ? true : false;
     setAnimation(anim, true);
 
-    refreshMobileReleases();
   });
 
   // Initial setup for a user with a public key
@@ -1106,7 +1077,6 @@ export const SettingsProvider = (props: { children: ContextChildren }) => {
       updateNotificationAdditionalSettings,
       setApplyContentModeration,
       modifyContentModeration,
-      refreshMobileReleases,
       setProxyThroughPrimal: setTheProxyThroughPrimal,
       getDefaultReadsFeeds,
       getDefaultHomeFeeds,

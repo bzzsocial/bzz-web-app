@@ -54,23 +54,6 @@ export const account = {
     defaultMessage: 'It will only take a minute to login to bzz.social securely.',
     description: 'Label inviting users to join Nostr',
   },
-  getStartedSteps: {
-    step_one: {
-      id: 'settings.account.getStartedSteps.step_one',
-      defaultMessage: 'Install the Bzz mobile app',
-      description: 'First step in getting started',
-    },
-    step_two: {
-      id: 'settings.account.getStartedSteps.step_two',
-      defaultMessage: 'Create your account within the app ',
-      description: 'Second step in getting started',
-    },
-    step_three: {
-      id: 'settings.account.getStartedSteps.step_three',
-      defaultMessage: 'Go to the login page and scan the QR code',
-      description: 'First step in getting started',
-    },
-  },
   create: {
     title: {
       id: 'settings.account.title',
@@ -233,7 +216,7 @@ export const actions = {
   },
   getStartedTitle: {
     id: 'actions.getStartedTitle',
-    defaultMessage: 'Get Started - Download the Bzz Mobile App',
+    defaultMessage: 'Get Started with Bzz',
     description: 'Get Started action title',
   },
   forgotPin: {

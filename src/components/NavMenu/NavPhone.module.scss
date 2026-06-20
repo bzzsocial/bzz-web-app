@@ -96,9 +96,6 @@
 .notificationsIcon {
   @include iconNav(url(../../assets/icons/nav/notifications.svg), var(--text-secondary));
 }
-.downloadIcon {
-  @include iconNav(url(../../assets/icons/nav/downloads.svg), var(--text-secondary));
-}
 .settingsIcon {
   @include iconNav(url(../../assets/icons/nav/settings.svg), var(--text-secondary));
 }
